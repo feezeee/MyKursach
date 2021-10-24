@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MyKursach2.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,8 @@ namespace MyKursach
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.Add(new ServiceDescriptor(typeof(PostalOfficeContext), new PostalOfficeContext(Configuration.GetConnectionString("DefaultConnection"))));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,7 +46,7 @@ namespace MyKursach
             app.UseStaticFiles();
 
             app.UseRouting();
-                        app.UseAuthorization();
+            app.UseAuthorization();
 
 
 

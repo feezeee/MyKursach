@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MyKursach.Models;
+using MyKursach2.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,8 +26,8 @@ namespace MyKursach.Controllers
 
         public ViewResult Positions()
         {
-
-            return View();
+            PostalOfficeContext context = HttpContext.RequestServices.GetService(typeof(MyKursach2.Models.PostalOfficeContext)) as PostalOfficeContext;
+            return View(context.GetAllPositions());
         }
 
         public ViewResult Workers()

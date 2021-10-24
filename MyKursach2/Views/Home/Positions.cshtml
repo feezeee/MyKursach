@@ -1,12 +1,38 @@
-﻿@{
+﻿@model List<MyKursach2.Models.Position>
+@{
     Layout = "_Layout";
     ViewData["Title"] = "Должности";
 }
 
 
 
-<div class="" style="height: 100%;">
+<div class="table-responsive" style="height: 100%;">
     <h1 class="text-center">Должности</h1>
+    <table class="table table-bordered table-hover ">
+        <thead class="thead-dark">
+            <tr>
+                <th>#</th>
+                <th>Наименование должности</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (MyKursach2.Models.Position el in Model)
+            {
+            <tr>
+                <th scope="row">
+                    @el.id
+                </th>
+                <td>
+                    @el.position_name
+                </td>
+                <td>
+                    @el.position_name
+                </td>
+
+            </tr>
+            }
+        </tbody>
+    </table>
 </div>
 
 
