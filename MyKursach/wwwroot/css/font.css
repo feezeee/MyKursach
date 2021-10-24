@@ -1,0 +1,12 @@
+@font-face {
+	font-family: "Montserrat Alternates Regular";
+	src: url("../fonts/montserrat-alternates-regular/montserrat-alternates-regular.eot"); /* IE9 Compat Modes */
+	src: url("../fonts/montserrat-alternates-regular/montserrat-alternates-regular.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+		url("../fonts/montserrat-alternates-regular/montserrat-alternates-regular.otf") format("opentype"), /* Open Type Font */
+		url("../fonts/montserrat-alternates-regular/montserrat-alternates-regular.svg") format("svg"), /* Legacy iOS */
+		url("../fonts/montserrat-alternates-regular/montserrat-alternates-regular.ttf") format("truetype"), /* Safari, Android, iOS */
+		url("../fonts/montserrat-alternates-regular/montserrat-alternates-regular.woff") format("woff"), /* Modern Browsers */
+		url("../fonts/montserrat-alternates-regular/montserrat-alternates-regular.woff2") format("woff2"); /* Modern Browsers */
+	font-weight: normal;
+	font-style: normal;
+}
