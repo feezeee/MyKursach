@@ -25,6 +25,7 @@ namespace MyKursach.Controllers
 
         public ViewResult Positions()
         {
+
             return View();
         }
 
