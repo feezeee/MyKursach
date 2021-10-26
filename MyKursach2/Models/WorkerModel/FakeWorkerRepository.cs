@@ -9,9 +9,9 @@ namespace MyKursach2.Models
     {        
         public IQueryable<Worker> Workers => new List<Worker>
         {
-            new Worker { first_name = "тестовая должность Максим" },
-            new Worker { first_name = "тестовая должность Денис" },
-            new Worker { first_name = "тестовая должность Никита" }
+            new Worker { FirstName = "тестовая должность Максим" },
+            new Worker { FirstName = "тестовая должность Денис" },
+            new Worker { FirstName = "тестовая должность Никита" }
         }.AsQueryable();
     }
 }

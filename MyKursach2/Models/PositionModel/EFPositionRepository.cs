@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyKursach2.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,9 +8,9 @@ namespace MyKursach2.Models
 {
     public class EFPositionRepository : IPositionRepository
     {
-        private PostalOfficeContext context;
+        private ApplicationDbContext context;
 
-        public EFPositionRepository (PostalOfficeContext context)
+        public EFPositionRepository(ApplicationDbContext context)
         {
             this.context = context;
         }

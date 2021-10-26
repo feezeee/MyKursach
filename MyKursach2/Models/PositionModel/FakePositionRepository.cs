@@ -7,9 +7,9 @@ namespace MyKursach2.Models
     {        
         public IQueryable<Position> Positions => new List<Position>
         {
-            new Position { position_name = "тестовая должность Директор" },
-            new Position { position_name = "тестовая должность Кассир" },
-            new Position { position_name = "тестовая должность Администратор" }
+            new Position { PositionName = "тестовая должность Директор" },
+            new Position { PositionName = "тестовая должность Кассир" },
+            new Position { PositionName = "тестовая должность Администратор" }
         }.AsQueryable();
     }
 }

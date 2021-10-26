@@ -1,11 +1,19 @@
-﻿namespace MyKursach2.Models
+﻿using MyKursach2.Data;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace MyKursach2.Models
 {
     public class Position
     {
-        private PostalOfficeContext context;
+        [Display(Name = "Number")]
+        public int Id { get; set; }
 
-        public int id { get; set; }
 
-        public string position_name { get; set; }
+        [Required(ErrorMessage = "Title is required.")]
+        [MaxLength(30)]
+        public string PositionName { get; set; }
+
+        public ICollection<Worker> Workers { get; set; }
     }
 }

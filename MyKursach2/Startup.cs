@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using System;
+using MyKursach2.Data;
 
 namespace MyKursach
 {
@@ -22,13 +23,16 @@ namespace MyKursach
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connection = Configuration.GetConnectionString("DefaultConnection");
             // добавляем контекст MobileContext в качестве сервиса в приложение
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseMySql(connection, new MySqlServerVersion(new Version(8, 0, 11))));
-            services.AddControllersWithViews();
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseMySql(connection, new MySqlServerVersion(new Version(8, 0, 11))));
+            //services.AddControllersWithViews();
 
+            var connection = Configuration.GetConnectionString("DefaultConnection");
+
+            services.AddDbContext<ApplicationDbContext>(options => options.UseMySQL(connection));
             services.AddTransient<IPositionRepository, EFPositionRepository>();
+            services.AddTransient<IWorkerRepository, EFWorkerRepository>();
             services.AddControllersWithViews();
 
             //services.Add(new ServiceDescriptor(typeof(PostalOfficeContext), new PostalOfficeContext(Configuration.GetConnectionString("DefaultConnection"))));

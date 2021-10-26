@@ -17,7 +17,8 @@ namespace MyKursach2.Controllers
 
         public ViewResult List()
         {
-            return View(repository.Workers);
+            var res = repository.Workers;
+            return View(res);
         }
     }
 }

@@ -1,22 +1,25 @@
-﻿using System;
+﻿using MyKursach2.Data;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyKursach2.Models
 {
     public class Worker
-    {
-        private PostalOfficeContext context;
+    {      
+        public int Id { get; set; }
 
-        public int id { get; set; }
+        public string FirstName { get; set; }
 
-        public string first_name { get; set; }
+        public string LastName { get; set; }
 
-        public string last_name { get; set; }
+        public DateTime DateOfBirth { get; set; }
 
-        public DateTime date_of_birth { get; set; }
+        public string? Email { get; set; }
 
-        public string email { get; set; }
 
-        public string position_id { get; set; }
+        public int? PositionId { get; set; }
+
+        public Position Position { get; set; }
 
     }
 }
