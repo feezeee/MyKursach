@@ -1,4 +1,4 @@
-﻿@model List<MyKursach2.Models.Position>
+﻿@model IEnumerable<MyKursach2.Models.Position>
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Должности";
@@ -16,7 +16,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (MyKursach2.Models.Position el in Model)
+            @foreach (var el in Model)
             {
             <tr>
                 <th scope="row">

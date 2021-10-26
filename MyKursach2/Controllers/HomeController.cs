@@ -23,21 +23,6 @@ namespace MyKursach.Controllers
         {
             return View();
         }
-
-        public ViewResult Positions()
-        {
-            PostalOfficeContext context = HttpContext.RequestServices.GetService(typeof(MyKursach2.Models.PostalOfficeContext)) as PostalOfficeContext;
-            return View(context.GetAllPositions());
-        }
-
-        public ViewResult Workers()
-        {
-            return View();
-        }
-
-        public ViewResult Operations()
-        {
-            return View();
-        }
+        
     }
 }

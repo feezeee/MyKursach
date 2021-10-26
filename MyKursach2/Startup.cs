@@ -1,14 +1,11 @@
+using MyKursach2.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MyKursach2.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MyKursach
 {
@@ -17,6 +14,7 @@ namespace MyKursach
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
         }
 
         public IConfiguration Configuration { get; }
@@ -24,9 +22,16 @@ namespace MyKursach
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+            // добавляем контекст MobileContext в качестве сервиса в приложение
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseMySql(connection, new MySqlServerVersion(new Version(8, 0, 11))));
             services.AddControllersWithViews();
 
-            services.Add(new ServiceDescriptor(typeof(PostalOfficeContext), new PostalOfficeContext(Configuration.GetConnectionString("DefaultConnection"))));
+            services.AddTransient<IPositionRepository, EFPositionRepository>();
+            services.AddControllersWithViews();
+
+            //services.Add(new ServiceDescriptor(typeof(PostalOfficeContext), new PostalOfficeContext(Configuration.GetConnectionString("DefaultConnection"))));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,6 +40,7 @@ namespace MyKursach
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseBrowserLink();
             }
             else
             {
@@ -57,13 +63,10 @@ namespace MyKursach
                     pattern: "{controller=Home}/{action=Index}");
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Positions}");
+                    pattern: "{controller=Position}/{action=List}");
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Workers}");
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Operations}");
+                    pattern: "{controller=Worker}/{action=List}");
             });
         }
     }

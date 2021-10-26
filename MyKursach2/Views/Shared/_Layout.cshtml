@@ -16,7 +16,7 @@
 <body style="height: max-content; background-color: rgb(242, 255, 255);">
     <header>
         <nav class="mx-auto navbar navbar-expand-lg navbar-light border-bottom " style="background-color: rgb(181, 234, 255); max-width: 1440px;">
-            <a class="navbar-brand" asp-action="Index">Почта РБ</a>
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">Почта РБ</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -29,8 +29,8 @@
                             Сотрудники
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonStaff">
-                            <a class="dropdown-item" asp-action="Workers">Список сотрудников</a>
-                            <a class="dropdown-item" asp-action="Positions">Должности</a>
+                            <a class="dropdown-item" asp-controller="Worker" asp-action="List">Список сотрудников</a>
+                            <a class="dropdown-item" asp-controller="Position" asp-action="List">Должности</a>
                         </div>
 
                     </li>
@@ -39,8 +39,8 @@
                             Операция
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonOperation">
-                            <a class="dropdown-item" asp-action="NewOperation">Новая операция</a>
-                            <a class="dropdown-item" asp-action="Operations">Список операций</a>
+                            <a class="dropdown-item" asp-controller="Operation" asp-action="NewOperation">Новая операция</a>
+                            <a class="dropdown-item" asp-controller="Operation" asp-action="List">Список операций</a>
                         </div>
                     </li>
 
