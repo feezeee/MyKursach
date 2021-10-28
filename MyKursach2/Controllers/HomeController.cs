@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MyKursach.Models;
 using MyKursach2.Models;
@@ -19,6 +20,7 @@ namespace MyKursach.Controllers
             _logger = logger;
         }
 
+        [Authorize]
         public ViewResult Index()
         {
             return View();

@@ -13,6 +13,7 @@ namespace MyKursach2.Data
         }
         public DbSet<Position> Positions { get; set; }
         public DbSet<Worker> Workers { get; set; }
+        
 
     }
 }

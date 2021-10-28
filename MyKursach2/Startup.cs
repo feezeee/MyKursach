@@ -7,6 +7,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using System;
 using MyKursach2.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 
 namespace MyKursach
 {
@@ -29,10 +31,19 @@ namespace MyKursach
             //services.AddControllersWithViews();
 
             var connection = Configuration.GetConnectionString("DefaultConnection");
-
             services.AddDbContext<ApplicationDbContext>(options => options.UseMySQL(connection));
+
             services.AddTransient<IPositionRepository, EFPositionRepository>();
             services.AddTransient<IWorkerRepository, EFWorkerRepository>();
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+               .AddCookie(options =>
+               {
+                   options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+                   options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
+               });
+
+
             services.AddControllersWithViews();
 
             //services.Add(new ServiceDescriptor(typeof(PostalOfficeContext), new PostalOfficeContext(Configuration.GetConnectionString("DefaultConnection"))));
@@ -43,8 +54,8 @@ namespace MyKursach
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
+                app.UseDeveloperExceptionPage();               
             }
             else
             {
@@ -56,8 +67,9 @@ namespace MyKursach
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
-
+            
 
 
             app.UseEndpoints(endpoints =>

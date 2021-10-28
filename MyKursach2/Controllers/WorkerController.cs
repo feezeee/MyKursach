@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MyKursach2.Models;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace MyKursach2.Controllers
             repository = repos;
         }
 
+        [Authorize(Roles = "Директор, Администратор")]
         public ViewResult List()
         {
             var res = repository.Workers;

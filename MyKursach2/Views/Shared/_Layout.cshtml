@@ -33,15 +33,19 @@
                             <a class="dropdown-item" asp-controller="Position" asp-action="List">Должности</a>
                         </div>
                     </li>
-                    <li class="mx-3 dropdown">
-                        <a class="dropdown-toggle" type="button" id="dropdownMenuButtonOperation" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Операция
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonOperation">
-                            <a class="dropdown-item" asp-controller="Operation" asp-action="NewOperation">Новая операция</a>
-                            <a class="dropdown-item" asp-controller="Operation" asp-action="List">Список операций</a>
-                        </div>
-                    </li>
+                    @if (User.IsInRole("Администратор"))
+                    {
+                        <li class="mx-3 dropdown">
+                            <a class="dropdown-toggle" type="button" id="dropdownMenuButtonOperation" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Операция
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonOperation">
+                                <a class="dropdown-item" asp-controller="Operation" asp-action="NewOperation">Новая операция</a>
+                                <a class="dropdown-item" asp-controller="Operation" asp-action="List">Список операций</a>
+                            </div>
+                        </li>
+                    }
+
 
                     <li class="mx-3 dropdown">
                         <a class="dropdown-toggle" type="button" id="dropdownMenuButtonOrder" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -53,6 +57,25 @@
 
                     </li>
                 </ul>
+            </div>
+            <div class="d-flex justify-content-xl-between float-right">
+                @{
+                    Worker user = AuthorizedUser.GetInstance().GetWorker();
+                    <a>@user.LastName @user.FirstName (@user.Position.PositionName)</a>
+                }
+
+            <form method="post" asp-controller="Account" asp-action="Logout">
+                <style>
+                    .myHover {                        
+                        background-color:transparent; 
+                        color: #808080;
+                    }
+                    .myHover:hover {
+                        color: black;
+                    }
+                </style>
+                <input class="myHover border-0 ml-3" type="submit" value="Выход" />                
+            </form>
             </div>
         </nav>
     </header>

@@ -1,6 +1,7 @@
 ﻿using MyKursach2.Data;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Principal;
 
 namespace MyKursach2.Models
 {
@@ -16,10 +17,13 @@ namespace MyKursach2.Models
 
         public string? Email { get; set; }
 
+        public string PhoneNumber { get; set; }
 
         public int? PositionId { get; set; }
 
         public Position Position { get; set; }
 
+        public string Password { get; set; }
+       
     }
 }
