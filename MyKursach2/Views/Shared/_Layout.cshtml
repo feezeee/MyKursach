@@ -12,8 +12,134 @@
     <script src="~/lib/popper/dist/popper.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 
+    <link rel="stylesheet" href="~/css/style.css">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+
 </head>
-<body style="height: max-content; background-color: rgb(242, 255, 255);">
+<body>
+    <div class="sidebar">
+        <div class="logo-details">
+            <a asp-controller="Home" asp-action="Index">
+                <i class='bx bxs-envelope icon'></i>
+                <p class="logo_name">Почта РБ</p>
+            </a>
+            <i class='bx bx-menu' id="btn"></i>
+        </div>
+
+        <ul class="nav-list">
+            @if (User.IsInRole("Администратор") || User.IsInRole("Директор"))
+            {
+                <li id="area_users">
+                    <a asp-controller="Worker" asp-action="List">
+                        <i id="_users" class='bx bx-user'></i>
+                        <span class="links_name">Сотрудники</span>
+                    </a>
+                    <span class="tooltip">Сотрудники</span>
+                </li>
+                <script>
+                    document.getElementById('area_users').onmouseenter = function () {
+                        document.getElementById('_users').classList.add('bx-tada');
+                    }
+                    document.getElementById('area_users').onmouseleave = function () {
+                        document.getElementById('_users').classList.remove('bx-tada');
+                    }
+                </script>
+            }
+                <li id="area_operations">
+                    <a href="#">
+                        <i id="_operations" class='bx bx-plus-circle'></i>
+                        <span class="links_name">Операции</span>
+                    </a>
+                    <span class="tooltip">Операции</span>
+                </li>
+                <script>
+                    document.getElementById('area_operations').onmouseenter = function () {
+                        document.getElementById('_operations').classList.add('bx-tada');
+                    }
+                    document.getElementById('area_operations').onmouseleave = function () {
+                        document.getElementById('_operations').classList.remove('bx-tada');
+                    }
+                </script>
+                <li id="area_products">
+                    <a href="#">
+                        <i id="_proudcts" class='bx bxs-component'></i>
+                        <span class="links_name">Товары</span>
+                    </a>
+                    <span class="tooltip">Товары</span>
+                </li>
+                <script>
+                    document.getElementById('area_products').onmouseenter = function () {
+                        document.getElementById('_proudcts').classList.add('bx-tada');
+                    }
+                    document.getElementById('area_products').onmouseleave = function () {
+                        document.getElementById('_proudcts').classList.remove('bx-tada');
+                    }
+                </script>
+
+                <li class="profile">
+                    <div class="profile-details">
+                        @{
+                            Worker user = AuthorizedUser.GetInstance().GetWorker();
+                            <div class="name_job">
+                                <div class="name">@user.LastName @user.FirstName</div>
+                                <div class="job">@user.Position.PositionName</div>
+                            </div>
+                        }
+                    </div>
+                    <form method="post" asp-controller="Account" asp-action="Logout">
+                        <button>
+                            <i class='bx bx-log-out' id="log_out"></i>
+                        </button>
+                    </form>
+                    <!-- <i class='bx bx-log-out' id="log_out" ></i> -->
+                </li>
+
+                <script>
+                    document.getElementById('log_out').onmouseenter = function () {
+                        document.getElementById('log_out').classList.remove('bx-log-out');
+                        document.getElementById('log_out').classList.add('bxs-log-out');
+                        document.getElementById('log_out').classList.add('bxs-log-out');
+                    }
+                    document.getElementById('log_out').onmouseleave = function () {
+                        document.getElementById('log_out').classList.remove('bxs-log-out');
+                        document.getElementById('log_out').classList.add('bx-log-out');
+                    }
+                </script>
+            </ul>
+    </div>
+    <section class="home-section">
+        <div class="text">
+            @RenderBody()
+        
+        </div>
+    </section>
+    <script>
+        let sidebar = document.querySelector(".sidebar");
+        let closeBtn = document.querySelector("#btn");
+        let searchBtn = document.querySelector(".bx-search");
+
+        closeBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("open");
+            menuBtnChange();//calling the function(optional)
+        });
+
+        searchBtn.addEventListener("click", () => { // Sidebar open when you click on the search iocn
+            sidebar.classList.toggle("open");
+            menuBtnChange(); //calling the function(optional)
+        });
+
+        // following are the code to change sidebar button(optional)
+        function menuBtnChange() {
+            if (sidebar.classList.contains("open")) {
+                closeBtn.classList.replace("bx-menu", "bx-menu-alt-right");//replacing the iocns class
+            } else {
+                closeBtn.classList.replace("bx-menu-alt-right", "bx-menu");//replacing the iocns class
+            }
+        }
+    </script>
+</body>
+
+@*<body style="height: max-content; background-color: rgb(242, 255, 255);">
     <header>
         <nav class="mx-auto navbar navbar-expand-lg navbar-light border-bottom " style="background-color: rgb(181, 234, 255); max-width: 1440px;">
             <a class="navbar-brand" asp-controller="Home" asp-action="Index">Почта РБ</a>
@@ -87,5 +213,5 @@
     <footer class="mx-auto" style="max-width: 1440px; background-color: rgb(0, 103, 121); height: 70px;">
     </footer>
 
-</body>
+</body>*@
 </html>

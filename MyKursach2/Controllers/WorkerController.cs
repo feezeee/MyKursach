@@ -19,6 +19,7 @@ namespace MyKursach2.Controllers
         [Authorize(Roles = "Директор, Администратор")]
         public ViewResult List()
         {
+
             var res = repository.Workers;
             return View(res);
         }
