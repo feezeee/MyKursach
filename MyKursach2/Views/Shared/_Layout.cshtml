@@ -8,11 +8,14 @@
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/popper/dist/popper.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/styleForTable.css">
+    <link rel="stylesheet" href="~/css/styleForParamWorkers.css">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 
 </head>
@@ -23,7 +26,7 @@
                 <i class='bx bxs-envelope icon'></i>
                 <p class="logo_name">Почта РБ</p>
             </a>
-            <i class='bx bx-menu' id="btn"></i>
+            <i class='bx bx-menu' id="btn_nav_menu"></i>
         </div>
 
         <ul class="nav-list">
@@ -115,7 +118,7 @@
     </section>
     <script>
         let sidebar = document.querySelector(".sidebar");
-        let closeBtn = document.querySelector("#btn");
+        let closeBtn = document.querySelector("#btn_nav_menu");
         let searchBtn = document.querySelector(".bx-search");
 
         closeBtn.addEventListener("click", () => {

@@ -28,5 +28,17 @@ namespace MyKursach2.Models
                 PositionId = p.PositionId 
             });
 
+        public void Add(Worker worker)
+        {
+            context.Workers.Add(worker);
+        }
+
+        public void SaveChanges()
+        {
+            context.SaveChanges();
+        }
+
+
+
     }
 }

@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace MyKursach2.Models
 {
-    public interface IWorkerRepository
+    public class Gender
     {
-        IQueryable<Worker> Workers { get; }
-        void Add(Worker worker);
-        void SaveChanges();
+        public int Id { get; set; }
+
+        public string GenderName { get; set; }
     }
 }

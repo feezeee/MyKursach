@@ -58,22 +58,22 @@
         opacity: 1;
     }
 
-    .sidebar .logo-details #btn {
-        position: absolute;
-        top: 50%;
-        right: 0;
-        transform: translateY(-50%);
-        font-size: 22px;
-        transition: all 0.4s ease;
-        font-size: 23px;
-        text-align: center;
-        cursor: pointer;
-        transition: all 0.5s ease;
-    }
+.sidebar .logo-details #btn_nav_menu {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    font-size: 22px;
+    transition: all 0.4s ease;
+    font-size: 23px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
 
-    .sidebar.open .logo-details #btn {
-        text-align: right;
-    }
+.sidebar.open .logo-details #btn_nav_menu {
+    text-align: right;
+}
 
     .sidebar i {
         color: #fff;
@@ -278,6 +278,7 @@
     top: 0;
     left: 78px;
     width: calc(100% - 78px);
+    min-width:fit-content;
     transition: all 0.5s ease;
     z-index: 2;
 }
@@ -288,11 +289,9 @@
 }
 
 .home-section .text {
-    display: inline-block;
     color: #11101d;
     font-size: 25px;
     font-weight: 500;
-    margin: 18px
 }
 
 @media (max-width: 420px) {
