@@ -23,7 +23,7 @@ namespace MyKursach.Controllers
         [Authorize]
         public ViewResult Index()
         {
-            return View("");
+            return View();
         }
         
     }
