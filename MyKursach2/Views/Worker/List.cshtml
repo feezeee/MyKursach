@@ -30,7 +30,7 @@
             <i class='bx bx-user-plus'></i>
             Добавить сотрудника
         </a>
-        <table class="content-table">
+        <table class="content-table" id="myTable">
             <thead>
                 <tr>
                     <th>#</th>
@@ -46,32 +46,33 @@
             <tbody>
                 @foreach (var el in Model)
                 {
-                <tr>
-                    <th scope="row">
-                        @el.Id
-                    </th>
-                    <td>
-                        @el.LastName
-                    </td>
-                    <td>
-                        @el.FirstName
-                    </td>
-                    <td>
-                        @el.Gender.GenderName
-                    </td>
-                    <td>
-                        @el.DateOfBirth.ToShortDateString()
-                    </td>
-                    <td>
-                        @el.Email
-                    </td>
-                    <td>
-                        @el.PhoneNumber
-                    </td>
-                    <td>
-                        @el.Position.PositionName
-                    </td>
-                </tr>
+                    <input type="hidden" class="rowID" value="@el.Id" />
+                    <tr>
+                        <th>
+                            @el.Id
+                        </th>
+                        <td>
+                            @el.LastName
+                        </td>
+                        <td>
+                            @el.FirstName
+                        </td>
+                        <td>
+                            @el.Gender.GenderName
+                        </td>
+                        <td>
+                            @el.DateOfBirth.ToShortDateString()
+                        </td>
+                        <td>
+                            @el.Email
+                        </td>
+                        <td>
+                            @el.PhoneNumber
+                        </td>
+                        <td>
+                            @el.Position.PositionName
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -80,5 +81,18 @@
 </div>
 <script src="~/js/test.js">
 
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#myTable").bind('click', function () {
+            var taskID = $(this).find('input.rowID').val();
+            $.get("/Task/Edit/", {
+                id: Id
+            }, function () {
+                document.location.href = '/Task/Edit/' + Id;
+            });
+        });
+    });
 </script>
 

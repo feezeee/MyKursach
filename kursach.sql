@@ -4,20 +4,26 @@ CREATE DATABASE postal_office;
 
 USE postal_office;
 
-CREATE TABLE Workers (
+CREATE TABLE Worker (
 Id int primary key not null auto_increment,
 FirstName varchar(30) not null,
 LastName varchar(30) not null,
 DateOfBirth date not null,
 PhoneNumber varchar(19) not null,
 Email varchar(50) null,
+GenderId int not null,
 PositionId int not null,
 Password varchar(50) not null
 );
 
-CREATE TABLE Positions (
+CREATE TABLE Position (
 Id int primary key not null auto_increment,
 PositionName varchar(30) not null
+);
+
+CREATE TABLE Gender (
+Id int primary key not null auto_increment,
+GenderName varchar(10) not null
 );
 
 CREATE TABLE Operations (
@@ -86,18 +92,24 @@ availablePayment_id int not null
 );
 
 
-INSERT INTO Positions (PositionName)
+INSERT INTO Position (PositionName)
 	VALUES 
     ("Администратор"),
     ("Директор"),
     ("Кассир"),
     ("Почтальон");
     
-INSERT INTO Workers (FirstName, LastName, DateOfBirth, PhoneNumber, Email, PositionId, Password)
+INSERT INTO Worker (FirstName, LastName, GenderId, DateOfBirth, PhoneNumber, Email, PositionId, Password)
 	VALUES 
-    ("Админ", "Админович", "2001-04-23", "+375 (29) 830-63-61", "krut1@yandex.com", 1, "root")
+    ("Админ", "Админович",1 ,"2001-04-23", "+375 (29) 111-11-11", "krut1@yandex.com", 1, "root"),
+    ("Максим", "Сащеко",1 ,"2001-04-23", "+375 (29) 358-17-24", "krut1@yandex.com", 2, "root"),
+    ("Марцев", "Артем",1 ,"2001-04-23", "+375 (29) 222-22-22", "krut1@yandex.com", 3, "root"),
+    ("Денис", "Скурат",1 ,"2001-04-23", "+375 (29) 830-63-61", "krut1@yandex.com", 4, "root");
 
-
+INSERT INTO Gender (GenderName)
+	VALUES 
+    ("Мужчина"),
+    ("Женщина");
 
 INSERT INTO Workers (FirstName, LastName, DateOfBirth, Email, PositionId, PhoneNumber)
 	VALUES 

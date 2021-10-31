@@ -89,8 +89,8 @@
                         @{
                             Worker user = AuthorizedUser.GetInstance().GetWorker();
                             <div class="name_job">
-                                <div class="name">@user.LastName @user.FirstName</div>
-                                <div class="job">@user.Position.PositionName</div>
+                                <div class="name">@user?.LastName @user?.FirstName</div>
+                                <div class="job">@user?.Position?.PositionName</div>
                             </div>
                         }
                     </div>

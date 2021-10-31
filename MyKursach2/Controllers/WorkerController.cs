@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using MyKursach2.Data;
 using MyKursach2.Models;
 using System;
@@ -61,6 +62,7 @@ namespace MyKursach2.Controllers
             return View(res);
         }
 
+        [Authorize(Roles = "Директор, Администратор")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -69,7 +71,7 @@ namespace MyKursach2.Controllers
             return View();
         }
 
-
+        [Authorize(Roles = "Директор, Администратор")]
         [HttpPost]
         public async Task<IActionResult> Create(Worker worker)
         {
@@ -78,20 +80,74 @@ namespace MyKursach2.Controllers
                 _context.Add(worker);
 
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             }
             ViewBag.Genders = new SelectList(_context.Gender, "Id", "GenderName");
             ViewBag.Positions = new SelectList(_context.Position, "Id", "PositionName");
             return View();
         }
-
+        [Authorize(Roles = "Директор, Администратор")]
         [AcceptVerbs("Get", "Post")]
-        public IActionResult CheckPhoneNumber(string PhoneNumber)
+        public IActionResult CheckPhoneNumber(int? Id, string PhoneNumber)
         {
-            var res = _context.Worker.Where(t => t.PhoneNumber == PhoneNumber).Select(t => t).FirstOrDefault();
-            if(res != null)
+            if (Id != null)
+            {
+                var res1 = _context.Worker.Where(t => t.Id == Id).Select(t => t).FirstOrDefault();
+                var res2 = _context.Worker.Where(t => t.PhoneNumber == PhoneNumber).Select(t => t).FirstOrDefault();
+                if (res2 == null || res1.Id == res2?.Id)
+                {
+                    return Json(true);
+                }
                 return Json(false);
-            return Json(true);
+            }
+            else
+            {
+                var res3 = _context.Worker.Where(t => t.PhoneNumber == PhoneNumber).Select(t => t).FirstOrDefault();
+                if (res3 != null)
+                    return Json(false);
+                return Json(true);
+            }
+        }
+
+        [Authorize(Roles = "Директор, Администратор")]
+        [HttpGet]
+        public IActionResult Edit(int? id)
+        {
+            if (id == 0)
+            {
+                return RedirectToAction("List");
+            }
+            Worker worker = _context.Worker.Find(id);
+            if (worker != null)
+            {
+                var gend = _context.Gender;
+                var pos = _context.Position;
+                worker.Gender = gend.Where(t => t.Id == worker.GenderId).Select(t => t).FirstOrDefault();
+                worker.Position = pos.Where(t => t.Id == worker.PositionId).Select(t => t).FirstOrDefault();
+                ViewBag.Genders = new SelectList(gend, "Id", "GenderName");
+                ViewBag.Positions = new SelectList(pos, "Id", "PositionName");
+                return View(worker);
+            }
+            return RedirectToAction("List");
+        
+        }
+
+        [Authorize(Roles = "Директор, Администратор")]
+        [HttpPost]
+        public async Task<IActionResult> Edit(Worker worker)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Entry(worker).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                return RedirectToAction("List");
+            }
+
+            var gend = _context.Gender;
+            var pos = _context.Position;
+            ViewBag.Genders = new SelectList(gend, "Id", "GenderName");
+            ViewBag.Positions = new SelectList(pos, "Id", "PositionName");
+            return View(worker);
         }
 
     }

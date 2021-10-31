@@ -19,38 +19,38 @@ namespace MyKursach2.Controllers
         {
             _context = context;
         }
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(Register model)
-        {
-            if (ModelState.IsValid)
-            {
-                Worker worker = await _context.Worker.FirstOrDefaultAsync(u => u.FirstName == model.FirstName && u.LastName == model.LastName && u.PhoneNumber == model.PhoneNumber);
-                if (worker == null)
-                {
-                    // добавляем пользователя в бд
-                    worker = new Worker { FirstName = worker.FirstName, LastName = worker.LastName, DateOfBirth = model.DateOfBirth, Email = model.Email, Password = model.Password, PhoneNumber=model.PhoneNumber };
-                    Position workerPosition = await _context.Position.FirstOrDefaultAsync(r => r.PositionName == "Директор");
-                    if (workerPosition != null)
-                        worker.Position = workerPosition;
+        //[HttpGet]
+        //public IActionResult Register()
+        //{
+        //    return View();
+        //}
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Register(Register model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        Worker worker = await _context.Worker.FirstOrDefaultAsync(u => u.FirstName == model.FirstName && u.LastName == model.LastName && u.PhoneNumber == model.PhoneNumber);
+        //        if (worker == null)
+        //        {
+        //            // добавляем пользователя в бд
+        //            worker = new Worker { FirstName = worker.FirstName, LastName = worker.LastName, DateOfBirth = model.DateOfBirth, Email = model.Email, Password = model.Password, PhoneNumber=model.PhoneNumber };
+        //            Position workerPosition = await _context.Position.FirstOrDefaultAsync(r => r.PositionName == "Директор");
+        //            if (workerPosition != null)
+        //                worker.Position = workerPosition;
 
-                    _context.Worker.Add(worker);
-                    await _context.SaveChangesAsync();
+        //            _context.Worker.Add(worker);
+        //            await _context.SaveChangesAsync();
 
-                    await Authenticate(worker); // аутентификация
+        //            await Authenticate(worker); // аутентификация
 
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                    ModelState.AddModelError("", "Некорректные логин и(или) пароль");
-            }
-            return View(model);
-        }
+        //            return RedirectToAction("Index", "Home");
+        //        }
+        //        else
+        //            ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+        //    }
+        //    return View(model);
+        //}
         [HttpGet]
         public IActionResult Login()
         {
@@ -63,13 +63,12 @@ namespace MyKursach2.Controllers
         {
             if (ModelState.IsValid)
             {
-                Worker user = await _context.Worker
-                    .Include(u => u.Position)
-                    .FirstOrDefaultAsync(u => u.PhoneNumber == model.PhoneNumber && u.Password == model.Password);
+                Worker user = await _context.Worker.FirstOrDefaultAsync(u => u.PhoneNumber == model.PhoneNumber && u.Password == model.Password);
                 if (user != null)
                 {
+                    user.Position = _context.Position.Where(p => p.Id == user.PositionId).FirstOrDefault();
+                    user.Gender = _context.Gender.Where(p => p.Id == user.GenderId).FirstOrDefault();
                     await Authenticate(user); // аутентификация
-                    user.Position = _context.Position.Where(p => p.Id == user.Id).FirstOrDefault();
                     AuthorizedUser.GetInstance().SetUser(user);
                     return RedirectToAction("Index", "Home");
                     
@@ -94,7 +93,7 @@ namespace MyKursach2.Controllers
             var claims = new List<Claim>
             {                
                 new Claim(ClaimsIdentity.DefaultNameClaimType, worker.Id.ToString()),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, worker.Position?.PositionName)
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, worker?.Position?.PositionName)
             };
             // создаем объект ClaimsIdentity
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,

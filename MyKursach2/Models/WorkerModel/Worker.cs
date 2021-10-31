@@ -7,7 +7,8 @@ using System.Security.Principal;
 namespace MyKursach2.Models
 {
     public class Worker
-    {      
+    {
+        [Required]
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Не указано имя")]
@@ -32,7 +33,8 @@ namespace MyKursach2.Models
 
         [Required(ErrorMessage = "Не указан номер телефона")]
         [StringLength(19, ErrorMessage = "Длина строки должна быть до 19 символов")]
-        [Remote(action: "CheckPhoneNumber", controller: "Worker", ErrorMessage = "Номер телефона уже используется")]
+        [Remote(action: "CheckPhoneNumber", controller: "Worker", AdditionalFields ="Id", ErrorMessage = "Номер телефона уже используется", HttpMethod = "POST")]
+        [RegularExpression(@"[+][0-9]{3}[ ][(][0-9]{2}[)][ ][0-9]{3}[-][0-9]{2}[-][0-9]{2}", ErrorMessage = "Некорректный номер телефона")]
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Не указана должность")]
