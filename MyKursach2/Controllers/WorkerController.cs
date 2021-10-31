@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using MyKursach2.Data;
 using MyKursach2.Models;
 using System;
 using System.Collections.Generic;
@@ -10,17 +12,37 @@ namespace MyKursach2.Controllers
 {
     public class WorkerController : Controller
     {
-        private IWorkerRepository repository;
-        public WorkerController(IWorkerRepository repos)
+        private ApplicationDbContext _context;
+        public WorkerController(ApplicationDbContext context)
         {
-            repository = repos;
+            _context = context;
         }
 
         [Authorize(Roles = "Директор, Администратор")]
+
         public ViewResult List(Worker worker)
         {
-            var res = repository.Workers;
-            if(worker?.Id > 0)
+            //var res = _context.Workers.Join(_context.Positions);
+
+            var res = from work in _context.Worker
+                      join position in _context.Position on work.PositionId equals position.Id
+                      join gender in _context.Gender on work.GenderId equals gender.Id
+                      select new Worker
+                      {
+                          Id = work.Id,
+                          FirstName = work.FirstName,
+                          LastName = work.LastName,
+                          Email = work.Email,
+                          DateOfBirth = work.DateOfBirth,
+                          GenderId = work.GenderId,
+                          Gender = gender,
+                          PositionId = work.PositionId,
+                          Position = position,
+                          Password = work.Password,
+                          PhoneNumber = work.PhoneNumber
+                      };
+
+            if (worker?.Id > 0)
             {
                 res = res.Where(i => i.Id == worker.Id).Select(i => i);
             }
@@ -36,15 +58,41 @@ namespace MyKursach2.Controllers
             {
                 res = res.Where(ln => ln.Position.PositionName.ToUpper().Contains(worker.Position.PositionName.ToUpper())).Select(ln => ln);
             }
-            ViewData["Positions"] = 
             return View(res);
         }
 
-        [HttpPost]
-        public void Create(Worker worker)
+        [HttpGet]
+        public IActionResult Create()
         {
-            repository.Add(worker);
-            repository.SaveChanges();
+            ViewBag.Genders = new SelectList(_context.Gender, "Id", "GenderName"); 
+            ViewBag.Positions = new SelectList(_context.Position, "Id", "PositionName");
+            return View();
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Worker worker)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(worker);
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            ViewBag.Genders = new SelectList(_context.Gender, "Id", "GenderName");
+            ViewBag.Positions = new SelectList(_context.Position, "Id", "PositionName");
+            return View();
+        }
+
+        [AcceptVerbs("Get", "Post")]
+        public IActionResult CheckPhoneNumber(string PhoneNumber)
+        {
+            var res = _context.Worker.Where(t => t.PhoneNumber == PhoneNumber).Select(t => t).FirstOrDefault();
+            if(res != null)
+                return Json(false);
+            return Json(true);
+        }
+
     }
 }

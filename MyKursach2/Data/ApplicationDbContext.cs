@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyKursach2.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyKursach2.Data
 {
@@ -11,8 +12,10 @@ namespace MyKursach2.Data
         {
                 
         }
-        public DbSet<Position> Positions { get; set; }
-        public DbSet<Worker> Workers { get; set; }
+        public DbSet<Position> Position { get; set; }
+        public DbSet<Worker> Worker { get; set; }
+        public DbSet<Gender> Gender { get; set; }
+        
         
 
     }

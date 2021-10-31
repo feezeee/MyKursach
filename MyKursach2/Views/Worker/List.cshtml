@@ -8,7 +8,10 @@
 
 <div class="container-fluid" style="height: 100%; width:contain;">
 
-    <h1 class="text-center pt-5">Сотрудники</h1>
+    <h1 class="text-center pt-5">
+        Сотрудники
+    </h1>
+
 
     <form name="test" method="get" asp-controller="Worker" asp-action="List" class="param_workers">
 
@@ -22,24 +25,27 @@
             </button>
         </div>
     </form>
-    <button id="worker_add_new">
-        <i class='bx bx-user-plus'></i>
-        Добавить сотрудника
-    </button>
-    <table class="content-table">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Фамилия</th>
-                <th>Имя</th>
-                <th>Дата рождения</th>
-                <th>Email</th>
-                <th>Должность</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var el in Model)
-            {
+    <div class="div-contenet-table">
+        <a asp-controller="Worker" asp-action="Create" style="">
+            <i class='bx bx-user-plus'></i>
+            Добавить сотрудника
+        </a>
+        <table class="content-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Фамилия</th>
+                    <th>Имя</th>
+                    <th>Пол</th>
+                    <th>Дата рождения</th>
+                    <th>Email</th>
+                    <th>Номер телефона</th>
+                    <th>Должность</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var el in Model)
+                {
                 <tr>
                     <th scope="row">
                         @el.Id
@@ -51,75 +57,27 @@
                         @el.FirstName
                     </td>
                     <td>
+                        @el.Gender.GenderName
+                    </td>
+                    <td>
                         @el.DateOfBirth.ToShortDateString()
                     </td>
                     <td>
                         @el.Email
                     </td>
                     <td>
+                        @el.PhoneNumber
+                    </td>
+                    <td>
                         @el.Position.PositionName
                     </td>
                 </tr>
-            }
-        </tbody>
-    </table>
+                }
+            </tbody>
+        </table>
 
-    <form class="popup" id="worker_add_new_popup" asp-controller="Worker" asp-action="Create">
-        <div class="popup-inner">
-            <p class="addingWorkerPopup">Добавление работника</p>
-            <ul class="popupinput">
-                <li>
-                    <span>Фамилия*</span>
-                    <input name="worker.LastName" required type="text" placeholder="Введите фамилию" />
-                </li>
-                <li>
-                    <span>Имя*</span>
-                    <input name="worker.FirstName"  type="text" placeholder="Введите имя" />
-                </li>
-                <li>
-                    <span>Дата рождения*</span>
-                    <input name="worker.DateOfBirth"  type="text" placeholder="Дата рождения" />
-                </li>
-                <li>
-                    <span>Email</span>
-                    <input name="worker.Email" type="text" placeholder="Введите Email" />
-                </li>
-                <li>
-                    <span>Выберите пол*</span>
-                    <select>
-                    </select>
-                </li>
-
-                <li>
-                    <span>Выберите должность*</span>
-                    <select>
-                        @{ 
-                            foreach(var t in )
-                        }
-                    </select>
-                </li>
-                <li>
-                    <span>Номер телефона*</span>
-                    <input  type="text" placeholder="Номер телефона" />
-                </li>
-                <li>
-                    <span>Введите пароль*</span>
-                    <input type="text" placeholder="Введите пароль" value="root" />
-                </li>
-
-
-            </ul>
-            <button type="reset" class="closepopup" href="#">X</button>
-            <div>
-                <button class="popupsubmit" type="submit">
-                    Создать
-                </button>
-            </div>
-
-        </div>
-    </form>
+    </div>
 </div>
-
 <script src="~/js/test.js">
 
 </script>

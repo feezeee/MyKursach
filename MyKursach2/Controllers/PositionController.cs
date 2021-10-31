@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyKursach2.Data;
 using MyKursach2.Models;
 using System;
 using System.Collections.Generic;
@@ -9,15 +10,15 @@ namespace MyKursach2.Controllers
 {
     public class PositionController : Controller
     {
-        private IPositionRepository repository;
-        public PositionController (IPositionRepository repos)
+        private ApplicationDbContext _context;
+        public PositionController(ApplicationDbContext context)
         {
-            repository = repos;
+            _context = context;
         }
 
         public ViewResult List()
         {
-            return View(repository.Positions);
+            return View(_context.Position);
         }
     }
 }

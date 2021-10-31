@@ -30,16 +30,16 @@ namespace MyKursach2.Controllers
         {
             if (ModelState.IsValid)
             {
-                Worker worker = await _context.Workers.FirstOrDefaultAsync(u => u.FirstName == model.FirstName && u.LastName == model.LastName && u.PhoneNumber == model.PhoneNumber);
+                Worker worker = await _context.Worker.FirstOrDefaultAsync(u => u.FirstName == model.FirstName && u.LastName == model.LastName && u.PhoneNumber == model.PhoneNumber);
                 if (worker == null)
                 {
                     // добавляем пользователя в бд
                     worker = new Worker { FirstName = worker.FirstName, LastName = worker.LastName, DateOfBirth = model.DateOfBirth, Email = model.Email, Password = model.Password, PhoneNumber=model.PhoneNumber };
-                    Position workerPosition = await _context.Positions.FirstOrDefaultAsync(r => r.PositionName == "Директор");
+                    Position workerPosition = await _context.Position.FirstOrDefaultAsync(r => r.PositionName == "Директор");
                     if (workerPosition != null)
                         worker.Position = workerPosition;
 
-                    _context.Workers.Add(worker);
+                    _context.Worker.Add(worker);
                     await _context.SaveChangesAsync();
 
                     await Authenticate(worker); // аутентификация
@@ -63,13 +63,13 @@ namespace MyKursach2.Controllers
         {
             if (ModelState.IsValid)
             {
-                Worker user = await _context.Workers
+                Worker user = await _context.Worker
                     .Include(u => u.Position)
                     .FirstOrDefaultAsync(u => u.PhoneNumber == model.PhoneNumber && u.Password == model.Password);
                 if (user != null)
                 {
                     await Authenticate(user); // аутентификация
-                    user.Position = _context.Positions.Where(p => p.Id == user.Id).FirstOrDefault();
+                    user.Position = _context.Position.Where(p => p.Id == user.Id).FirstOrDefault();
                     AuthorizedUser.GetInstance().SetUser(user);
                     return RedirectToAction("Index", "Home");
                     

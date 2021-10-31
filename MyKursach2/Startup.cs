@@ -31,10 +31,7 @@ namespace MyKursach
             //services.AddControllersWithViews();
 
             var connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<ApplicationDbContext>(options => options.UseMySQL(connection));
-
-            services.AddTransient<IPositionRepository, EFPositionRepository>();
-            services.AddTransient<IWorkerRepository, EFWorkerRepository>();
+            services.AddDbContext<ApplicationDbContext>(options => options.UseMySQL(connection));            
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                .AddCookie(options =>

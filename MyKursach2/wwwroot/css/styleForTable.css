@@ -1,9 +1,16 @@
-﻿.content-table {
+﻿.div-contenet-table {
+    margin-top: 50px;
+}
+.div-contenet-table a {
+    margin-right: 25px;
+    float:right;
+}
+
+.content-table {
     border-collapse: collapse;
     margin-left:25px;
     margin-right: 25px;
-    margin-top: 50px;
-    font-size: 0.6em;
+    font-size: 0.9em;
     min-width: 400px;
     width: Calc(100% - 50px);
     border-radius: 5px 5px 0 0;
@@ -40,3 +47,4 @@
     font-weight: bold;
     color: #009879;
 }
+
