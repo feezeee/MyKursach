@@ -42,13 +42,12 @@
                     <th>Номер телефона</th>
                     <th>Должность</th>
                 </tr>
-            </thead>
-            <tbody>
+            </thead>            
+            <tbody id="editClickbody">
                 @foreach (var el in Model)
                 {
-                    <input type="hidden" class="rowID" value="@el.Id" />
-                    <tr>
-                        <th>
+                    <tr class="rowEditStart">
+                        <th class="editId">
                             @el.Id
                         </th>
                         <td>
@@ -81,18 +80,5 @@
 </div>
 <script src="~/js/test.js">
 
-</script>
-
-<script>
-    $(document).ready(function () {
-        $("#myTable").bind('click', function () {
-            var taskID = $(this).find('input.rowID').val();
-            $.get("/Task/Edit/", {
-                id: Id
-            }, function () {
-                document.location.href = '/Task/Edit/' + Id;
-            });
-        });
-    });
 </script>
 

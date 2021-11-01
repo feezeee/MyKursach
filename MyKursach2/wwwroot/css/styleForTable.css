@@ -39,12 +39,17 @@
     background-color: #f3f3f3;
 }
 
-    .content-table tbody tr:last-of-type {
-        border-bottom: 2px solid #537C38;
-    }
+.content-table tbody tr:last-of-type {
+    border-bottom: 2px solid #537C38;
+}
 
 .content-table tbody tr.active-row {
     font-weight: bold;
     color: #009879;
+}
+
+tbody tr:hover {
+    background: #9f9f9f !important;
+    cursor:pointer;
 }
 
