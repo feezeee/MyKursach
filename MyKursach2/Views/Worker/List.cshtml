@@ -32,7 +32,7 @@
         </a>
         <table class="content-table" id="myTable">
             <thead>
-                <tr>
+                <tr>                    
                     <th>#</th>
                     <th>Фамилия</th>
                     <th>Имя</th>
@@ -45,9 +45,12 @@
             </thead>            
             <tbody id="editClickbody">
                 @foreach (var el in Model)
-                {
+                {                    
                     <tr class="rowEditStart">
                         <th class="editId">
+                            @*<a class="popupdelete" asp-action="Delete" asp-controller="Worker" asp-route-id="@el.Id">
+                                Удалить пользователя
+                            </a>*@
                             @el.Id
                         </th>
                         <td>

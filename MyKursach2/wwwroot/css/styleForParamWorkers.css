@@ -108,15 +108,19 @@ margin-top: 15px;
     height: 50px;
 }
 
-.popupinput li select {
-    border-radius: 10px;
-    border: 1px solid #b6def5;
-    height: 50px;
-}
+    .popupinput li select {
+        border-radius: 10px;
+        border: 1px solid #b6def5;
+        height: 50px;
+        margin-top: 50px;
+        margin-bottom: 20px;
+    }
 
 .popup_button{
     display:flex;
     justify-content:space-around;
+    margin-top: 50px;
+    margin-bottom: 20px;
 }
 
 .popupsubmit {
@@ -126,15 +130,26 @@ margin-top: 15px;
     height: 50px;
     background: linear-gradient(135deg, #71b7e6, #9b59b6);
     color: #fff;
-    margin-top: 50px;
-    margin-bottom: 20px;
 }
 
 .popupsubmit:hover {
     background: linear-gradient(-135deg, #71b7e6, #9b59b6);
 }
 
-
+.popupdelete {
+    width: 30%;
+    border-radius: 20px;
+    border: 0;
+    height: 50px;
+    background: linear-gradient(90deg, rgba(217,20,124,1) 0%, rgba(232,15,15,1) 100%);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.popupdelete:hover {
+    background: linear-gradient(-90deg, rgba(217,20,124,1) 0%, rgba(232,15,15,1) 100%);        
+}
 
 .popupclear {
     width: 30%;
@@ -147,6 +162,6 @@ margin-top: 15px;
     margin-bottom: 20px;
 }
 
-    .popupclear:hover {
-        background: linear-gradient(-135deg, rgba(219,113,230,1) 0%, rgba(209,8,8,1) 100%);
-    }
+.popupclear:hover {
+    background: linear-gradient(-135deg, rgba(219,113,230,1) 0%, rgba(209,8,8,1) 100%);
+}

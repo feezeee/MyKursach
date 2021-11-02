@@ -48,7 +48,7 @@
             </li>
             <li>
                 <span>Введите пароль*</span>
-                <input asp-for="Password" type="text" placeholder="Введите пароль" value="root" value="@Model.Password" />
+                <input asp-for="Password" type="text" placeholder="Введите пароль" value="@Model.Password" />
                 @Html.ValidationMessageFor(model => model.Password, null, new { style = "color:red" })
             </li>
 
@@ -56,9 +56,13 @@
         </ul>
         <a type="button" asp-action="List" asp-controller="Worker" class="closepopup">X</a>
         <div class="popup_button">
-            <button class="popupsubmit" type="submit">
-                Изменить
+            <button class="popupsubmit">
+                Сохранить
             </button>
+            <a class="popupdelete" type="button" asp-action="Delete" asp-controller="Worker" asp-route-worker=@Model>Удалить</a>
+
+            @*@Html.ActionLink("DisplayText", "Delete", "Worker", "post",);*@
+            @*<input id="deleteClickUser" type="button" class="popupdelete" value="Удалить"/>*@
         </div>
 
     </div>

@@ -149,6 +149,32 @@ namespace MyKursach2.Controllers
             ViewBag.Positions = new SelectList(pos, "Id", "PositionName");
             return View(worker);
         }
+        [HttpGet]
+        public IActionResult Delete(int? id)
+        {
+            Worker worker = _context.Worker.Find(id);
+            if (worker == null)
+            {
+                //return HttpNotFound();
+            }
+            if (worker?.Id == AuthorizedUser.GetInstance().GetWorker().Id)
+            {
+                //return View("Fail");
+            }
+            return View(worker);
+        }
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int? id)
+        {
+            Worker worker = _context.Worker.Find(id);
+            if (worker == null)
+            {
+                //return HttpNotFound();
+            }
+            _context.Worker.Remove(worker);
+            _context.SaveChanges();
+            return RedirectToAction("List");
+        }
 
     }
 }
