@@ -50,13 +50,17 @@
             font-size: 20px;
             font-weight: 600;
             opacity: 0;
+            visibility:hidden;
+            display: none;
             transition: all 0.5s ease;
         }
 
-    .sidebar.open .logo-details .icon,
-    .sidebar.open .logo-details .logo_name {
-        opacity: 1;
-    }
+.sidebar.open .logo-details .icon,
+.sidebar.open .logo-details .logo_name {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
 
 .sidebar .logo-details #btn_nav_menu {
     position: absolute;

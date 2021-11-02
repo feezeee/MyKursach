@@ -80,6 +80,9 @@ namespace MyKursach
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Worker}/{action=List}");
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

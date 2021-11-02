@@ -51,6 +51,7 @@ namespace MyKursach2.Controllers
         //    }
         //    return View(model);
         //}
+
         [HttpGet]
         public IActionResult Login()
         {
@@ -85,7 +86,7 @@ namespace MyKursach2.Controllers
             // удаляем аутентификационные куки
             await HttpContext.SignOutAsync();
             AuthorizedUser.GetInstance().ClearUser();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
         private async Task Authenticate(Worker worker)
         {

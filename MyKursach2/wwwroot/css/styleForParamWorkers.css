@@ -61,6 +61,8 @@
     /*transform: rotate(32deg);*/
     transition: .64s ease-in-out;
     padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
 .closepopup {
@@ -78,14 +80,23 @@
     line-height: 3rem;
     text-align: center;
     cursor: pointer;
+}
+
+.closepopup:hover {
     text-decoration: none;
 }
 
 .addingWorkerPopup {
     margin-bottom: 10px;
-    font-size: 25px;
-    font-weight: 500;
+    font-size: 30px;
+    font-weight: 700;
 }
+.popupinput li span {
+    font-size: 20px;
+    font-weight: 500;
+
+}
+
 
 .popupinput {
     display: flex;
@@ -95,26 +106,26 @@
 }
 
 .popupinput li {
-display: flex;
-justify-content: left;
-flex-direction: column;
-width: 40%;
-margin-top: 15px;
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    width: 40%;
+    margin-top: 15px;
 }
 
 .popupinput li input {
     border-radius: 10px;
     border: 1px solid #b6def5;
     height: 50px;
+    padding: 10px;
 }
 
-    .popupinput li select {
-        border-radius: 10px;
-        border: 1px solid #b6def5;
-        height: 50px;
-        margin-top: 50px;
-        margin-bottom: 20px;
-    }
+.popupinput li select {
+    border-radius: 10px;
+    border: 1px solid #b6def5;
+    height: 50px;
+    padding: 10px;
+}
 
 .popup_button{
     display:flex;
@@ -130,6 +141,7 @@ margin-top: 15px;
     height: 50px;
     background: linear-gradient(135deg, #71b7e6, #9b59b6);
     color: #fff;
+
 }
 
 .popupsubmit:hover {
@@ -146,9 +158,13 @@ margin-top: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-decoration: none;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 .popupdelete:hover {
-    background: linear-gradient(-90deg, rgba(217,20,124,1) 0%, rgba(232,15,15,1) 100%);        
+    background: linear-gradient(-90deg, rgba(217,20,124,1) 0%, rgba(232,15,15,1) 100%);
+    color: #affff8;
+    text-decoration: none;
 }
 
 .popupclear {
@@ -158,8 +174,6 @@ margin-top: 15px;
     height: 50px;
     background: linear-gradient(135deg, rgba(219,113,230,1) 0%, rgba(209,8,8,1) 100%);
     color: #fff;
-    margin-top: 50px;
-    margin-bottom: 20px;
 }
 
 .popupclear:hover {

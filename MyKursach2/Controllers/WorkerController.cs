@@ -19,8 +19,8 @@ namespace MyKursach2.Controllers
             _context = context;
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
 
+        [Authorize(Roles = "Директор, Администратор")]
         public ViewResult List(Worker worker)
         {
             //var res = _context.Workers.Join(_context.Positions);
@@ -138,6 +138,13 @@ namespace MyKursach2.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (worker.Id == AuthorizedUser.GetInstance().GetWorker().Id)
+                {
+                    worker.Position = _context.Position.Find(worker.PositionId);
+                    worker.Gender = _context.Gender.Find(worker.GenderId);
+                    AuthorizedUser.GetInstance().ClearUser();
+                    AuthorizedUser.GetInstance().SetUser(worker);
+                }
                 _context.Entry(worker).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
                 return RedirectToAction("List");
@@ -149,6 +156,7 @@ namespace MyKursach2.Controllers
             ViewBag.Positions = new SelectList(pos, "Id", "PositionName");
             return View(worker);
         }
+
         [HttpGet]
         public IActionResult Delete(int? id)
         {
@@ -157,12 +165,14 @@ namespace MyKursach2.Controllers
             {
                 //return HttpNotFound();
             }
-            if (worker?.Id == AuthorizedUser.GetInstance().GetWorker().Id)
+            else if (worker?.Id == AuthorizedUser.GetInstance().GetWorker().Id)
             {
-                //return View("Fail");
+                return RedirectToRoute("default", new { controller = "Worker", action = "Edit", id = id });
             }
-            return View(worker);
+            
+            return View(worker);            
         }
+
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int? id)
         {
