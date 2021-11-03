@@ -52,68 +52,83 @@
                         document.getElementById('_users').classList.remove('bx-tada');
                     }
                 </script>
+                <li id="area_positions">
+                    <a asp-controller="Position" asp-action="List">
+                        <i id="_positions" class='bx bx-user-pin'></i>
+                        <span class="links_name">Должности</span>
+                    </a>
+                    <span class="tooltip">Должности</span>
+                </li>
+                <script>
+                    document.getElementById('area_positions').onmouseenter = function () {
+                        document.getElementById('_positions').classList.add('bx-tada');
+                    }
+                    document.getElementById('area_positions').onmouseleave = function () {
+                        document.getElementById('_positions').classList.remove('bx-tada');
+                    }
+                </script>
             }
-                <li id="area_operations">
-                    <a href="#">
-                        <i id="_operations" class='bx bx-plus-circle'></i>
-                        <span class="links_name">Операции</span>
-                    </a>
-                    <span class="tooltip">Операции</span>
-                </li>
-                <script>
-                    document.getElementById('area_operations').onmouseenter = function () {
-                        document.getElementById('_operations').classList.add('bx-tada');
-                    }
-                    document.getElementById('area_operations').onmouseleave = function () {
-                        document.getElementById('_operations').classList.remove('bx-tada');
-                    }
-                </script>
-                <li id="area_products">
-                    <a href="#">
-                        <i id="_proudcts" class='bx bxs-component'></i>
-                        <span class="links_name">Товары</span>
-                    </a>
-                    <span class="tooltip">Товары</span>
-                </li>
-                <script>
-                    document.getElementById('area_products').onmouseenter = function () {
-                        document.getElementById('_proudcts').classList.add('bx-tada');
-                    }
-                    document.getElementById('area_products').onmouseleave = function () {
-                        document.getElementById('_proudcts').classList.remove('bx-tada');
-                    }
-                </script>
+            <li id="area_operations">
+                <a href="#">
+                    <i id="_operations" class='bx bx-plus-circle'></i>
+                    <span class="links_name">Операции</span>
+                </a>
+                <span class="tooltip">Операции</span>
+            </li>
+            <script>
+                document.getElementById('area_operations').onmouseenter = function () {
+                    document.getElementById('_operations').classList.add('bx-tada');
+                }
+                document.getElementById('area_operations').onmouseleave = function () {
+                    document.getElementById('_operations').classList.remove('bx-tada');
+                }
+            </script>
+            <li id="area_products">
+                <a href="#">
+                    <i id="_proudcts" class='bx bxs-component'></i>
+                    <span class="links_name">Товары</span>
+                </a>
+                <span class="tooltip">Товары</span>
+            </li>
+            <script>
+                document.getElementById('area_products').onmouseenter = function () {
+                    document.getElementById('_proudcts').classList.add('bx-tada');
+                }
+                document.getElementById('area_products').onmouseleave = function () {
+                    document.getElementById('_proudcts').classList.remove('bx-tada');
+                }
+            </script>
 
-                <li class="profile">
-                    <div class="profile-details">
-                        @{
-                            Worker user = AuthorizedUser.GetInstance().GetWorker();
-                            <div class="name_job">
-                                <div class="name">@user?.LastName @user?.FirstName</div>
-                                <div class="job">@user?.Position?.PositionName</div>
-                            </div>
-                        }
-                    </div>
-                    <form method="post" asp-controller="Account" asp-action="Logout">
-                        <button>
-                            <i class='bx bx-log-out' id="log_out"></i>
-                        </button>
-                    </form>
-                    <!-- <i class='bx bx-log-out' id="log_out" ></i> -->
-                </li>
+            <li class="profile">
+                <div class="profile-details">
+                    @{
+                        Worker user = AuthorizedUser.GetInstance().GetWorker();
+                        <div class="name_job">
+                            <div class="name">@user?.LastName @user?.FirstName</div>
+                            <div class="job">@user?.Position?.PositionName</div>
+                        </div>
+                    }
+                </div>
+                <form method="post" asp-controller="Account" asp-action="Logout">
+                    <button>
+                        <i class='bx bx-log-out' id="log_out"></i>
+                    </button>
+                </form>
+                <!-- <i class='bx bx-log-out' id="log_out" ></i> -->
+            </li>
 
-                <script>
-                    document.getElementById('log_out').onmouseenter = function () {
-                        document.getElementById('log_out').classList.remove('bx-log-out');
-                        document.getElementById('log_out').classList.add('bxs-log-out');
-                        document.getElementById('log_out').classList.add('bxs-log-out');
-                    }
-                    document.getElementById('log_out').onmouseleave = function () {
-                        document.getElementById('log_out').classList.remove('bxs-log-out');
-                        document.getElementById('log_out').classList.add('bx-log-out');
-                    }
-                </script>
-            </ul>
+            <script>
+                document.getElementById('log_out').onmouseenter = function () {
+                    document.getElementById('log_out').classList.remove('bx-log-out');
+                    document.getElementById('log_out').classList.add('bxs-log-out');
+                    document.getElementById('log_out').classList.add('bxs-log-out');
+                }
+                document.getElementById('log_out').onmouseleave = function () {
+                    document.getElementById('log_out').classList.remove('bxs-log-out');
+                    document.getElementById('log_out').classList.add('bx-log-out');
+                }
+            </script>
+        </ul>
     </div>
     <section class="home-section">
             @RenderBody()
