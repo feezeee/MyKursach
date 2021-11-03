@@ -6,33 +6,56 @@
 
 
 
-<div class="table-responsive" style="height: 100%;">
-    <h1 class="text-center">Должности</h1>
-    <table class="table table-bordered table-hover ">
-        <thead class="thead-dark">
-            <tr>
-                <th>#</th>
-                <th>Наименование должности</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var el in Model)
-            {
-            <tr>
-                <th scope="row">
-                    @el.Id
-                </th>
-                <td>
-                    @el.PositionName
-                </td>
-                <td>
-                    @el.PositionName
-                </td>
+<div class="container-fluid" style="height: 100%; width:contain;">
 
-            </tr>
-            }
-        </tbody>
-    </table>
+    <h1 class="text-center pt-5">
+        Должности
+    </h1>
+
+
+    <form name="test" method="get" asp-controller="Position" asp-action="List" class="param_workers">
+
+        <input class="form-control" name="position.Id" type="text" placeholder="Id должности:" />
+        <input class="form-control" name="position.PositionName" type="text" placeholder="Наименование должности:" />
+        <div>
+            <button class="btn btn-success" type="submit">
+                Поиск
+            </button>
+        </div>
+    </form>
+    <div class="div-contenet-table">
+        <a asp-controller="Position" asp-action="Create" style="">
+            <i class='bx bx-user-plus'></i>
+            Добавить должность
+        </a>
+        <table class="content-table" id="myTable">
+            <thead>
+                <tr>                    
+                    <th>#</th>
+                    <th>Должность</th>
+                </tr>
+            </thead>            
+            <tbody id="editClickbodyPosition">
+                @foreach (var el in Model)
+                {                    
+                    <tr class="rowEditStart">
+                        <th class="editId">
+                            @*<a class="popupdelete" asp-action="Delete" asp-controller="Worker" asp-route-id="@el.Id">
+                                Удалить пользователя
+                            </a>*@
+                            @el.Id
+                        </th>
+                        <td>
+                            @el.PositionName
+                        </td>                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
 </div>
+<script src="~/js/test.js">
 
+</script>
 
