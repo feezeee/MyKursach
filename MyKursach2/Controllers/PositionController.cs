@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using MyKursach2.Data;
 using MyKursach2.Models;
 using System;
@@ -40,5 +42,116 @@ namespace MyKursach2.Controllers
             }            
             return View(res);
         }
+
+
+        [Authorize(Roles = "Директор, Администратор")]
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "Директор, Администратор")]
+        [HttpPost]
+        public async Task<IActionResult> Create(Position position)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(position);
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction("List");
+            }           
+            return View();
+        }
+        [Authorize(Roles = "Директор, Администратор")]
+        [AcceptVerbs("Get", "Post")]
+        public IActionResult CheckPositionName(int? Id, string PositionName)
+        {
+            if (Id != null)
+            {
+                var res1 = _context.Position.Where(t => t.Id == Id).Select(t => t).FirstOrDefault();
+                var res2 = _context.Position.Where(t => t.PositionName == PositionName).Select(t => t).FirstOrDefault();
+                if (res2 == null || res1.Id == res2?.Id)
+                {
+                    return Json(true);
+                }
+                return Json(false);
+            }
+            else
+            {
+                var res3 = _context.Position.Where(t => t.PositionName == PositionName).Select(t => t).FirstOrDefault();
+                if (res3 != null)
+                    return Json(false);
+                return Json(true);
+            }
+        }
+
+
+
+        [Authorize(Roles = "Директор, Администратор")]
+        [HttpGet]
+        public IActionResult Edit(int? id)
+        {
+            if (id == 0)
+            {
+                return RedirectToAction("List");
+            }
+            Position position = _context.Position.Find(id);
+            if (position != null)
+            {                
+                return View(position);
+            }
+            return RedirectToAction("List");
+
+        }
+
+        [Authorize(Roles = "Директор, Администратор")]
+        [HttpPost]
+        public async Task<IActionResult> Edit(Position position)
+        {
+            if (ModelState.IsValid)
+            {
+                if (position.Id == AuthorizedUser.GetInstance().GetWorker().PositionId)
+                {
+                    AuthorizedUser.GetInstance().GetWorker().Position.PositionName = position.PositionName;                    
+                }
+                _context.Entry(position).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                return RedirectToAction("List");
+            }
+            return View(position);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int? id)
+        {
+            Position position = _context.Position.Find(id);
+            if (position == null)
+            {
+                //return HttpNotFound();
+            }
+            else if (position?.Id == AuthorizedUser.GetInstance().GetWorker().PositionId)
+            {
+                return RedirectToRoute("default", new { controller = "Position", action = "Edit", id = id });
+            }
+
+            return View(position);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int? id)
+        {
+            Position position = _context.Position.Find(id);
+            if (position == null)
+            {
+                //return HttpNotFound();
+            }
+            _context.Position.Remove(position);
+            _context.SaveChanges();
+            return RedirectToAction("List");
+        }
+
+
     }
 }
