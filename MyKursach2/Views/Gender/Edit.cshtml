@@ -1,0 +1,83 @@
+﻿@model MyKursach2.Models.Worker
+@{
+    Layout = "_Layout";
+}
+
+<script src="@Url.Content("~/lib/jquery-validation/dist/jquery.validate.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js")" type="text/javascript"></script>
+
+<form class="popup" asp-controller="Worker" asp-action="Edit">
+    <div class="popup-inner">
+        <p class="addingWorkerPopup">Изменение работника</p>
+        <ul class="popupinput">
+            <li>
+                <span>Фамилия*</span>
+                <input asp-for="LastName" required type="text" placeholder="Введите фамилию" value="@Model.LastName" />
+                @Html.ValidationMessageFor(model => model.LastName, null, new { style = "color:red" })
+            </li>
+            <li>
+                <span>Имя*</span>
+                <input asp-for="FirstName" type="text" placeholder="Введите имя" value="@Model.FirstName" />
+                @Html.ValidationMessageFor(model => model.FirstName, null, new { style = "color:red" })
+            </li>
+            <li>
+                <span>Дата рождения*</span>
+                <input id="_dateofbirth" asp-for="DateOfBirth" type="text" placeholder="Дата рождения" value="@Model.DateOfBirth" />
+                @Html.ValidationMessageFor(model => model.DateOfBirth, null, new { style = "color:red" })
+            </li>
+            <li>
+                <span>Электронная почта</span>
+                <input asp-for="Email" type="text" placeholder="Введите Email" value="@Model.Email" />
+                @Html.ValidationMessageFor(model => model.Email, null, new { style = "color:red" })
+            </li>
+            <li>
+                <span>Выберите пол*</span>
+                <select asp-for="GenderId" asp-items="ViewBag.Genders" value="@Model.Gender.GenderName"></select>
+                @Html.ValidationMessageFor(model => model.GenderId, null, new { style = "color:red" })
+            </li>
+            <li>
+                <span>Выберите должность*</span>
+                <select asp-for="PositionId" asp-items="ViewBag.Positions" value="@Model.Position.PositionName"></select>
+                @Html.ValidationMessageFor(model => model.PositionId, null, new { style = "color:red" })
+            </li>
+            <li>
+                <span>Номер телефона*</span>
+                <input type="hidden" name="Id" value="@Model.Id" />
+                <input autocomplete="off" id="_phonenumber" asp-for="PhoneNumber" type="text" placeholder="Номер телефона" value="@Model.PhoneNumber" />
+                @Html.ValidationMessageFor(model => model.PhoneNumber, null, new { style = "color:red" })
+            </li>
+            <li>
+                <span>Введите пароль*</span>
+                <input asp-for="Password" type="text" placeholder="Введите пароль" value="@Model.Password" />
+                @Html.ValidationMessageFor(model => model.Password, null, new { style = "color:red" })
+            </li>
+
+
+        </ul>
+        <a type="button" asp-action="List" asp-controller="Worker" class="closepopup">X</a>
+        <div class="popup_button">
+            <button class="popupsubmit" type="submit">
+                Сохранить
+            </button>
+            @if (AuthorizedUser.GetInstance().GetWorker().Id != Model.Id)
+            {
+                <a class="popupdelete" type="button" asp-action="Delete" asp-controller="Worker" asp-route-id=@Model.Id>Удалить</a>
+            }
+            @*<a class="popupdelete" type="button" asp-action="Delete" asp-controller="Worker" asp-route-id=@Model.Id>Удалить</a>*@
+
+            @*@Html.ActionLink("DisplayText", "Delete", "Worker", "post",);*@
+            @*<input id="deleteClickUser" type="button" class="popupdelete" value="Удалить"/>*@
+        </div>
+
+    </div>
+</form>
+<script src="~/js/jquery.maskedinput.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#_phonenumber").mask("+375 (99) 999-99-99");
+    });
+    $(document).ready(function () {
+        $("#_dateofbirth").mask("99.99.9999");
+    });
+</script>
+

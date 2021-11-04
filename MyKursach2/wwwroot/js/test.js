@@ -31,6 +31,15 @@ $(function () {
 });
 
 
+$(function () {
+    $('#editClickbodyGender').on('click', '.rowEditStart', function () {
+        var id = parseInt($(this).find('.editId').html());
+        document.location.href = '/Gender/Edit?id=' + id;
+        //alert($(this).find('.editId').html());
+    });
+});
+
+
 //let worker_add_new = document.querySelector("#worker_add_new");
 //let worker_add_new_popup = document.querySelector("#worker_add_new_popup");
 //worker_add_new.addEventListener("click", () => {
