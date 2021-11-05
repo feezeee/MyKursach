@@ -1,56 +1,20 @@
-﻿@model MyKursach2.Models.Worker
+﻿@model MyKursach2.Models.Gender
 @{
     Layout = "_Layout";
 }
 
-<form class="popup" asp-controller="Worker" asp-action="Create">
+<form class="popup" asp-controller="Gender" asp-action="Create">
     <div class="popup-inner">
-        <p class="addingWorkerPopup">Добавление работника</p>
+        <p class="addingWorkerPopup">Добавление пола</p>
         <ul class="popupinput">
-            <li>
-                <span>Фамилия*</span>
-                <input asp-for="LastName" required type="text" placeholder="Введите фамилию" />
-                @Html.ValidationMessageFor(model => model.LastName, null, new { style = "color:red" })
+            <li style="width:100%;">
+                <span>Наименование пола*</span>
+                <input asp-for="GenderName" required type="text" placeholder="Введите наименование пола" />
+                @Html.ValidationMessageFor(model => model.GenderName, null, new { style = "color:red" })
             </li>
-            <li>
-                <span>Имя*</span>
-                <input asp-for="FirstName" type="text" placeholder="Введите имя" />
-                @Html.ValidationMessageFor(model => model.FirstName, null, new { style = "color:red" })
-            </li>
-            <li>
-                <span>Дата рождения*</span>
-                <input id="_dateofbirth" asp-for="DateOfBirth" type="text" placeholder="Дата рождения" />
-                @Html.ValidationMessageFor(model => model.DateOfBirth, null, new { style = "color:red" })
-            </li>
-            <li>
-                <span>Электронная почта</span>
-                <input asp-for="Email" type="text" placeholder="Введите Email" />
-                @Html.ValidationMessageFor(model => model.Email, null, new { style = "color:red" })
-            </li>
-            <li>
-                <span>Выберите пол*</span>
-                <select asp-for="GenderId" asp-items="ViewBag.Genders"></select>
-                @Html.ValidationMessageFor(model => model.GenderId, null, new { style = "color:red" })
-            </li>
-            <li>
-                <span>Выберите должность*</span>
-                <select asp-for="PositionId" asp-items="ViewBag.Positions"></select>
-                @Html.ValidationMessageFor(model => model.PositionId, null, new { style = "color:red" })
-            </li>
-            <li>
-                <span>Номер телефона*</span>
-                <input id="_phonenumber" asp-for="PhoneNumber" type="text" placeholder="Номер телефона" />
-                @Html.ValidationMessageFor(model => model.PhoneNumber, null, new { style = "color:red" })
-            </li>
-            <li>
-                <span>Введите пароль*</span>
-                <input asp-for="Password" type="text" placeholder="Введите пароль" value="root" />
-                @Html.ValidationMessageFor(model => model.Password, null, new { style = "color:red" })
-            </li>
-
-
+            
         </ul>
-        <a type="button" asp-action="List" asp-controller="Worker" class="closepopup">X</a>
+        <a type="button" asp-action="List" asp-controller="Gender" class="closepopup">X</a>
         <div class="popup_button">
             <button class="popupsubmit" type="submit">
                 Создать
@@ -59,16 +23,6 @@
                 Очистить
             </button>
         </div>
-
     </div>
 </form>
-<script src="~/js/jquery.maskedinput.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $("#_phonenumber").mask("+375 (99) 999-99-99");
-    });
-    $(document).ready(function () {
-        $("#_dateofbirth").mask("99.99.9999");
-    });
-</script>
 

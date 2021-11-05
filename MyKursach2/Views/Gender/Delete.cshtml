@@ -1,11 +1,11 @@
-﻿@model MyKursach2.Models.Worker
+﻿@model MyKursach2.Models.Gender
 @{
     Layout = "_Layout";
 }
 
-<form class="popup" method="post" asp-controller="Worker" asp-action="Delete" asp-route-id="@Model.Id">
+<form class="popup" method="post" asp-controller="Gender" asp-action="Delete" asp-route-id="@Model.Id">
     <p>Вы уверены?</p>
     <button type="submit">Да</button>
-    <a type="button" asp-action="Edit" asp-controller="Worker" asp-route-id=@Model.Id>Нет</a>
+    <a type="button" asp-action="Edit" asp-controller="Gender" asp-route-id=@Model.Id>Нет</a>
 </form>>
 
