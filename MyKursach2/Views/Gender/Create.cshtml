@@ -1,0 +1,28 @@
+﻿@model MyKursach2.Models.Gender
+@{
+    Layout = "_Layout";
+}
+
+<form class="popup" asp-controller="Gender" asp-action="Create">
+    <div class="popup-inner">
+        <p class="addingWorkerPopup">Добавление пола</p>
+        <ul class="popupinput">
+            <li style="width:100%;">
+                <span>Наименование пола*</span>
+                <input asp-for="GenderName" required type="text" placeholder="Введите наименование пола" />
+                @Html.ValidationMessageFor(model => model.GenderName, null, new { style = "color:red" })
+            </li>
+            
+        </ul>
+        <a type="button" asp-action="List" asp-controller="Gender" class="closepopup">X</a>
+        <div class="popup_button">
+            <button class="popupsubmit" type="submit">
+                Создать
+            </button>
+            <button class="popupclear" type="reset">
+                Очистить
+            </button>
+        </div>
+    </div>
+</form>
+

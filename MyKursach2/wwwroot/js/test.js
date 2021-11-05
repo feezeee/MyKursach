@@ -31,25 +31,13 @@ $(function () {
 });
 
 
-
-
-
-//$(function () {
-//    $('#deleteClickUser').on('click', '#deleteClickUser', function () {
-//        var id = parseInt($(this).find('.editId').html());
-//        document.location.href = '/Worker/Edit?id=' + id;
-//        //alert($(this).find('.editId').html());
-//    });
-//});
-
-
-//$(function () {
-//    $('#deleteClickPosition').on('click', '#deleteClickPosition', function () {
-//        var id = parseInt($(this).find('.editId').html());
-//        document.location.href = '/Worker/Edit?id=' + id;
-//        //alert($(this).find('.editId').html());
-//    });
-//});
+$(function () {
+    $('#editClickbodyGender').on('click', '.rowEditStart', function () {
+        var id = parseInt($(this).find('.editId').html());
+        document.location.href = '/Gender/Edit?id=' + id;
+        //alert($(this).find('.editId').html());
+    });
+});
 
 
 //let worker_add_new = document.querySelector("#worker_add_new");
