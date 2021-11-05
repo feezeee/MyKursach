@@ -67,6 +67,21 @@
                         document.getElementById('_positions').classList.remove('bx-tada');
                     }
                 </script>
+                <li id="area_genders">
+                    <a asp-controller="Gender" asp-action="List">
+                        <i id="_genders" class='bx bx-smile'></i>
+                        <span class="links_name">Пол</span>
+                    </a>
+                    <span class="tooltip">Пол</span>
+                </li>
+                <script>
+                    document.getElementById('area_genders').onmouseenter = function () {
+                        document.getElementById('_genders').classList.add('bx-tada');
+                    }
+                    document.getElementById('area_genders').onmouseleave = function () {
+                        document.getElementById('_genders').classList.remove('bx-tada');
+                    }
+                </script>
             }
             <li id="area_operations">
                 <a href="#">
