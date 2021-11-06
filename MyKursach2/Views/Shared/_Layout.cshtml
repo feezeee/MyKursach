@@ -119,6 +119,23 @@
                 }
             </script>
 
+            <li id="area_availablePaymenty">
+                <a asp-controller="AvailablePayment" asp-action="List">
+                    <i id="_availablePayment" class='bx bx-receipt'></i>
+                    <span class="links_name">Доступные платежи</span>
+                </a>
+                <span class="tooltip">Доступные платежи</span>
+            </li>
+            <script>
+                document.getElementById('area_availablePaymenty').onmouseenter = function () {
+                    document.getElementById('_availablePayment').classList.add('bx-tada');
+                }
+                document.getElementById('area_availablePaymenty').onmouseleave = function () {
+                    document.getElementById('_availablePayment').classList.remove('bx-tada');
+                }
+            </script>
+
+
             <li id="area_operations">
                 <a href="#">
                     <i id="_operations" class='bx bx-plus-circle'></i>

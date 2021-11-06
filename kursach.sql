@@ -79,9 +79,9 @@ Id int primary key not null auto_increment,
 DeliveryCountryName varchar(20) not null
 );
 
-CREATE TABLE AvailablePayments (
-id int primary key not null auto_increment,
-payment_name varchar(30) not null
+CREATE TABLE AvailablePayment (
+Id int primary key not null auto_increment,
+AvailablePaymentName varchar(30) not null
 );
 
 CREATE TABLE MakingPayments (
