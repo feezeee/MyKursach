@@ -75,8 +75,8 @@ deliveryCountries_id int not null
 );
 
 CREATE TABLE DeliveryCountry (
-id int primary key not null auto_increment,
-countries varchar(20) not null
+Id int primary key not null auto_increment,
+DeliveryCountryName varchar(20) not null
 );
 
 CREATE TABLE AvailablePayments (
