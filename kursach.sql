@@ -59,9 +59,9 @@ provider_id int not null,
 goodForSale_id int not null
 );
 
-CREATE TABLE PaymentMethods (
-id int primary key not null auto_increment,
-payment_method varchar(20) not null
+CREATE TABLE PaymentMethod (
+Id int primary key not null auto_increment,
+PaymentMethodName varchar(20) not null
 );
 
 CREATE TABLE DeliveryGoods (

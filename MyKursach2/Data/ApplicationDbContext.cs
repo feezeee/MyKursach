@@ -15,8 +15,10 @@ namespace MyKursach2.Data
         public DbSet<Position> Position { get; set; }
         public DbSet<Worker> Worker { get; set; }
         public DbSet<Gender> Gender { get; set; }
-        
-        
+        public DbSet<PaymentMethod> PaymentMethod { get; set; }
+
+
+
 
     }
 }

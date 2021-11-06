@@ -82,6 +82,23 @@
                         document.getElementById('_genders').classList.remove('bx-tada');
                     }
                 </script>
+
+
+                <li id="area_paymentMethod">
+                    <a asp-controller="PaymentMethod" asp-action="List">
+                        <i id="_paymentMethod" class='bx bx-wallet'></i>
+                        <span class="links_name">Способы оплаты</span>
+                    </a>
+                    <span class="tooltip">Способы оплаты</span>
+                </li>
+                <script>
+                    document.getElementById('area_paymentMethod').onmouseenter = function () {
+                        document.getElementById('_paymentMethod').classList.add('bx-tada');
+                    }
+                    document.getElementById('area_paymentMethod').onmouseleave = function () {
+                        document.getElementById('_paymentMethod').classList.remove('bx-tada');
+                    }
+                </script>
             }
             <li id="area_operations">
                 <a href="#">
