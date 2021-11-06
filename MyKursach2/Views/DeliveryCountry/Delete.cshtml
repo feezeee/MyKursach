@@ -1,0 +1,11 @@
+﻿@model MyKursach2.Models.DeliveryCountry
+@{
+    Layout = "_Layout";
+}
+
+<form class="popup" method="post" asp-controller="DeliveryCountry" asp-action="Delete" asp-route-id="@Model.Id">
+    <p>Вы уверены?</p>
+    <button type="submit">Да</button>
+    <a type="button" asp-action="Edit" asp-controller="DeliveryCountry" asp-route-id=@Model.Id>Нет</a>
+</form>>
+
