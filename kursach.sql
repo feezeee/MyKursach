@@ -74,7 +74,7 @@ paymentMethod_id int not null,
 deliveryCountries_id int not null
 );
 
-CREATE TABLE DeliveryCountries (
+CREATE TABLE DeliveryCountry (
 id int primary key not null auto_increment,
 countries varchar(20) not null
 );
