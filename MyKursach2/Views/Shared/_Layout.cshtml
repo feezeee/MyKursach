@@ -100,22 +100,25 @@
                     }
                 </script>
 
-                <li id="area_deliveryCountry">
-                    <a asp-controller="DeliveryCountry" asp-action="List">
-                        <i id="_deliveryCountry" class='bx bxs-city'></i>
-                        <span class="links_name">Страны доставки</span>
-                    </a>
-                    <span class="tooltip">Страны доставки</span>
-                </li>
-                <script>
-                    document.getElementById('area_deliveryCountry').onmouseenter = function () {
-                        document.getElementById('_deliveryCountry').classList.add('bx-tada');
-                    }
-                    document.getElementById('area_deliveryCountry').onmouseleave = function () {
-                        document.getElementById('_deliveryCountry').classList.remove('bx-tada');
-                    }
-                </script>
+
             }
+
+            <li id="area_deliveryCountry">
+                <a asp-controller="DeliveryCountry" asp-action="List">
+                    <i id="_deliveryCountry" class='bx bxs-city'></i>
+                    <span class="links_name">Страны доставки</span>
+                </a>
+                <span class="tooltip">Страны доставки</span>
+            </li>
+            <script>
+                document.getElementById('area_deliveryCountry').onmouseenter = function () {
+                    document.getElementById('_deliveryCountry').classList.add('bx-tada');
+                }
+                document.getElementById('area_deliveryCountry').onmouseleave = function () {
+                    document.getElementById('_deliveryCountry').classList.remove('bx-tada');
+                }
+            </script>
+
             <li id="area_operations">
                 <a href="#">
                     <i id="_operations" class='bx bx-plus-circle'></i>
