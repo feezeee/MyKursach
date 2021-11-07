@@ -1,0 +1,74 @@
+﻿@model IEnumerable<MyKursach2.Models.GoodForSale>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Товары для продажи";
+}
+
+
+
+<div class="container-fluid" style="height: 100%; width:contain;">
+
+    <h1 class="text-center pt-5">
+        Товары для продажи
+    </h1>
+
+
+    <form name="test" method="get" asp-controller="GoodForSale" asp-action="List" class="param_workers">
+
+        <input class="form-control" name="goodForSale.Id" type="text" placeholder="Id товара:" />
+        <input class="form-control" name="goodForSale.Name" type="text" placeholder="Наименование товара:" />
+        <input class="form-control" name="goodForSale.QuantityInStock" type="text" placeholder="Количество товара на складе:" />
+        <div>
+            <button class="btn btn-success" type="submit">
+                Поиск
+            </button>
+        </div>
+    </form>
+    <div class="div-contenet-table">
+        <a asp-controller="GoodForSale" asp-action="Create" style="">
+            <i class='bx bx-user-plus'></i>
+            Добавить товар
+        </a>
+        <table class="content-table" id="myTable">
+            <thead>
+                <tr>                    
+                    <th>#</th>
+                    <th>Наименование товара</th>
+                    <th>Количество товара на складе</th>
+                    <th>Поставщики</th>
+                </tr>
+            </thead>            
+            <tbody id="editClickbodyGoodForSale">
+                @foreach (var el in Model)
+                {                    
+                    <tr class="rowEditStart">
+                        <th class="editId">
+                            @*<a class="popupdelete" asp-action="Delete" asp-controller="Worker" asp-route-id="@el.Id">
+                                Удалить пользователя
+                            </a>*@
+                            @el.Id
+                        </th>
+                        <td>
+                            @el.Name
+                        </td>
+                        <td>
+                            @el.QuantityInStock
+                        </td>
+                        <td>
+                            @foreach(var pr in el.Providers)
+                            { 
+                                <div>@pr.Name</div>
+                            }
+                        </td>
+                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<script src="~/js/GoodForSale.js">
+
+</script>
+

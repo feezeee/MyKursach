@@ -40,23 +40,30 @@ paymentMethod_id int not null,
 goodForSale_id int not null
 );
 
-CREATE TABLE GoodsForSale (
-id int primary key not null auto_increment,
-product_name varchar(30) not null,
-storage_quantity int not null
+CREATE TABLE GoodForSale (
+Id int primary key not null auto_increment,
+Name varchar(30) not null,
+QuantityInStock int not null
 );
 
-CREATE TABLE Providers (
-id int primary key not null auto_increment,
-full_name varchar(50) not null,
-phone_number varchar(15) not null,
-email varchar(50) null
+CREATE TABLE Provider (
+Id int primary key not null auto_increment,
+Name varchar(50) not null,
+PhoneNumber varchar(20) not null,
+Email varchar(50) null
 );
 
-CREATE TABLE Providers_GoodsForSale (
-id int primary key not null auto_increment,
-provider_id int not null,
-goodForSale_id int not null
+INSERT INTO Provider (Name, PhoneNumber, Email)
+	VALUES 
+    ("ООО Тест", "тест", "test"),
+    ("ООО Родничок", "тест", "test"),
+    ("ООО БГУИР", "тест", "test"),
+    ("ООО БНТУ", "тест", "test");
+
+CREATE TABLE GoodForSaleProvider (
+Id int primary key not null auto_increment,
+GoodsForSaleId int not null,
+ProvidersId int not null
 );
 
 CREATE TABLE PaymentMethod (
@@ -98,6 +105,8 @@ INSERT INTO Position (PositionName)
     ("Директор"),
     ("Кассир"),
     ("Почтальон");
+    
+    
     
 INSERT INTO Worker (FirstName, LastName, GenderId, DateOfBirth, PhoneNumber, Email, PositionId, Password)
 	VALUES 

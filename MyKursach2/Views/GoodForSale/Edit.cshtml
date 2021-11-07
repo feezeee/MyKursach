@@ -1,0 +1,69 @@
+﻿@model MyKursach2.Models.GoodForSale
+@{
+    Layout = "_Layout";
+}
+
+<script src="@Url.Content("~/lib/jquery-validation/dist/jquery.validate.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js")" type="text/javascript"></script>
+
+<form class="popup" asp-controller="GoodForSale" asp-action="Edit">
+    <div class="popup-inner">
+        <p class="addingWorkerPopup">Изменение товара</p>
+        <ul class="popupinput">
+            <li>
+                <span>Наименование товара*</span>
+                <input type="hidden" name="Id" value="@Model.Id" />
+                <input asp-for="Name" required type="text" placeholder="Введите наименование товара" />
+                @Html.ValidationMessageFor(model => model.Name, null, new { style = "color:red" })
+            </li>
+            <li>
+                <span>Количество на складе*</span>
+                <input asp-for="QuantityInStock" type="text" placeholder="Введите количество на складе" />
+                @Html.ValidationMessageFor(model => model.QuantityInStock, null, new { style = "color:red" })
+            </li>
+            <li style="width:100%;">
+                <span>Выберите поставщиков*</span>
+                <div style="display: flex; justify-content:space-between; flex-wrap:wrap;">
+                    @foreach (Provider el in ViewBag.Provider)
+                    {
+                        @if (Model.Providers.Contains(el))
+                        {
+                            <label style="display: flex; align-items:center;">
+                                <input type="checkbox"
+                                       name="selectedProviders"
+                                       value="@el.Id" style="margin-right: 10px;" checked />
+                                @el.Name
+                            </label>
+                        }
+                        else
+                        {
+                            <label style="display: flex; align-items:center;">
+                                <input type="checkbox"
+                                       name="selectedProviders"
+                                       value="@el.Id" style="margin-right: 10px;"/>
+                                @el.Name
+                            </label>
+                        }
+
+                    }
+                </div>
+                @*<select asp-for="GenderId" asp-items="ViewBag.Genders"></select>
+            @Html.ValidationMessageFor(model => model.GenderId, null, new { style = "color:red" })*@
+            </li>
+
+
+        </ul>
+        <a type="button" asp-action="List" asp-controller="GoodForSale" class="closepopup">X</a>
+        <div class="popup_button">
+            <button class="popupsubmit" type="submit">
+                Сохранить
+            </button>
+            @if (AuthorizedUser.GetInstance().GetWorker().Id != Model.Id)
+            {
+                <a class="popupdelete" type="button" asp-action="Delete" asp-controller="GoodForSale" asp-route-id=@Model.Id>Удалить</a>
+            }            
+        </div>
+
+    </div>
+</form>
+

@@ -1,0 +1,50 @@
+﻿@model MyKursach2.Models.GoodForSale
+@{
+    Layout = "_Layout";
+}
+
+<form class="popup" asp-controller="GoodForSale" asp-action="Create">
+    <div class="popup-inner">
+        <p class="addingWorkerPopup">Добавление товара</p>
+        <ul class="popupinput">
+            <li>
+                <span>Наименование товара*</span>
+                <input asp-for="Name" required type="text" placeholder="Введите наименование товара" />
+                @Html.ValidationMessageFor(model => model.Name, null, new { style = "color:red" })
+            </li>
+            <li>
+                <span>Количество на складе*</span>
+                <input asp-for="QuantityInStock" type="text" placeholder="Введите количество на складе" />
+                @Html.ValidationMessageFor(model => model.QuantityInStock, null, new { style = "color:red" })
+            </li>            
+            <li style="width:100%;">
+                <span>Выберите поставщиков*</span>
+                <div style="display: flex; justify-content:space-between; flex-wrap:wrap;">
+                    @foreach (Provider el in ViewBag.Provider)
+                    {
+                        <label style="display: flex; align-items:center;">
+                            <input type="checkbox"
+                                   name="selectedProviders"
+                                   value="@el.Id" style="margin-right: 10px;" />
+                            @el.Name
+                        </label>
+
+                    }
+                </div>               
+            </li>
+           
+
+        </ul>
+        <a type="button" asp-action="List" asp-controller="GoodForSale" class="closepopup">X</a>
+        <div class="popup_button">
+            <button class="popupsubmit" type="submit">
+                Создать
+            </button>
+            <button class="popupclear" type="reset">
+                Очистить
+            </button>
+        </div>
+
+    </div>
+</form>
+
