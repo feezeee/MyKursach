@@ -13,11 +13,12 @@ namespace MyKursach2.Models
         public int Id { get; set; }
 
 
-        [Required(ErrorMessage = "Не указан номер телефона")]
+        [Required(ErrorMessage = "Не указан поставщик")]
         [StringLength(19, ErrorMessage = "Длина строки должна быть до 19 символов")]
-        [Remote(action: "CheckGenderName", controller: "Gender", AdditionalFields = "Id", ErrorMessage = "Такой пол уже используется", HttpMethod = "POST")]
+        [Remote(action: "CheckName", controller: "Provider", AdditionalFields = "Id", ErrorMessage = "Такой поставщик уже существует", HttpMethod = "POST")]
         public string? Name { get; set; }
 
+        [StringLength(30, ErrorMessage = "Длина строки должна быть до 20 символов")]
         public string PhoneNumber { get; set; }
 
         public string? Email { get; set; }

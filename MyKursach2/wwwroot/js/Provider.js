@@ -7,9 +7,9 @@
 }
 fillInputs(document.forms.test);
 $(function () {
-    $('#editClickbodyGoodForSale').on('click', '.rowEditStart', function () {
+    $('#editClickbodyProvider').on('click', '.rowEditStart', function () {
         var id = parseInt($(this).find('.editId').html());
-        document.location.href = '/GoodForSale/Edit?id=' + id;
+        document.location.href = '/Provider/Edit?id=' + id;
         //alert($(this).find('.editId').html());
     });
 });

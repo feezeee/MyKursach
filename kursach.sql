@@ -49,7 +49,7 @@ QuantityInStock int not null
 CREATE TABLE Provider (
 Id int primary key not null auto_increment,
 Name varchar(50) not null,
-PhoneNumber varchar(20) not null,
+PhoneNumber varchar(30) not null,
 Email varchar(50) null
 );
 

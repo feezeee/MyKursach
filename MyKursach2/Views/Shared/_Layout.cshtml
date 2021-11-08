@@ -151,6 +151,22 @@
                 }
             </script>
 
+            <li id="area_provider">
+                <a asp-controller="Provider" asp-action="List">
+                    <i id="_provider" class='bx bx-receipt'></i>
+                    <span class="links_name">Поставщики</span>
+                </a>
+                <span class="tooltip">Поставщики</span>
+            </li>
+            <script>
+                document.getElementById('area_provider').onmouseenter = function () {
+                    document.getElementById('_provider').classList.add('bx-tada');
+                }
+                document.getElementById('area_provider').onmouseleave = function () {
+                    document.getElementById('_provider').classList.remove('bx-tada');
+                }
+            </script>
+
 
 
 

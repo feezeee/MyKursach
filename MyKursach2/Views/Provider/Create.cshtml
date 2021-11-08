@@ -1,0 +1,38 @@
+﻿@model MyKursach2.Models.Provider
+@{
+    Layout = "_Layout";
+}
+
+<form class="popup" asp-controller="Provider" asp-action="Create">
+    <div class="popup-inner">
+        <p class="addingWorkerPopup">Добавление поставщика</p>
+        <ul class="popupinput">
+            <li>
+                <span>Поставщик*</span>
+                <input asp-for="Name" required type="text" placeholder="Введите поставщика" />
+                @Html.ValidationMessageFor(model => model.Name, null, new { style = "color:red" })
+            </li>
+            <li>
+                <span>Номер телефона*</span>
+                <input required asp-for="PhoneNumber" type="text" placeholder="Введите номер телефона" />
+                @Html.ValidationMessageFor(model => model.PhoneNumber, null, new { style = "color:red" })
+            </li>
+            <li>
+                <span>Эл. почта*</span>
+                <input asp-for="Email" type="text" placeholder="Введите электронную почту" />
+                @Html.ValidationMessageFor(model => model.Email, null, new { style = "color:red" })
+            </li>
+        </ul>
+        <a type="button" asp-action="List" asp-controller="Provider" class="closepopup">X</a>
+        <div class="popup_button">
+            <button class="popupsubmit" type="submit">
+                Создать
+            </button>
+            <button class="popupclear" type="reset">
+                Очистить
+            </button>
+        </div>
+
+    </div>
+</form>
+
