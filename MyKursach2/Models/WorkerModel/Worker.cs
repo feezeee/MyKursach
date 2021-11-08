@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyKursach2.Data;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Principal;
 
@@ -45,6 +46,12 @@ namespace MyKursach2.Models
         [Required(ErrorMessage = "Не указан пароль")]
         [StringLength(50, ErrorMessage = "Длина строки должна быть до 50 символов")]
         public string Password { get; set; }
-       
+
+        public virtual ICollection<Operation> Operations { get; set; }
+        public Worker()
+        {
+            Operations = new List<Operation>();
+        }
+
     }
 }

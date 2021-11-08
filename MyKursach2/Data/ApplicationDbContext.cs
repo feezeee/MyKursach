@@ -20,5 +20,6 @@ namespace MyKursach2.Data
         public DbSet<AvailablePayment> AvailablePayment { get; set; }
         public DbSet<GoodForSale> GoodForSale { get; set; }
         public DbSet<Provider> Provider { get; set; }
+        public DbSet<Operation> Operation { get; set; }
     }
 }

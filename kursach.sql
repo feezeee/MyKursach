@@ -27,9 +27,9 @@ GenderName varchar(10) not null
 );
 
 CREATE TABLE Operations (
-id int primary key not null auto_increment,
-operation_date_time datetime not null,
-worker_id int not null
+Id int primary key not null auto_increment,
+OperationDateTime datetime not null,
+WorkersId int not null
 );
 
 CREATE TABLE SaleGoods (
