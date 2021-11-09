@@ -24,7 +24,7 @@ namespace MyKursach2.Controllers
         {
             //var res = _context.Workers.Join(_context.Positions);
 
-            var res = from gend in _context.Gender
+            var res = from gend in _context.Genders
                       select new Gender
                       {
                           Id = gend.Id,
@@ -70,8 +70,8 @@ namespace MyKursach2.Controllers
         {
             if (Id != null)
             {
-                var res1 = _context.Gender.Where(t => t.Id == Id).Select(t => t).FirstOrDefault();
-                var res2 = _context.Gender.Where(t => t.GenderName == GenderName).Select(t => t).FirstOrDefault();
+                var res1 = _context.Genders.Where(t => t.Id == Id).Select(t => t).FirstOrDefault();
+                var res2 = _context.Genders.Where(t => t.GenderName == GenderName).Select(t => t).FirstOrDefault();
                 if (res2 == null || res1.Id == res2?.Id)
                 {
                     return Json(true);
@@ -80,7 +80,7 @@ namespace MyKursach2.Controllers
             }
             else
             {
-                var res3 = _context.Gender.Where(t => t.GenderName == GenderName).Select(t => t).FirstOrDefault();
+                var res3 = _context.Genders.Where(t => t.GenderName == GenderName).Select(t => t).FirstOrDefault();
                 if (res3 != null)
                     return Json(false);
                 return Json(true);
@@ -95,7 +95,7 @@ namespace MyKursach2.Controllers
             {
                 return RedirectToAction("List");
             }
-            Gender gender = _context.Gender.Find(id);
+            Gender gender = _context.Genders.Find(id);
             if (gender != null)
             {                
                 return View(gender);
@@ -128,7 +128,7 @@ namespace MyKursach2.Controllers
         [HttpGet]
         public IActionResult Delete(int? id)
         {
-            Gender gender = _context.Gender.Find(id);
+            Gender gender = _context.Genders.Find(id);
             if (gender == null)
             {
                 //return HttpNotFound();
@@ -144,12 +144,12 @@ namespace MyKursach2.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int? id)
         {
-            Gender gender = _context.Gender.Find(id);
+            Gender gender = _context.Genders.Find(id);
             if (gender == null)
             {
                 //return HttpNotFound();
             }
-            _context.Gender.Remove(gender);
+            _context.Genders.Remove(gender);
             _context.SaveChanges();
             return RedirectToAction("List");
         }

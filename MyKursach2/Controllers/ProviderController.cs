@@ -24,7 +24,7 @@ namespace MyKursach2.Controllers
         {
             //var res = _context.Workers.Join(_context.Positions);
 
-            var res = from prv in _context.Provider
+            var res = from prv in _context.Providers
                       select new Provider
                       {
                           Id = prv.Id,
@@ -72,8 +72,8 @@ namespace MyKursach2.Controllers
         {
             if (Id != null)
             {
-                var res1 = _context.Provider.Where(t => t.Id == Id).Select(t => t).FirstOrDefault();
-                var res2 = _context.Provider.Where(t => t.Name == Name).Select(t => t).FirstOrDefault();
+                var res1 = _context.Providers.Where(t => t.Id == Id).Select(t => t).FirstOrDefault();
+                var res2 = _context.Providers.Where(t => t.Name == Name).Select(t => t).FirstOrDefault();
                 if (res2 == null || res1.Id == res2?.Id)
                 {
                     return Json(true);
@@ -82,7 +82,7 @@ namespace MyKursach2.Controllers
             }
             else
             {
-                var res3 = _context.Provider.Where(t => t.Name == Name).Select(t => t).FirstOrDefault();
+                var res3 = _context.Providers.Where(t => t.Name == Name).Select(t => t).FirstOrDefault();
                 if (res3 != null)
                     return Json(false);
                 return Json(true);
@@ -99,7 +99,7 @@ namespace MyKursach2.Controllers
             }
             
 
-            var res = from prv in _context.Provider
+            var res = from prv in _context.Providers
                       where prv.Id == id
                       select new Provider
                       {
@@ -126,7 +126,7 @@ namespace MyKursach2.Controllers
         {
             if (ModelState.IsValid)
             {
-                var res = from prv in _context.Provider
+                var res = from prv in _context.Providers
                           where prv.Id == provider.Id
                           select new Provider
                           {
@@ -151,7 +151,7 @@ namespace MyKursach2.Controllers
         [HttpGet]
         public IActionResult Delete(int? id)
         {
-            Provider provider = _context.Provider.Find(id);
+            Provider provider = _context.Providers.Find(id);
             if (provider == null)
             {
                 //return HttpNotFound();
@@ -163,7 +163,7 @@ namespace MyKursach2.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int? id)
         {
-            Provider provider = _context.Provider.Find(id);
+            Provider provider = _context.Providers.Find(id);
             if (provider == null)
             {
                 //return HttpNotFound();
@@ -175,7 +175,7 @@ namespace MyKursach2.Controllers
             _context.Entry(provider).Collection(u => u.GoodsForSale).Load();
             provider.GoodsForSale.Clear();
             _context.Entry(provider).State = EntityState.Modified;
-            _context.Provider.Remove(provider);
+            _context.Providers.Remove(provider);
             _context.SaveChanges();
             return RedirectToAction("List");
         }

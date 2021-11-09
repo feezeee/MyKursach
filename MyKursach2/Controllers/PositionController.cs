@@ -25,7 +25,7 @@ namespace MyKursach2.Controllers
         {
             //var res = _context.Workers.Join(_context.Positions);
 
-            var res = from pos in _context.Position                      
+            var res = from pos in _context.Positions                      
                       select new Position
                       {
                           Id = pos.Id,
@@ -70,8 +70,8 @@ namespace MyKursach2.Controllers
         {
             if (Id != null)
             {
-                var res1 = _context.Position.Where(t => t.Id == Id).Select(t => t).FirstOrDefault();
-                var res2 = _context.Position.Where(t => t.PositionName == PositionName).Select(t => t).FirstOrDefault();
+                var res1 = _context.Positions.Where(t => t.Id == Id).Select(t => t).FirstOrDefault();
+                var res2 = _context.Positions.Where(t => t.PositionName == PositionName).Select(t => t).FirstOrDefault();
                 if (res2 == null || res1.Id == res2?.Id)
                 {
                     return Json(true);
@@ -80,7 +80,7 @@ namespace MyKursach2.Controllers
             }
             else
             {
-                var res3 = _context.Position.Where(t => t.PositionName == PositionName).Select(t => t).FirstOrDefault();
+                var res3 = _context.Positions.Where(t => t.PositionName == PositionName).Select(t => t).FirstOrDefault();
                 if (res3 != null)
                     return Json(false);
                 return Json(true);
@@ -97,7 +97,7 @@ namespace MyKursach2.Controllers
             {
                 return RedirectToAction("List");
             }
-            Position position = _context.Position.Find(id);
+            Position position = _context.Positions.Find(id);
             if (position != null)
             {                
                 return View(position);
@@ -126,7 +126,7 @@ namespace MyKursach2.Controllers
         [HttpGet]
         public IActionResult Delete(int? id)
         {
-            Position position = _context.Position.Find(id);
+            Position position = _context.Positions.Find(id);
             if (position == null)
             {
                 //return HttpNotFound();
@@ -142,12 +142,12 @@ namespace MyKursach2.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int? id)
         {
-            Position position = _context.Position.Find(id);
+            Position position = _context.Positions.Find(id);
             if (position == null)
             {
                 //return HttpNotFound();
             }
-            _context.Position.Remove(position);
+            _context.Positions.Remove(position);
             _context.SaveChanges();
             return RedirectToAction("List");
         }

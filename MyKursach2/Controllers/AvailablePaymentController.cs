@@ -24,7 +24,7 @@ namespace MyKursach2.Controllers
         {
             //var res = _context.Workers.Join(_context.Positions);
 
-            var res = from availPay in _context.AvailablePayment
+            var res = from availPay in _context.AvailablePayments
                       select new AvailablePayment
                       {
                           Id = availPay.Id,
@@ -68,8 +68,8 @@ namespace MyKursach2.Controllers
         {
             if (Id != null)
             {
-                var res1 = _context.AvailablePayment.Where(t => t.Id == Id).Select(t => t).FirstOrDefault();
-                var res2 = _context.AvailablePayment.Where(t => t.AvailablePaymentName == AvailablePaymentName).Select(t => t).FirstOrDefault();
+                var res1 = _context.AvailablePayments.Where(t => t.Id == Id).Select(t => t).FirstOrDefault();
+                var res2 = _context.AvailablePayments.Where(t => t.AvailablePaymentName == AvailablePaymentName).Select(t => t).FirstOrDefault();
                 if (res2 == null || res1.Id == res2?.Id)
                 {
                     return Json(true);
@@ -78,7 +78,7 @@ namespace MyKursach2.Controllers
             }
             else
             {
-                var res3 = _context.AvailablePayment.Where(t => t.AvailablePaymentName == AvailablePaymentName).Select(t => t).FirstOrDefault();
+                var res3 = _context.AvailablePayments.Where(t => t.AvailablePaymentName == AvailablePaymentName).Select(t => t).FirstOrDefault();
                 if (res3 != null)
                     return Json(false);
                 return Json(true);
@@ -93,7 +93,7 @@ namespace MyKursach2.Controllers
             {
                 return RedirectToAction("List");
             }
-            AvailablePayment availablePayment = _context.AvailablePayment.Find(id);
+            AvailablePayment availablePayment = _context.AvailablePayments.Find(id);
             if (availablePayment != null)
             {
                 return View(availablePayment);
@@ -118,7 +118,7 @@ namespace MyKursach2.Controllers
         [HttpGet]
         public IActionResult Delete(int? id)
         {
-            AvailablePayment availablePayment = _context.AvailablePayment.Find(id);
+            AvailablePayment availablePayment = _context.AvailablePayments.Find(id);
             if (availablePayment == null)
             {
                 //return HttpNotFound();
@@ -130,12 +130,12 @@ namespace MyKursach2.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int? id)
         {
-            AvailablePayment availablePayment = _context.AvailablePayment.Find(id);
+            AvailablePayment availablePayment = _context.AvailablePayments.Find(id);
             if (availablePayment == null)
             {
                 //return HttpNotFound();
             }
-            _context.AvailablePayment.Remove(availablePayment);
+            _context.AvailablePayments.Remove(availablePayment);
             _context.SaveChanges();
             return RedirectToAction("List");
         }

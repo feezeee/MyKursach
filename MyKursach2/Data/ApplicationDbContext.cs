@@ -12,13 +12,29 @@ namespace MyKursach2.Data
         {
                 
         }
-        public DbSet<Position> Position { get; set; }
-        public DbSet<Worker> Worker { get; set; }
-        public DbSet<Gender> Gender { get; set; }
-        public DbSet<PaymentMethod> PaymentMethod { get; set; }
-        public DbSet<DeliveryCountry> DeliveryCountry { get; set; }
-        public DbSet<AvailablePayment> AvailablePayment { get; set; }
-        public DbSet<GoodForSale> GoodForSale { get; set; }
-        public DbSet<Provider> Provider { get; set; }
+        public DbSet<Position> Positions { get; set; }
+        public DbSet<Worker> Workers { get; set; }
+        public DbSet<Gender> Genders { get; set; }
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
+        public DbSet<DeliveryCountry> DeliveryCountries { get; set; }
+        public DbSet<AvailablePayment> AvailablePayments { get; set; }
+        public DbSet<GoodForSale> GoodsForSale { get; set; }
+        public DbSet<Provider> Providers { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<GoodForSale_Provider>()
+            .HasKey(t => new { t.GoodForSaleId, t.ProviderId });
+
+            modelBuilder.Entity<GoodForSale_Provider>()
+                .HasOne(pt => pt.GoodsForSale)
+                .WithMany(p => p.GoodForSale_Providers)
+                .HasForeignKey(pt => pt.GoodForSaleId);
+
+            modelBuilder.Entity<GoodForSale_Provider>()
+                .HasOne(pt => pt.Providers)
+                .WithMany(t => t.GoodForSale_Providers)
+                .HasForeignKey(pt => pt.ProviderId);
+        }
     }
 }

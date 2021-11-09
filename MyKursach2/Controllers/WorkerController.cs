@@ -25,9 +25,9 @@ namespace MyKursach2.Controllers
         {
             //var res = _context.Workers.Join(_context.Positions);
 
-            var res = from work in _context.Worker
-                      join position in _context.Position on work.PositionId equals position.Id
-                      join gender in _context.Gender on work.GenderId equals gender.Id
+            var res = from work in _context.Workers
+                      join position in _context.Positions on work.PositionId equals position.Id
+                      join gender in _context.Genders on work.GenderId equals gender.Id
                       select new Worker
                       {
                           Id = work.Id,
@@ -66,8 +66,8 @@ namespace MyKursach2.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Genders = new SelectList(_context.Gender, "Id", "GenderName"); 
-            ViewBag.Positions = new SelectList(_context.Position, "Id", "PositionName");
+            ViewBag.Genders = new SelectList(_context.Genders, "Id", "GenderName"); 
+            ViewBag.Positions = new SelectList(_context.Positions, "Id", "PositionName");
             return View();
         }
 
@@ -82,8 +82,8 @@ namespace MyKursach2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("List");
             }
-            ViewBag.Genders = new SelectList(_context.Gender, "Id", "GenderName");
-            ViewBag.Positions = new SelectList(_context.Position, "Id", "PositionName");
+            ViewBag.Genders = new SelectList(_context.Genders, "Id", "GenderName");
+            ViewBag.Positions = new SelectList(_context.Positions, "Id", "PositionName");
             return View();
         }
         [Authorize(Roles = "Директор, Администратор")]
@@ -92,8 +92,8 @@ namespace MyKursach2.Controllers
         {
             if (Id != null)
             {
-                var res1 = _context.Worker.Where(t => t.Id == Id).Select(t => t).FirstOrDefault();
-                var res2 = _context.Worker.Where(t => t.PhoneNumber == PhoneNumber).Select(t => t).FirstOrDefault();
+                var res1 = _context.Workers.Where(t => t.Id == Id).Select(t => t).FirstOrDefault();
+                var res2 = _context.Workers.Where(t => t.PhoneNumber == PhoneNumber).Select(t => t).FirstOrDefault();
                 if (res2 == null || res1.Id == res2?.Id)
                 {
                     return Json(true);
@@ -102,7 +102,7 @@ namespace MyKursach2.Controllers
             }
             else
             {
-                var res3 = _context.Worker.Where(t => t.PhoneNumber == PhoneNumber).Select(t => t).FirstOrDefault();
+                var res3 = _context.Workers.Where(t => t.PhoneNumber == PhoneNumber).Select(t => t).FirstOrDefault();
                 if (res3 != null)
                     return Json(false);
                 return Json(true);
@@ -117,11 +117,11 @@ namespace MyKursach2.Controllers
             {
                 return RedirectToAction("List");
             }
-            Worker worker = _context.Worker.Find(id);
+            Worker worker = _context.Workers.Find(id);
             if (worker != null)
             {
-                var gend = _context.Gender;
-                var pos = _context.Position;
+                var gend = _context.Genders;
+                var pos = _context.Positions;
                 worker.Gender = gend.Where(t => t.Id == worker.GenderId).Select(t => t).FirstOrDefault();
                 worker.Position = pos.Where(t => t.Id == worker.PositionId).Select(t => t).FirstOrDefault();
                 ViewBag.Genders = new SelectList(gend, "Id", "GenderName");
@@ -140,8 +140,8 @@ namespace MyKursach2.Controllers
             {
                 if (worker.Id == AuthorizedUser.GetInstance().GetWorker().Id)
                 {
-                    worker.Position = _context.Position.Find(worker.PositionId);
-                    worker.Gender = _context.Gender.Find(worker.GenderId);
+                    worker.Position = _context.Positions.Find(worker.PositionId);
+                    worker.Gender = _context.Genders.Find(worker.GenderId);
                     AuthorizedUser.GetInstance().ClearUser();
                     AuthorizedUser.GetInstance().SetUser(worker);
                 }
@@ -150,8 +150,8 @@ namespace MyKursach2.Controllers
                 return RedirectToAction("List");
             }
 
-            var gend = _context.Gender;
-            var pos = _context.Position;
+            var gend = _context.Genders;
+            var pos = _context.Positions;
             ViewBag.Genders = new SelectList(gend, "Id", "GenderName");
             ViewBag.Positions = new SelectList(pos, "Id", "PositionName");
             return View(worker);
@@ -160,7 +160,7 @@ namespace MyKursach2.Controllers
         [HttpGet]
         public IActionResult Delete(int? id)
         {
-            Worker worker = _context.Worker.Find(id);
+            Worker worker = _context.Workers.Find(id);
             if (worker == null)
             {
                 //return HttpNotFound();
@@ -176,12 +176,12 @@ namespace MyKursach2.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int? id)
         {
-            Worker worker = _context.Worker.Find(id);
+            Worker worker = _context.Workers.Find(id);
             if (worker == null)
             {
                 //return HttpNotFound();
             }
-            _context.Worker.Remove(worker);
+            _context.Workers.Remove(worker);
             _context.SaveChanges();
             return RedirectToAction("List");
         }

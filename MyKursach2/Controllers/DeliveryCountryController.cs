@@ -25,7 +25,7 @@ namespace MyKursach2.Controllers
         {
             //var res = _context.Workers.Join(_context.Positions);
 
-            var res = from delcount in _context.DeliveryCountry
+            var res = from delcount in _context.DeliveryCountries
                       select new DeliveryCountry
                       {
                           Id = delcount.Id,
@@ -70,8 +70,8 @@ namespace MyKursach2.Controllers
         {
             if (Id != null)
             {
-                var res1 = _context.DeliveryCountry.Where(t => t.Id == Id).Select(t => t).FirstOrDefault();
-                var res2 = _context.DeliveryCountry.Where(t => t.DeliveryCountryName == DeliveryCountryName).Select(t => t).FirstOrDefault();
+                var res1 = _context.DeliveryCountries.Where(t => t.Id == Id).Select(t => t).FirstOrDefault();
+                var res2 = _context.DeliveryCountries.Where(t => t.DeliveryCountryName == DeliveryCountryName).Select(t => t).FirstOrDefault();
                 if (res2 == null || res1.Id == res2?.Id)
                 {
                     return Json(true);
@@ -80,7 +80,7 @@ namespace MyKursach2.Controllers
             }
             else
             {
-                var res3 = _context.DeliveryCountry.Where(t => t.DeliveryCountryName == DeliveryCountryName).Select(t => t).FirstOrDefault();
+                var res3 = _context.DeliveryCountries.Where(t => t.DeliveryCountryName == DeliveryCountryName).Select(t => t).FirstOrDefault();
                 if (res3 != null)
                     return Json(false);
                 return Json(true);
@@ -97,7 +97,7 @@ namespace MyKursach2.Controllers
             {
                 return RedirectToAction("List");
             }
-            DeliveryCountry deliveryCountry = _context.DeliveryCountry.Find(id);
+            DeliveryCountry deliveryCountry = _context.DeliveryCountries.Find(id);
             if (deliveryCountry != null)
             {
                 return View(deliveryCountry);
@@ -123,7 +123,7 @@ namespace MyKursach2.Controllers
         [HttpGet]
         public IActionResult Delete(int? id)
         {
-            DeliveryCountry deliveryCountry = _context.DeliveryCountry.Find(id);
+            DeliveryCountry deliveryCountry = _context.DeliveryCountries.Find(id);
             if (deliveryCountry == null)
             {
                 //return HttpNotFound();
@@ -137,12 +137,12 @@ namespace MyKursach2.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int? id)
         {
-            DeliveryCountry deliveryCountry = _context.DeliveryCountry.Find(id);
+            DeliveryCountry deliveryCountry = _context.DeliveryCountries.Find(id);
             if (deliveryCountry == null)
             {
                 //return HttpNotFound();
             }
-            _context.DeliveryCountry.Remove(deliveryCountry);
+            _context.DeliveryCountries.Remove(deliveryCountry);
             _context.SaveChanges();
             return RedirectToAction("List");
         }

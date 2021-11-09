@@ -24,14 +24,15 @@ namespace MyKursach2.Controllers
         {
             //var res = _context.Workers.Join(_context.Positions);
 
-            var res = from gfs in _context.GoodForSale
+            var res = from gfs in _context.GoodsForSale
                       select new GoodForSale
                       {
                           Id = gfs.Id,
                           Name = gfs.Name,
                           QuantityInStock = gfs.QuantityInStock,
-                          Providers = gfs.Providers                          
+                          Providers = gfs.Providers
                       };
+
 
             if (goodForSale?.Id > 0)
             {
@@ -52,7 +53,7 @@ namespace MyKursach2.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Provider = _context.Provider;
+            ViewBag.Provider = _context.Providers;
             return View();
         }
 
@@ -65,7 +66,7 @@ namespace MyKursach2.Controllers
                 if (selectedProviders != null)
                 {
 
-                    foreach(var p in _context.Provider.Where(t => selectedProviders.Contains(t.Id)))
+                    foreach(var p in _context.Providers.Where(t => selectedProviders.Contains(t.Id)))
                     {
                         goodForSale.Providers.Add(p);
                     }
@@ -84,8 +85,8 @@ namespace MyKursach2.Controllers
         {
             if (Id != null)
             {
-                var res1 = _context.GoodForSale.Where(t => t.Id == Id).Select(t => t).FirstOrDefault();
-                var res2 = _context.GoodForSale.Where(t => t.Name == Name).Select(t => t).FirstOrDefault();
+                var res1 = _context.GoodsForSale.Where(t => t.Id == Id).Select(t => t).FirstOrDefault();
+                var res2 = _context.GoodsForSale.Where(t => t.Name == Name).Select(t => t).FirstOrDefault();
                 if (res2 == null || res1.Id == res2?.Id)
                 {
                     return Json(true);
@@ -94,7 +95,7 @@ namespace MyKursach2.Controllers
             }
             else
             {
-                var res3 = _context.GoodForSale.Where(t => t.Name == Name).Select(t => t).FirstOrDefault();
+                var res3 = _context.GoodsForSale.Where(t => t.Name == Name).Select(t => t).FirstOrDefault();
                 if (res3 != null)
                     return Json(false);
                 return Json(true);
@@ -110,7 +111,7 @@ namespace MyKursach2.Controllers
                 return RedirectToAction("List");
             }
 
-            var res = from gfs in _context.GoodForSale
+            var res = from gfs in _context.GoodsForSale
                       where gfs.Id == id
                       select new GoodForSale
                       {
@@ -124,7 +125,7 @@ namespace MyKursach2.Controllers
 
             if (goodForSale != null)
             {
-                ViewBag.Provider = _context.Provider;
+                ViewBag.Provider = _context.Providers;
                 return View(goodForSale);
             }
             return RedirectToAction("List");
@@ -137,7 +138,7 @@ namespace MyKursach2.Controllers
         {
             if (ModelState.IsValid)
             {
-                var res = from gfs in _context.GoodForSale
+                var res = from gfs in _context.GoodsForSale
                           where gfs.Id == goodForSale.Id
                           select new GoodForSale
                           {
@@ -159,7 +160,7 @@ namespace MyKursach2.Controllers
 
                 if (selectedProviders != null)
                 {
-                    foreach (var p in _context.Provider.Where(t => selectedProviders.Contains(t.Id)))
+                    foreach (var p in _context.Providers.Where(t => selectedProviders.Contains(t.Id)))
                     {
                         newgoodForSale.Providers.Add(p);
                     }
@@ -174,7 +175,7 @@ namespace MyKursach2.Controllers
         [HttpGet]
         public IActionResult Delete(int? id)
         {
-            GoodForSale goodForSale = _context.GoodForSale.Find(id);
+            GoodForSale goodForSale = _context.GoodsForSale.Find(id);
             if (goodForSale == null)
             {
                 //return HttpNotFound();
@@ -186,7 +187,7 @@ namespace MyKursach2.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int? id)
         {
-            GoodForSale goodForSale = _context.GoodForSale.Find(id);
+            GoodForSale goodForSale = _context.GoodsForSale.Find(id);
             if (goodForSale == null)
             {
                 //return HttpNotFound();
@@ -198,7 +199,7 @@ namespace MyKursach2.Controllers
             _context.Entry(goodForSale).Collection(u => u.Providers).Load();
             goodForSale.Providers.Clear();
             _context.Entry(goodForSale).State = EntityState.Modified;
-            _context.GoodForSale.Remove(goodForSale);
+            _context.GoodsForSale.Remove(goodForSale);
             _context.SaveChanges();
             return RedirectToAction("List");
         }

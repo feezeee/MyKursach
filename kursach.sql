@@ -4,33 +4,56 @@ CREATE DATABASE postal_office;
 
 USE postal_office;
 
-CREATE TABLE Worker (
-Id int primary key not null auto_increment,
-FirstName varchar(30) not null,
-LastName varchar(30) not null,
-DateOfBirth date not null,
-PhoneNumber varchar(19) not null,
-Email varchar(50) null,
-GenderId int not null,
-PositionId int not null,
-Password varchar(50) not null
+CREATE TABLE workers (
+worker_id int primary key not null auto_increment,
+first_name varchar(30) not null,
+last_name varchar(30) not null,
+date_of_birth date not null,
+phone_number varchar(19) not null,
+email varchar(50) null,
+gender_id int not null,
+position_id int not null,
+password varchar(50) not null
 );
 
-CREATE TABLE Position (
-Id int primary key not null auto_increment,
-PositionName varchar(30) not null
+INSERT INTO workers (first_name, last_name, gender_id, date_of_birth, phone_number, email, position_id, password)
+	VALUES 
+    ("Админ", "Админович",1 ,"2001-04-23", "+375 (29) 111-11-11", "krut1@yandex.com", 1, "root"),
+    ("Максим", "Сащеко",1 ,"2001-04-23", "+375 (29) 358-17-24", "krut1@yandex.com", 2, "root"),
+    ("Марцев", "Артем",1 ,"2001-04-23", "+375 (29) 222-22-22", "krut1@yandex.com", 3, "root"),
+    ("Денис", "Скурат",1 ,"2001-04-23", "+375 (29) 830-63-61", "krut1@yandex.com", 4, "root");
+
+
+CREATE TABLE positions (
+position_id int primary key not null auto_increment,
+position_name varchar(30) not null
 );
 
-CREATE TABLE Gender (
-Id int primary key not null auto_increment,
-GenderName varchar(10) not null
+INSERT INTO positions (position_name)
+	VALUES 
+    ("Администратор"),
+    ("Директор"),
+    ("Кассир"),
+    ("Почтальон");
+
+
+CREATE TABLE genders (
+gender_id int primary key not null auto_increment,
+gender_name varchar(10) not null
 );
 
-CREATE TABLE Operations (
-id int primary key not null auto_increment,
+INSERT INTO genders (gender_name)
+	VALUES 
+    ("Мужчина"),
+    ("Женщина");
+
+
+CREATE TABLE operations (
+operation_id int primary key not null auto_increment,
 operation_date_time datetime not null,
 worker_id int not null
 );
+
 
 CREATE TABLE SaleGoods (
 id int primary key not null auto_increment,
@@ -40,35 +63,35 @@ paymentMethod_id int not null,
 goodForSale_id int not null
 );
 
-CREATE TABLE GoodForSale (
-Id int primary key not null auto_increment,
-Name varchar(30) not null,
-QuantityInStock int not null
+CREATE TABLE goodsforsale (
+goodsforsale_id int primary key not null auto_increment,
+goodsforsale_name varchar(30) not null,
+quantity_in_stock int not null
 );
 
-CREATE TABLE Provider (
-Id int primary key not null auto_increment,
-Name varchar(50) not null,
-PhoneNumber varchar(30) not null,
-Email varchar(50) null
+CREATE TABLE providers (
+provider_id int primary key not null auto_increment,
+provider_name varchar(50) not null,
+phone_number varchar(30) not null,
+email varchar(50) null
 );
 
-INSERT INTO Provider (Name, PhoneNumber, Email)
+INSERT INTO providers (provider_name, phone_number, email)
 	VALUES 
     ("ООО Тест", "тест", "test"),
     ("ООО Родничок", "тест", "test"),
     ("ООО БГУИР", "тест", "test"),
     ("ООО БНТУ", "тест", "test");
 
-CREATE TABLE GoodForSaleProvider (
-Id int primary key not null auto_increment,
-GoodsForSaleId int not null,
-ProvidersId int not null
+CREATE TABLE goodsforsale_providers (
+goodsforsale_providers_id int primary key not null auto_increment,
+goodsforsale_id int not null,
+providers_id int not null
 );
 
-CREATE TABLE PaymentMethod (
-Id int primary key not null auto_increment,
-PaymentMethodName varchar(20) not null
+CREATE TABLE paymentmethods (
+paymentmethod_id int primary key not null auto_increment,
+paymentmethod_name varchar(20) not null
 );
 
 CREATE TABLE DeliveryGoods (
@@ -81,14 +104,14 @@ paymentMethod_id int not null,
 deliveryCountries_id int not null
 );
 
-CREATE TABLE DeliveryCountry (
-Id int primary key not null auto_increment,
-DeliveryCountryName varchar(20) not null
+CREATE TABLE deliverycountries (
+deliverycountry_id int primary key not null auto_increment,
+deliverycountry_name varchar(20) not null
 );
 
-CREATE TABLE AvailablePayment (
-Id int primary key not null auto_increment,
-AvailablePaymentName varchar(30) not null
+CREATE TABLE availablepayments (
+availablepayment_id int primary key not null auto_increment,
+availablepayment_name varchar(30) not null
 );
 
 CREATE TABLE MakingPayments (
@@ -108,19 +131,13 @@ INSERT INTO Position (PositionName)
     
     
     
-INSERT INTO Worker (FirstName, LastName, GenderId, DateOfBirth, PhoneNumber, Email, PositionId, Password)
-	VALUES 
-    ("Админ", "Админович",1 ,"2001-04-23", "+375 (29) 111-11-11", "krut1@yandex.com", 1, "root"),
-    ("Максим", "Сащеко",1 ,"2001-04-23", "+375 (29) 358-17-24", "krut1@yandex.com", 2, "root"),
-    ("Марцев", "Артем",1 ,"2001-04-23", "+375 (29) 222-22-22", "krut1@yandex.com", 3, "root"),
-    ("Денис", "Скурат",1 ,"2001-04-23", "+375 (29) 830-63-61", "krut1@yandex.com", 4, "root");
 
 INSERT INTO Gender (GenderName)
 	VALUES 
     ("Мужчина"),
     ("Женщина");
 
-INSERT INTO Workers (FirstName, LastName, DateOfBirth, Email, PositionId, PhoneNumber)
+INSERT INTO Workers (first_name, last_name, date_of_birth, email, position_id, phone_number)
 	VALUES 
 		("Максим", "Сащеко", "2001-04-23", "krut1@yandex.com", 1, "+375 (29) 830-63-61"),
 		("Артем", "Марцев", "2001-04-23", "krut2@yandex.com", 2,"+375 (29) 830-63-61"),

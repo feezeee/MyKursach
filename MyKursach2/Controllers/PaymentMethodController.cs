@@ -25,7 +25,7 @@ namespace MyKursach2.Controllers
         {
             //var res = _context.Workers.Join(_context.Positions);
 
-            var res = from paym in _context.PaymentMethod
+            var res = from paym in _context.PaymentMethods
                       select new PaymentMethod
                       {
                           Id = paym.Id,
@@ -69,8 +69,8 @@ namespace MyKursach2.Controllers
         {
             if (Id != null)
             {
-                var res1 = _context.PaymentMethod.Where(t => t.Id == Id).Select(t => t).FirstOrDefault();
-                var res2 = _context.PaymentMethod.Where(t => t.PaymentMethodName == PaymentMethodName).Select(t => t).FirstOrDefault();
+                var res1 = _context.PaymentMethods.Where(t => t.Id == Id).Select(t => t).FirstOrDefault();
+                var res2 = _context.PaymentMethods.Where(t => t.PaymentMethodName == PaymentMethodName).Select(t => t).FirstOrDefault();
                 if (res2 == null || res1.Id == res2?.Id)
                 {
                     return Json(true);
@@ -79,7 +79,7 @@ namespace MyKursach2.Controllers
             }
             else
             {
-                var res3 = _context.PaymentMethod.Where(t => t.PaymentMethodName == PaymentMethodName).Select(t => t).FirstOrDefault();
+                var res3 = _context.PaymentMethods.Where(t => t.PaymentMethodName == PaymentMethodName).Select(t => t).FirstOrDefault();
                 if (res3 != null)
                     return Json(false);
                 return Json(true);
@@ -94,7 +94,7 @@ namespace MyKursach2.Controllers
             {
                 return RedirectToAction("List");
             }
-            PaymentMethod pay = _context.PaymentMethod.Find(id);
+            PaymentMethod pay = _context.PaymentMethods.Find(id);
             if (pay != null)
             {                
                 return View(pay);
@@ -119,7 +119,7 @@ namespace MyKursach2.Controllers
         [HttpGet]
         public IActionResult Delete(int? id)
         {
-            PaymentMethod payment = _context.PaymentMethod.Find(id);
+            PaymentMethod payment = _context.PaymentMethods.Find(id);
             if (payment == null)
             {
                 //return HttpNotFound();
@@ -131,12 +131,12 @@ namespace MyKursach2.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int? id)
         {
-            PaymentMethod payment = _context.PaymentMethod.Find(id);
+            PaymentMethod payment = _context.PaymentMethods.Find(id);
             if (payment == null)
             {
                 //return HttpNotFound();
             }
-            _context.PaymentMethod.Remove(payment);
+            _context.PaymentMethods.Remove(payment);
             _context.SaveChanges();
             return RedirectToAction("List");
         }

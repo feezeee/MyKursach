@@ -64,11 +64,11 @@ namespace MyKursach2.Controllers
         {
             if (ModelState.IsValid)
             {
-                Worker user = await _context.Worker.FirstOrDefaultAsync(u => u.PhoneNumber == model.PhoneNumber && u.Password == model.Password);
+                Worker user = await _context.Workers.FirstOrDefaultAsync(u => u.PhoneNumber == model.PhoneNumber && u.Password == model.Password);
                 if (user != null)
                 {
-                    user.Position = _context.Position.Where(p => p.Id == user.PositionId).FirstOrDefault();
-                    user.Gender = _context.Gender.Where(p => p.Id == user.GenderId).FirstOrDefault();
+                    user.Position = _context.Positions.Where(p => p.Id == user.PositionId).FirstOrDefault();
+                    user.Gender = _context.Genders.Where(p => p.Id == user.GenderId).FirstOrDefault();
                     await Authenticate(user); // аутентификация
                     AuthorizedUser.GetInstance().SetUser(user);
                     return RedirectToAction("Index", "Home");
