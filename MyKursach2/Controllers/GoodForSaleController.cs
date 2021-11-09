@@ -24,14 +24,17 @@ namespace MyKursach2.Controllers
         {
             //var res = _context.Workers.Join(_context.Positions);
 
-            var res = from gfs in _context.GoodsForSale
-                      select new GoodForSale
-                      {
-                          Id = gfs.Id,
-                          Name = gfs.Name,
-                          QuantityInStock = gfs.QuantityInStock,
-                          Providers = gfs.Providers
-                      };
+            //var res = from gfs in _context.GoodsForSale
+            //          select new GoodForSale
+            //          {
+            //              Id = gfs.Id,
+            //              Name = gfs.Name,
+            //              QuantityInStock = gfs.QuantityInStock,
+            //              Providers = gfs.Providers
+            //          };
+            //var res = _context.GoodsForSale;
+
+            var res = _context.GoodsForSale.Include(c => c.Providers).Select(t=>t);
 
 
             if (goodForSale?.Id > 0)
@@ -111,15 +114,16 @@ namespace MyKursach2.Controllers
                 return RedirectToAction("List");
             }
 
-            var res = from gfs in _context.GoodsForSale
-                      where gfs.Id == id
-                      select new GoodForSale
-                      {
-                          Id = gfs.Id,
-                          Name = gfs.Name,
-                          QuantityInStock = gfs.QuantityInStock,
-                          Providers = gfs.Providers
-                      };
+            //var res = from gfs in _context.GoodsForSale
+            //          where gfs.Id == id
+            //          select new GoodForSale
+            //          {
+            //              Id = gfs.Id,
+            //              Name = gfs.Name,
+            //              QuantityInStock = gfs.QuantityInStock,
+            //              Providers = gfs.Providers
+            //          };
+            var res = _context.GoodsForSale.Include(c => c.Providers).Where(t => t.Id == id).Select(t => t);
 
             GoodForSale goodForSale = res.FirstOrDefault();
 
@@ -138,15 +142,17 @@ namespace MyKursach2.Controllers
         {
             if (ModelState.IsValid)
             {
-                var res = from gfs in _context.GoodsForSale
-                          where gfs.Id == goodForSale.Id
-                          select new GoodForSale
-                          {
-                              Id = gfs.Id,
-                              Name = gfs.Name,
-                              QuantityInStock = gfs.QuantityInStock,
-                              Providers = gfs.Providers
-                          };
+                //var res = from gfs in _context.GoodsForSale
+                //          where gfs.Id == goodForSale.Id
+                //          select new GoodForSale
+                //          {
+                //              Id = gfs.Id,
+                //              Name = gfs.Name,
+                //              QuantityInStock = gfs.QuantityInStock,
+                //              Providers = gfs.Providers
+                //          };
+
+                var res = _context.GoodsForSale.Include(c => c.Providers).Where(t => t.Id == goodForSale.Id).Select(t => t);
 
                 GoodForSale newgoodForSale = res.FirstOrDefault();
                 newgoodForSale.Name = goodForSale.Name;
@@ -157,7 +163,7 @@ namespace MyKursach2.Controllers
 
                 _context.Entry(newgoodForSale).Collection(u => u.Providers).Load();
                 newgoodForSale.Providers.Clear();
-
+                await _context.SaveChangesAsync();
                 if (selectedProviders != null)
                 {
                     foreach (var p in _context.Providers.Where(t => selectedProviders.Contains(t.Id)))
@@ -178,7 +184,7 @@ namespace MyKursach2.Controllers
             GoodForSale goodForSale = _context.GoodsForSale.Find(id);
             if (goodForSale == null)
             {
-                //return HttpNotFound();
+                return View("List");
             }
 
             return View(goodForSale);
@@ -190,7 +196,7 @@ namespace MyKursach2.Controllers
             GoodForSale goodForSale = _context.GoodsForSale.Find(id);
             if (goodForSale == null)
             {
-                //return HttpNotFound();
+                return View("List");
             }
 
             goodForSale.Providers.Clear();

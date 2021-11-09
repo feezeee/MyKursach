@@ -11,7 +11,7 @@ namespace MyKursach2.Models
     public class GoodForSale
     {
         [Required]
-        [Column("goodsforsale_id")]
+        [Column("goodforsale_id")]
         public int Id { get; set; }
 
 
@@ -19,20 +19,14 @@ namespace MyKursach2.Models
         [StringLength(19, ErrorMessage = "Длина строки должна быть до 19 символов")]
         [Remote(action: "CheckName", controller: "GoodForSale", AdditionalFields = "Id", ErrorMessage = "Такой товар уже существует", HttpMethod = "POST")]
 
-        [Column("goodsforsale_name")] 
+        [Column("goodforsale_name")] 
         public string Name { get; set; }
 
         [Required]
         [Column("quantity_in_stock")]
         public int? QuantityInStock { get; set; }
 
-        public virtual ICollection<Provider> Providers { get; set; }
-
-        public GoodForSale()
-        {
-            Providers = new List<Provider>();
-        }
-
-        public List<GoodForSale_Provider> GoodForSale_Providers { get; set; } = new List<GoodForSale_Provider>();
+        public virtual List<Provider> Providers { get; set; } = new List<Provider>();
+        public virtual List<GoodForSale_Provider> GoodsForSale_Providers { get; set; } = new List<GoodForSale_Provider>();
     }
 }

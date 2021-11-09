@@ -28,13 +28,8 @@ namespace MyKursach2.Models
         [Column("email")]
         public string? Email { get; set; }
 
-        public virtual ICollection<GoodForSale> GoodsForSale { get; set; }
-        public Provider()
-        {
-            GoodsForSale = new List<GoodForSale>();
-        }
-                
-        public List<GoodForSale_Provider> GoodForSale_Providers { get; set; } = new List<GoodForSale_Provider>();
+        public virtual List<GoodForSale> GoodsForSale { get; set; } = new List<GoodForSale>();
+        public virtual List<GoodForSale_Provider> GoodsForSale_Providers { get; set; } = new List<GoodForSale_Provider>();
 
     }
 }

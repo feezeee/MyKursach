@@ -10,7 +10,7 @@ namespace MyKursach2.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-                
+
         }
         public DbSet<Position> Positions { get; set; }
         public DbSet<Worker> Workers { get; set; }
@@ -23,18 +23,24 @@ namespace MyKursach2.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<GoodForSale_Provider>()
-            .HasKey(t => new { t.GoodForSaleId, t.ProviderId });
-
-            modelBuilder.Entity<GoodForSale_Provider>()
-                .HasOne(pt => pt.GoodsForSale)
-                .WithMany(p => p.GoodForSale_Providers)
-                .HasForeignKey(pt => pt.GoodForSaleId);
-
-            modelBuilder.Entity<GoodForSale_Provider>()
-                .HasOne(pt => pt.Providers)
-                .WithMany(t => t.GoodForSale_Providers)
-                .HasForeignKey(pt => pt.ProviderId);
+            modelBuilder
+               .Entity<Provider>()
+               .HasMany(c => c.GoodsForSale)
+               .WithMany(s => s.Providers)
+               .UsingEntity<GoodForSale_Provider>(
+                  j => j
+                   .HasOne(pt => pt.GoodForSale)
+                   .WithMany(t => t.GoodsForSale_Providers)
+                   .HasForeignKey(pt => pt.GoodForSaleId),
+               j => j
+                   .HasOne(pt => pt.Provider)
+                   .WithMany(p => p.GoodsForSale_Providers)
+                   .HasForeignKey(pt => pt.ProviderId),
+               j =>
+               {   
+                   j.HasKey(t => new { t.ProviderId, t.GoodForSaleId, t.Id });
+                   j.ToTable("goodsforsale_providers");
+               });
         }
     }
 }

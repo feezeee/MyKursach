@@ -35,7 +35,6 @@
                     <th>Поставщик</th>
                     <th>Мобильный телефон</th>
                     <th>Эл. почта</th>
-                    <th>Товары</th>
                 </tr>
             </thead>            
             <tbody id="editClickbodyProvider">
@@ -57,13 +56,6 @@
                     <td>
                         @el.Email
                     </td>
-                    <td>
-                        @foreach (var pr in el.GoodsForSale)
-                        {
-                            <div>@pr.Name (@pr.QuantityInStock)</div>
-                        }
-                    </td>
-
                 </tr>
                 }
             </tbody>

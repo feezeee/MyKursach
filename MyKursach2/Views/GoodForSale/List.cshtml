@@ -55,9 +55,9 @@
                             @el.QuantityInStock
                         </td>
                         <td>
-                            @foreach(var pr in el.Providers)
+                            @foreach(var pr in el.GoodsForSale_Providers)
                             { 
-                                <div>@pr.Name</div>
+                                <div>@pr.Provider.Name</div>
                             }
                         </td>
                         

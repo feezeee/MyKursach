@@ -24,15 +24,17 @@ namespace MyKursach2.Controllers
         {
             //var res = _context.Workers.Join(_context.Positions);
 
-            var res = from prv in _context.Providers
-                      select new Provider
-                      {
-                          Id = prv.Id,
-                          Name = prv.Name,
-                          PhoneNumber = prv.PhoneNumber,
-                          Email = prv.Email,
-                          GoodsForSale = prv.GoodsForSale
-                      };
+            //var res = from prv in _context.Providers
+            //          select new Provider
+            //          {
+            //              Id = prv.Id,
+            //              Name = prv.Name,
+            //              PhoneNumber = prv.PhoneNumber,
+            //              Email = prv.Email,
+            //              GoodsForSale_Providers = prv.GoodsForSale_Providers
+            //          };
+
+            var res = _context.Providers.Include(c => c.GoodsForSale).Select(t => t);
 
             if (provider?.Id > 0)
             {
@@ -97,18 +99,20 @@ namespace MyKursach2.Controllers
             {
                 return RedirectToAction("List");
             }
-            
 
-            var res = from prv in _context.Providers
-                      where prv.Id == id
-                      select new Provider
-                      {
-                          Id = prv.Id,
-                          Name = prv.Name,
-                          PhoneNumber = prv.PhoneNumber,
-                          Email = prv.Email,
-                          GoodsForSale = prv.GoodsForSale
-                      };
+
+            //var res = from prv in _context.Providers
+            //          where prv.Id == id
+            //          select new Provider
+            //          {
+            //              Id = prv.Id,
+            //              Name = prv.Name,
+            //              PhoneNumber = prv.PhoneNumber,
+            //              Email = prv.Email,
+            //              GoodsForSale_Providers = prv.GoodsForSale_Providers
+            //          };
+
+            var res = _context.Providers.Where(t => t.Id == id).Select(t => t);
 
             Provider provider = res.FirstOrDefault();
 
@@ -126,16 +130,17 @@ namespace MyKursach2.Controllers
         {
             if (ModelState.IsValid)
             {
-                var res = from prv in _context.Providers
-                          where prv.Id == provider.Id
-                          select new Provider
-                          {
-                              Id = prv.Id,
-                              Name = prv.Name,
-                              PhoneNumber = prv.PhoneNumber,
-                              Email = prv.Email,
-                              GoodsForSale = prv.GoodsForSale
-                          };
+                //var res = from prv in _context.Providers
+                //          where prv.Id == provider.Id
+                //          select new Provider
+                //          {
+                //              Id = prv.Id,
+                //              Name = prv.Name,
+                //              PhoneNumber = prv.PhoneNumber,
+                //              Email = prv.Email,
+                //              GoodsForSale_Providers = prv.GoodsForSale_Providers
+                //          };
+                var res = _context.Providers.Where(t => t.Id == provider.Id).Select(t => t);
 
                 Provider newProvider = res.FirstOrDefault();
                 newProvider.Name = provider.Name;
@@ -154,7 +159,7 @@ namespace MyKursach2.Controllers
             Provider provider = _context.Providers.Find(id);
             if (provider == null)
             {
-                //return HttpNotFound();
+                return View("List");
             }
 
             return View(provider);
@@ -166,14 +171,14 @@ namespace MyKursach2.Controllers
             Provider provider = _context.Providers.Find(id);
             if (provider == null)
             {
-                //return HttpNotFound();
+                return View("List");
             }
 
-            provider.GoodsForSale.Clear();
+            provider.GoodsForSale_Providers.Clear();
             _context.Entry(provider).State = EntityState.Modified;
 
-            _context.Entry(provider).Collection(u => u.GoodsForSale).Load();
-            provider.GoodsForSale.Clear();
+            _context.Entry(provider).Collection(u => u.GoodsForSale_Providers).Load();
+            provider.GoodsForSale_Providers.Clear();
             _context.Entry(provider).State = EntityState.Modified;
             _context.Providers.Remove(provider);
             _context.SaveChanges();

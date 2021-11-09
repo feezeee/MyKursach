@@ -64,10 +64,16 @@ goodForSale_id int not null
 );
 
 CREATE TABLE goodsforsale (
-goodsforsale_id int primary key not null auto_increment,
-goodsforsale_name varchar(30) not null,
+goodforsale_id int primary key not null auto_increment,
+goodforsale_name varchar(30) not null,
 quantity_in_stock int not null
 );
+
+INSERT INTO goodsforsale (goodforsale_name, quantity_in_stock)
+	VALUES 
+    ("хлеб", "100"),
+    ("батон", "200");
+    
 
 CREATE TABLE providers (
 provider_id int primary key not null auto_increment,
@@ -84,10 +90,19 @@ INSERT INTO providers (provider_name, phone_number, email)
     ("ООО БНТУ", "тест", "test");
 
 CREATE TABLE goodsforsale_providers (
-goodsforsale_providers_id int primary key not null auto_increment,
-goodsforsale_id int not null,
-providers_id int not null
+goodforsale_provider_id int primary key not null auto_increment,
+goodforsale_id int not null,
+provider_id int not null
 );
+
+INSERT INTO goodsforsale_providers (goodforsale_id, provider_id)
+	VALUES 
+    (1, 1),
+    (1, 2),
+    (1, 3),
+    (2, 1);
+
+
 
 CREATE TABLE paymentmethods (
 paymentmethod_id int primary key not null auto_increment,
