@@ -303,3 +303,72 @@
         display: none;
     }
 }
+
+
+
+
+
+
+
+.main_operation {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    position: absolute;
+    background: #E4E9F7;
+}
+
+.operation {
+    width: 1000px;
+    margin: 0;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgb(0 0 0 / 15%);
+}
+
+.operation_cont {
+    min-height: 800px;
+}
+
+.operation_cont_type {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0px;
+    min-height: 800px;
+}
+
+    .operation_cont_type li {
+        border-top: 1px solid black;
+        height: auto;
+        display: flex;
+        justify-content: space-between;
+        min-height: 200px;
+        margin-top: 18px;
+    }
+
+.operation_table {
+    margin-top: 18px;
+    width: 700px;
+    /* height: 500px; */
+    /*background-color: blueviolet;*/
+}
+
+.operation_cont_type li a {
+    border-radius: 5px;
+    border: 2px solid lightgreen;
+    width: 200px;
+    height: fit-content;
+    padding: 10px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 18px;
+}
+
+    .operation_cont_type li a:hover {
+        background-color: rgb(159, 253, 214);
+    }

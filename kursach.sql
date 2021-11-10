@@ -50,9 +50,15 @@ INSERT INTO genders (gender_name)
 
 CREATE TABLE operations (
 operation_id int primary key not null auto_increment,
-operation_date_time datetime not null,
+operation_date_time datetime default now() null,
 worker_id int not null
 );
+INSERT INTO operations (worker_id)
+	VALUES 
+    (1),
+    (1),
+    (2);
+
 
 
 CREATE TABLE SaleGoods (
@@ -104,9 +110,9 @@ INSERT INTO goodsforsale_providers (goodforsale_id, provider_id)
 
 
 
-CREATE TABLE paymentmethods (
-paymentmethod_id int primary key not null auto_increment,
-paymentmethod_name varchar(20) not null
+CREATE TABLE payment_methods (
+payment_method_id int primary key not null auto_increment,
+payment_method_name varchar(20) not null
 );
 
 CREATE TABLE DeliveryGoods (
@@ -119,21 +125,22 @@ paymentMethod_id int not null,
 deliveryCountries_id int not null
 );
 
-CREATE TABLE deliverycountries (
-deliverycountry_id int primary key not null auto_increment,
-deliverycountry_name varchar(20) not null
+CREATE TABLE delivery_countries (
+delivery_country_id int primary key not null auto_increment,
+delivery_country_name varchar(20) not null
 );
 
-CREATE TABLE availablepayments (
-availablepayment_id int primary key not null auto_increment,
-availablepayment_name varchar(30) not null
+CREATE TABLE available_payments (
+available_payment_id int primary key not null auto_increment,
+available_payment_name varchar(30) not null
 );
 
-CREATE TABLE MakingPayments (
-id int primary key not null auto_increment,
+CREATE TABLE making_payments (
+making_payment_id int primary key not null auto_increment,
 operation_id int not null,
-paymentMethod_id int not null,
-availablePayment_id int not null
+payment_method_id int not null,
+available_payment_id int not null,
+price int UNSIGNED not null
 );
 
 

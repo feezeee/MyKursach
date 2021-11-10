@@ -1,0 +1,71 @@
+﻿@model IEnumerable<MyKursach2.Models.Operation>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Операции";
+}
+
+
+
+<div class="container-fluid" style="height: 100%; width:contain;">
+
+    <h1 class="text-center pt-5">
+        Операции
+    </h1>
+
+
+    <form name="test" method="get" asp-controller="Operation" asp-action="List" class="param_workers">
+
+        <input class="form-control" name="operation.Id" type="text" placeholder="Id операции:" />
+        <input class="form-control" name="operation.Worker.LastName" type="text" placeholder="Фамилия сотрудника:" />
+        <input id="operationList_date" class="form-control" name="operation.DateTime" type="text" placeholder="Дата операции (гг.мм.дд):" />
+        <div>
+            <button class="btn btn-success" type="submit">
+                Поиск
+            </button>
+        </div>
+    </form>
+    <div class="div-contenet-table">
+        <a asp-controller="Operation" asp-action="Create" style="">
+            <i class='bx bx-user-plus'></i>
+            Новая операция
+        </a>
+        <table class="content-table" id="myTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Дата операции (гг.мм.дд)</th>
+                    <th>Сотрудник</th>
+                </tr>
+            </thead>
+            <tbody id="editClickbodyOperation">
+                @foreach (var el in Model)
+                {
+                    <tr class="rowEditStart">
+                        <th class="editId">
+                            @*<a class="popupdelete" asp-action="Delete" asp-controller="Worker" asp-route-id="@el.Id">
+                                    Удалить пользователя
+                                </a>*@
+                            @el?.Id
+                        </th>
+                        <td>
+                            @el?.DateTime.Value.Date.Year.@el?.DateTime.Value.Date.Month.@el?.DateTime.Value.Date.Day
+                        </td>
+                        <td>
+                            @el?.Worker?.LastName
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<script src="~/js/Operation.js">
+
+</script>
+<script src="~/js/jquery.maskedinput.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#operationList_date").mask("9999.99.99");
+    });
+</script>

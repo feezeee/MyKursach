@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyKursach2.Data;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Principal;
@@ -55,6 +56,8 @@ namespace MyKursach2.Models
         [StringLength(50, ErrorMessage = "Длина строки должна быть до 50 символов")]
         [Column("password")]
         public string Password { get; set; }
-       
+
+        public List<Operation> Operations { get; set; } = new List<Operation>(); // операции проведенные сотрудником
+
     }
 }

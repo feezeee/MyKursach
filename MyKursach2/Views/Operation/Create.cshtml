@@ -1,0 +1,74 @@
+﻿@model MyKursach2.Models.Operation
+@{
+    Layout = "_Layout";
+}
+
+<div class="main_operation container-fluid">
+    <form class="operation">
+        <div class="operation_cont">
+            <p class="addingWorkerPopup">Операция</p>
+            <ul class="operation_cont_type">
+                <li>
+                    <a>Добавить товар</a>
+                    <div class="operation_table">
+                        <table class="content-table" id="myTable">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Дата операции (гг.мм.дд)</th>
+                                    <th>Сотрудник</th>
+                                </tr>
+                            </thead>
+                            <tbody id="editClickbodyOperation">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    
+                </li>
+                <li>
+                    <a>Добавить доставку</a>
+                    <div class="operation_table">
+
+                    </div>
+                </li>
+                <li>
+                    <a asp-controller="MakingPayment" asp-action="Create" asp-route-operationId="@Model.Id">Выполнить платеж</a>
+                    <div class="operation_table">
+                        <table class="content-table" id="myTable">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Наименование платежа</th>
+                                    <th>Цена</th>
+                                    <th>Способ оплаты</th>
+                                </tr>
+                            </thead>
+                            <tbody id="editClickbodyOperation">
+                                @foreach (var el in Model.MakingPayments)
+                                {
+                                    <tr class="rowEditStart">
+                                        <th class="editId">
+                                            @el.Id
+                                        </th>
+                                        <td>
+                                            @el.AvailablePayment?.AvailablePaymentName
+                                        </td>
+                                        <td>
+                                            @el.Price
+                                        </td>
+                                        <td>
+                                            @el.PaymentMethod?.PaymentMethodName
+                                        </td>                                        
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </form>
+</div>
+

@@ -168,6 +168,23 @@
             </script>
 
 
+            <li id="area_operation">
+                <a asp-controller="Operation" asp-action="List">
+                    <i id="_operation" class='bx bx-receipt'></i>
+                    <span class="links_name">Операции</span>
+                </a>
+                <span class="tooltip">Операции</span>
+            </li>
+            <script>
+                document.getElementById('area_operation').onmouseenter = function () {
+                    document.getElementById('_operation').classList.add('bx-tada');
+                }
+                document.getElementById('area_operation').onmouseleave = function () {
+                    document.getElementById('_operation').classList.remove('bx-tada');
+                }
+            </script>
+
+
 
 
             @*<li id="area_operations">

@@ -20,6 +20,8 @@ namespace MyKursach2.Data
         public DbSet<AvailablePayment> AvailablePayments { get; set; }
         public DbSet<GoodForSale> GoodsForSale { get; set; }
         public DbSet<Provider> Providers { get; set; }
+        public DbSet<Operation> Operations { get; set; }
+        public DbSet<MakingPayment> MakingPayments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
