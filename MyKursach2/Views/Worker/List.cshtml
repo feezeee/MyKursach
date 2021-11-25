@@ -17,7 +17,9 @@
 
         <input class="form-control" name="worker.Id" type="text" placeholder="Id работника:" />
         <input class="form-control" name="worker.FirstName" type="text" placeholder="Имя работника:" />
-        <input class="form-control" name="worker.LastName" type="text" placeholder="Фамилия работника:" />
+        <input class="form-control" name="worker.LastName" type="text" placeholder="Фамилия работника:" />        
+        <input class="form-control" name="worker.MiddleName" type="text" placeholder="Отчество работника:" />
+        <input class="form-control" name="worker.GroupUser.Name" type="text" placeholder="Группа пользователей:" />
         <input class="form-control" name="worker.Position.PositionName" type="text" placeholder="Должность работника:" />
         <div>
             <button class="btn btn-success" type="submit">
@@ -36,7 +38,8 @@
                     <th>#</th>
                     <th>Фамилия</th>
                     <th>Имя</th>
-                    <th>Пол</th>
+                    <th>Отчество</th>
+                    <th>Группа пользователей</th>
                     <th>Дата рождения</th>
                     <th>Email</th>
                     <th>Номер телефона</th>
@@ -60,7 +63,10 @@
                             @el.FirstName
                         </td>
                         <td>
-                            @el.Gender.GenderName
+                            @el.MiddleName
+                        </td>
+                        <td>
+                            @el.GroupUser?.Name
                         </td>
                         <td>
                             @el.DateOfBirth.ToShortDateString()

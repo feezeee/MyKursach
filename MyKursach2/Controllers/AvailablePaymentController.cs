@@ -20,24 +20,17 @@ namespace MyKursach2.Controllers
 
 
         [Authorize(Roles = "Директор, Администратор, ")]
-        public ViewResult List(AvailablePayment availablePayment)
+        public async Task<IActionResult> List(AvailablePayment availablePayment)
         {
-            //var res = _context.Workers.Join(_context.Positions);
-
-            var res = from availPay in _context.AvailablePayments
-                      select new AvailablePayment
-                      {
-                          Id = availPay.Id,
-                          AvailablePaymentName = availPay.AvailablePaymentName
-                      };
+            var res = await _context.AvailablePayments.Include(t => t.CompletedPayment).OrderBy(t => t.Id).ToListAsync();
 
             if (availablePayment?.Id > 0)
             {
-                res = res.Where(i => i.Id == availablePayment.Id).Select(i => i);
+                res = res.Where(i => i.Id == availablePayment.Id).ToList();
             }
             if (availablePayment?.AvailablePaymentName != null)
             {
-                res = res.Where(fn => fn.AvailablePaymentName.ToUpper().Contains(availablePayment.AvailablePaymentName.ToUpper())).Select(fn => fn);
+                res = res.Where(fn => fn.AvailablePaymentName.ToUpper().Contains(availablePayment.AvailablePaymentName.ToUpper())).Select(fn => fn).ToList();
             }
             return View(res);
         }
@@ -60,16 +53,17 @@ namespace MyKursach2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("List");
             }
-            return View();
+            availablePayment.CompletedPayment = await _context.CompletedPayments.Where(t => t.AvailablePaymentId == availablePayment.Id).ToListAsync();
+            return View(availablePayment);
         }
         [Authorize(Roles = "Директор, Администратор")]
         [AcceptVerbs("Get", "Post")]
-        public IActionResult CheckAvailablePaymentName(int? Id, string AvailablePaymentName)
+        public async Task<IActionResult> CheckAvailablePaymentName(int? Id, string AvailablePaymentName)
         {
             if (Id != null)
             {
-                var res1 = _context.AvailablePayments.Where(t => t.Id == Id).Select(t => t).FirstOrDefault();
-                var res2 = _context.AvailablePayments.Where(t => t.AvailablePaymentName == AvailablePaymentName).Select(t => t).FirstOrDefault();
+                var res1 = await _context.AvailablePayments.Where(t => t.Id == Id).Select(t => t).FirstOrDefaultAsync();
+                var res2 = await _context.AvailablePayments.Where(t => t.AvailablePaymentName == AvailablePaymentName).Select(t => t).FirstOrDefaultAsync();
                 if (res2 == null || res1.Id == res2?.Id)
                 {
                     return Json(true);
@@ -78,7 +72,7 @@ namespace MyKursach2.Controllers
             }
             else
             {
-                var res3 = _context.AvailablePayments.Where(t => t.AvailablePaymentName == AvailablePaymentName).Select(t => t).FirstOrDefault();
+                var res3 = await _context.AvailablePayments.Where(t => t.AvailablePaymentName == AvailablePaymentName).Select(t => t).FirstOrDefaultAsync();
                 if (res3 != null)
                     return Json(false);
                 return Json(true);
@@ -87,13 +81,13 @@ namespace MyKursach2.Controllers
 
         [Authorize(Roles = "Директор, Администратор")]
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == 0)
             {
                 return RedirectToAction("List");
             }
-            AvailablePayment availablePayment = _context.AvailablePayments.Find(id);
+            AvailablePayment availablePayment = await _context.AvailablePayments.Include(t => t.CompletedPayment).Where(t=>t.Id == id).FirstOrDefaultAsync();
             if (availablePayment != null)
             {
                 return View(availablePayment);

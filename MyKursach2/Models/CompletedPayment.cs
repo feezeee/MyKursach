@@ -30,7 +30,7 @@ namespace MyKursach2.Models
         public int AvailablePaymentId { get; set; }
         public AvailablePayment AvailablePayment { get; set; }
 
-        [Column("price")]
+        [Column("payment_price")]
         public int Price { get; set; }
     }
 }

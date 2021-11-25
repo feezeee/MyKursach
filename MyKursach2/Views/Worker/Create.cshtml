@@ -1,4 +1,4 @@
-﻿@model MyKursach2.Models.Worker
+﻿@model Worker
 @{
     Layout = "_Layout";
 }
@@ -18,8 +18,13 @@
                 @Html.ValidationMessageFor(model => model.FirstName, null, new { style = "color:red" })
             </li>
             <li>
+                <span>Отчество*</span>
+                <input asp-for="MiddleName" type="text" placeholder="Введите отчество" />
+                @Html.ValidationMessageFor(model => model.MiddleName, null, new { style = "color:red" })
+            </li>
+            <li>
                 <span>Дата рождения*</span>
-                <input id="_dateofbirth" asp-for="DateOfBirth" type="text" placeholder="Дата рождения" />
+                <input required id="_dateofbirth" asp-for="DateOfBirth" type="date" placeholder="Дата рождения"/>
                 @Html.ValidationMessageFor(model => model.DateOfBirth, null, new { style = "color:red" })
             </li>
             <li>
@@ -28,9 +33,9 @@
                 @Html.ValidationMessageFor(model => model.Email, null, new { style = "color:red" })
             </li>
             <li>
-                <span>Выберите пол*</span>
-                <select asp-for="GenderId" asp-items="ViewBag.Genders"></select>
-                @Html.ValidationMessageFor(model => model.GenderId, null, new { style = "color:red" })
+                <span>Выберите группу пользователей*</span>
+                <select asp-for="GroupUserId" asp-items="ViewBag.GroupUsers"></select>
+                @Html.ValidationMessageFor(model => model.GroupUserId, null, new { style = "color:red" })
             </li>
             <li>
                 <span>Выберите должность*</span>
@@ -66,9 +71,6 @@
 <script>
     $(document).ready(function () {
         $("#_phonenumber").mask("+375 (99) 999-99-99");
-    });
-    $(document).ready(function () {
-        $("#_dateofbirth").mask("99.99.9999");
     });
 </script>
 

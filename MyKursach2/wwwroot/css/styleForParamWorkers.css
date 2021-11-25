@@ -55,6 +55,7 @@
 .popup-inner {
     position: relative;
     max-width: 800px;
+    min-width: 500px;
     width: fit-content;
     height: fit-content;
     background-color: #fff;
@@ -138,12 +139,12 @@
 
 .popupsubmit {
     width: 30%;
+    min-width: 150px;
     border-radius: 20px;
     border: 0;
     height: 50px;
     background: linear-gradient(135deg, #71b7e6, #9b59b6);
     color: #fff;
-
 }
 
 .popupsubmit:hover {
@@ -152,6 +153,7 @@
 
 .popupdelete {
     width: 30%;
+    min-width: 150px;
     border-radius: 20px;
     border: 0;
     height: 50px;

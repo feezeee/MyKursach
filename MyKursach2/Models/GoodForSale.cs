@@ -26,10 +26,16 @@ namespace MyKursach2.Models
         [Column("good_amount")]
         public int GoodAmount { get; set; }
 
+        [Required]
+        [Column("good_price")]
+        public int GoodPrice { get; set; }
+
+
+        public virtual List<SoldGood> SoldGoods { get; set; } = new List<SoldGood>();
         public virtual List<Provider> Providers { get; set; } = new List<Provider>();
-        public virtual List<GoodForSale_Provider> GoodsForSale_Providers { get; set; } = new List<GoodForSale_Provider>();
+        public virtual List<GoodForSale_Provider> GoodForSale_Providers { get; set; } = new List<GoodForSale_Provider>();
 
 
-        
+
     }
 }

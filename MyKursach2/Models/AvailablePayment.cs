@@ -19,7 +19,7 @@ namespace MyKursach2.Models
         [MaxLength(32)]
         [StringLength(32, ErrorMessage = "Длина строки должна быть до 32 символов")]
         [Remote(action: "CheckAvailablePaymentName", controller: "AvailablePayment", AdditionalFields = "Id", ErrorMessage = "Такое наименование платежа уже используется", HttpMethod = "POST")]
-        [Column("available_payment_name")]         
+        [Column("payment_name")]         
         public string AvailablePaymentName { get; set; }
 
 

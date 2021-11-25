@@ -21,5 +21,11 @@ namespace MyKursach2.Models
         [Remote(action: "CheckPaymentMethodName", controller: "PaymentMethod", AdditionalFields = "Id", ErrorMessage = "Такой способ оплаты уже используется", HttpMethod = "POST")]
         [Column("peyment_method_name")]
         public string PaymentMethodName { get; set; }
+
+
+        public virtual List<CompletedPayment> CompletedPayments { get; set; } = new List<CompletedPayment>();
+        public virtual List<DeliveryGood> DeliveryGoods { get; set; } = new List<DeliveryGood>();
+        public virtual List<SoldGood> SoldGoods { get; set; } = new List<SoldGood>();
+
     }
 }

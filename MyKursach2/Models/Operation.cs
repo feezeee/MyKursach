@@ -27,7 +27,8 @@ namespace MyKursach2.Models
 
 
 
-        public virtual List<CompletedPayment> MakingPayments { get; set; } = new List<CompletedPayment>();
-
+        public virtual List<CompletedPayment> CompletedPayments { get; set; } = new List<CompletedPayment>();
+        public virtual List<DeliveryGood> DeliveryGoods { get; set; } = new List<DeliveryGood>();
+        public virtual List<SoldGood> SoldGoods { get; set; } = new List<SoldGood>();
     }
 }

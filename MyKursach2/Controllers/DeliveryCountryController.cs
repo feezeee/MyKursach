@@ -21,24 +21,17 @@ namespace MyKursach2.Controllers
 
 
         [Authorize(Roles = "Директор, Администратор, Кассир, Почтальон")]
-        public ViewResult List(DeliveryCountry deliveryCountry)
+        public async Task<IActionResult> List(DeliveryCountry deliveryCountry)
         {
-            //var res = _context.Workers.Join(_context.Positions);
-
-            var res = from delcount in _context.DeliveryCountries
-                      select new DeliveryCountry
-                      {
-                          Id = delcount.Id,
-                          DeliveryCountryName = delcount.DeliveryCountryName
-                      };
+            var res = await _context.DeliveryCountries.Include(t => t.DeliveryGoods).OrderBy(t => t.Id).ToListAsync();
 
             if (deliveryCountry?.Id > 0)
             {
-                res = res.Where(i => i.Id == deliveryCountry.Id).Select(i => i);
+                res = res.Where(i => i.Id == deliveryCountry.Id).ToList();
             }
             if (deliveryCountry?.DeliveryCountryName != null)
             {
-                res = res.Where(fn => fn.DeliveryCountryName.ToUpper().Contains(deliveryCountry.DeliveryCountryName.ToUpper())).Select(fn => fn);
+                res = res.Where(fn => fn.DeliveryCountryName.ToUpper().Contains(deliveryCountry.DeliveryCountryName.ToUpper())).Select(fn => fn).ToList();
             }
             return View(res);
         }
@@ -61,17 +54,18 @@ namespace MyKursach2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("List");
             }
-            return View();
+            deliveryCountry.DeliveryGoods = await _context.DeliveryGoods.Where(t => t.DeliveryCountryId == deliveryCountry.Id).ToListAsync();
+            return View(deliveryCountry);
         }
 
         [Authorize(Roles = "Директор, Администратор")]
         [AcceptVerbs("Get", "Post")]
-        public IActionResult CheckDeliveryCountryName(int? Id, string DeliveryCountryName)
+        public async Task<IActionResult> CheckDeliveryCountryName(int? Id, string DeliveryCountryName)
         {
             if (Id != null)
             {
-                var res1 = _context.DeliveryCountries.Where(t => t.Id == Id).Select(t => t).FirstOrDefault();
-                var res2 = _context.DeliveryCountries.Where(t => t.DeliveryCountryName == DeliveryCountryName).Select(t => t).FirstOrDefault();
+                var res1 = await _context.DeliveryCountries.Where(t => t.Id == Id).Select(t => t).FirstOrDefaultAsync();
+                var res2 = await _context.DeliveryCountries.Where(t => t.DeliveryCountryName == DeliveryCountryName).Select(t => t).FirstOrDefaultAsync();
                 if (res2 == null || res1.Id == res2?.Id)
                 {
                     return Json(true);
@@ -80,7 +74,7 @@ namespace MyKursach2.Controllers
             }
             else
             {
-                var res3 = _context.DeliveryCountries.Where(t => t.DeliveryCountryName == DeliveryCountryName).Select(t => t).FirstOrDefault();
+                var res3 = await _context.DeliveryCountries.Where(t => t.DeliveryCountryName == DeliveryCountryName).Select(t => t).FirstOrDefaultAsync();
                 if (res3 != null)
                     return Json(false);
                 return Json(true);
@@ -91,13 +85,13 @@ namespace MyKursach2.Controllers
 
         [Authorize(Roles = "Директор, Администратор")]
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == 0)
             {
                 return RedirectToAction("List");
             }
-            DeliveryCountry deliveryCountry = _context.DeliveryCountries.Find(id);
+            DeliveryCountry deliveryCountry = await _context.DeliveryCountries.Include(t => t.DeliveryGoods).Where(t=>t.Id == id).FirstOrDefaultAsync();
             if (deliveryCountry != null)
             {
                 return View(deliveryCountry);
@@ -116,18 +110,21 @@ namespace MyKursach2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("List");
             }
+
+            deliveryCountry.DeliveryGoods = await _context.DeliveryGoods.Where(t => t.DeliveryCountryId == deliveryCountry.Id).ToListAsync();
+
             return View(deliveryCountry);
         }
 
         [Authorize(Roles = "Директор, Администратор")]
         [HttpGet]
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            DeliveryCountry deliveryCountry = _context.DeliveryCountries.Find(id);
-            if (deliveryCountry == null)
+            DeliveryCountry deliveryCountry = await _context.DeliveryCountries.Include(t => t.DeliveryGoods).Where(t=>t.Id == id).FirstOrDefaultAsync();
+            if (deliveryCountry == null || deliveryCountry.DeliveryGoods?.Count != 0)
             {
-                //return HttpNotFound();
-            }
+                return RedirectToAction("Edit", new { id = id });
+            }         
 
             return View(deliveryCountry);
         }
@@ -135,15 +132,16 @@ namespace MyKursach2.Controllers
 
         [Authorize(Roles = "Директор, Администратор")]
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(int? id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
-            DeliveryCountry deliveryCountry = _context.DeliveryCountries.Find(id);
-            if (deliveryCountry == null)
+            DeliveryCountry deliveryCountry = await _context.DeliveryCountries.Include(t => t.DeliveryGoods).Where(t => t.Id == id).FirstOrDefaultAsync();
+            if (deliveryCountry == null || deliveryCountry.DeliveryGoods?.Count != 0)
             {
-                //return HttpNotFound();
+                return RedirectToAction("Edit", new { id = id });
             }
+
             _context.DeliveryCountries.Remove(deliveryCountry);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return RedirectToAction("List");
         }
 

@@ -1,4 +1,4 @@
-﻿@model MyKursach2.Models.Worker
+﻿@model Worker
 @{
     Layout = "_Layout";
 }
@@ -12,17 +12,26 @@
         <ul class="popupinput">
             <li>
                 <span>Фамилия*</span>
-                <input asp-for="LastName" required type="text" placeholder="Введите фамилию" value="@Model.LastName" />
+                <input required asp-for="LastName" type="text" placeholder="Введите фамилию" value="@Model.LastName"/>
                 @Html.ValidationMessageFor(model => model.LastName, null, new { style = "color:red" })
             </li>
             <li>
                 <span>Имя*</span>
-                <input asp-for="FirstName" type="text" placeholder="Введите имя" value="@Model.FirstName" />
+                <input required asp-for="FirstName" type="text" placeholder="Введите имя" value="@Model.FirstName"/>
                 @Html.ValidationMessageFor(model => model.FirstName, null, new { style = "color:red" })
             </li>
             <li>
+                <span>Отчество*</span>
+                <input required asp-for="MiddleName" type="text" placeholder="Введите отчество" value="@Model.MiddleName"/>
+                @Html.ValidationMessageFor(model => model.MiddleName, null, new { style = "color:red" })
+            </li>
+            <li>
                 <span>Дата рождения*</span>
-                <input id="_dateofbirth" asp-for="DateOfBirth" type="text" placeholder="Дата рождения" value="@Model.DateOfBirth" />
+                 @{
+                    string mydate = "";                    
+                     mydate = DateTime.Parse($"{Model.DateOfBirth}").ToString("yyyy-MM-dd"); 
+                }
+                <input required id="_dateofbirth" asp-for="DateOfBirth" type="date" placeholder="Дата рождения" value="@mydate" />
                 @Html.ValidationMessageFor(model => model.DateOfBirth, null, new { style = "color:red" })
             </li>
             <li>
@@ -31,9 +40,9 @@
                 @Html.ValidationMessageFor(model => model.Email, null, new { style = "color:red" })
             </li>
             <li>
-                <span>Выберите пол*</span>
-                <select asp-for="GenderId" asp-items="ViewBag.Genders" value="@Model.Gender.GenderName"></select>
-                @Html.ValidationMessageFor(model => model.GenderId, null, new { style = "color:red" })
+                <span>Выберите группу пользователей*</span>
+                <select asp-for="GroupUserId" asp-items="ViewBag.GroupUsers" value="@Model.GroupUserId"></select>
+                @Html.ValidationMessageFor(model => model.GroupUserId, null, new { style = "color:red" })
             </li>
             <li>
                 <span>Выберите должность*</span>
@@ -43,12 +52,12 @@
             <li>
                 <span>Номер телефона*</span>
                 <input type="hidden" name="Id" value="@Model.Id" />
-                <input autocomplete="off" id="_phonenumber" asp-for="PhoneNumber" type="text" placeholder="Номер телефона" value="@Model.PhoneNumber" />
+                <input required autocomplete="off" id="_phonenumber" asp-for="PhoneNumber" type="text" placeholder="Номер телефона" value="@Model.PhoneNumber" />
                 @Html.ValidationMessageFor(model => model.PhoneNumber, null, new { style = "color:red" })
             </li>
             <li>
                 <span>Введите пароль*</span>
-                <input asp-for="Password" type="text" placeholder="Введите пароль" value="@Model.Password" />
+                <input required asp-for="Password" type="text" placeholder="Введите пароль" value="@Model.Password" />
                 @Html.ValidationMessageFor(model => model.Password, null, new { style = "color:red" })
             </li>
 
@@ -59,14 +68,10 @@
             <button class="popupsubmit" type="submit">
                 Сохранить
             </button>
-            @if (AuthorizedUser.GetInstance().GetWorker().Id != Model.Id)
+            @if (AuthorizedUser.GetInstance().GetWorker().Id != Model.Id && Model.Operations?.Count == 0)
             {
                 <a class="popupdelete" type="button" asp-action="Delete" asp-controller="Worker" asp-route-id=@Model.Id>Удалить</a>
             }
-            @*<a class="popupdelete" type="button" asp-action="Delete" asp-controller="Worker" asp-route-id=@Model.Id>Удалить</a>*@
-
-            @*@Html.ActionLink("DisplayText", "Delete", "Worker", "post",);*@
-            @*<input id="deleteClickUser" type="button" class="popupdelete" value="Удалить"/>*@
         </div>
 
     </div>
@@ -75,9 +80,6 @@
 <script>
     $(document).ready(function () {
         $("#_phonenumber").mask("+375 (99) 999-99-99");
-    });
-    $(document).ready(function () {
-        $("#_dateofbirth").mask("99.99.9999");
     });
 </script>
 

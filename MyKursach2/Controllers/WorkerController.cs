@@ -21,53 +21,46 @@ namespace MyKursach2.Controllers
 
 
         [Authorize(Roles = "Директор, Администратор")]
-        public ViewResult List(Worker worker)
+        public async Task<IActionResult> List(Worker worker)
         {
             //var res = _context.Workers.Join(_context.Positions);
 
-            var res = from work in _context.Workers
-                      join position in _context.Positions on work.PositionId equals position.Id
-                      join gender in _context.Genders on work.GenderId equals gender.Id
-                      select new Worker
-                      {
-                          Id = work.Id,
-                          FirstName = work.FirstName,
-                          LastName = work.LastName,
-                          Email = work.Email,
-                          DateOfBirth = work.DateOfBirth,
-                          GenderId = work.GenderId,
-                          Gender = gender,
-                          PositionId = work.PositionId,
-                          Position = position,
-                          Password = work.Password,
-                          PhoneNumber = work.PhoneNumber
-                      };
+            var res = await _context.Workers.Include(t => t.Position).Include(t => t.GroupUser).OrderBy(t=>t.Id).ToListAsync();            
 
             if (worker?.Id > 0)
             {
-                res = res.Where(i => i.Id == worker.Id).Select(i => i);
+                res = res.Where(i => i.Id == worker.Id).ToList();
             }
             if (worker?.FirstName != null)
             {
-                res = res.Where(fn => fn.FirstName.ToUpper().Contains(worker.FirstName.ToUpper())).Select(fn => fn);
+                res = res.Where(fn => fn.FirstName.ToUpper().Contains(worker.FirstName.ToUpper())).Select(fn => fn).ToList();
             }
             if (worker?.LastName != null)
             {
-                res = res.Where(ln => ln.LastName.ToUpper().Contains(worker.LastName.ToUpper())).Select(ln => ln);
-            }            
+                res = res.Where(ln => ln.LastName.ToUpper().Contains(worker.LastName.ToUpper())).Select(ln => ln).ToList();
+            }
+            if (worker?.MiddleName != null)
+            {
+                res = res.Where(ln => ln.MiddleName.ToUpper().Contains(worker.MiddleName.ToUpper())).Select(ln => ln).ToList();
+            }
             if (worker?.Position?.PositionName != null)
             {
-                res = res.Where(ln => ln.Position.PositionName.ToUpper().Contains(worker.Position.PositionName.ToUpper())).Select(ln => ln);
+                res = res.Where(ln => ln.Position.PositionName.ToUpper().Contains(worker.Position.PositionName.ToUpper())).Select(ln => ln).ToList();
             }
+            if (worker?.GroupUser?.Name != null)
+            {
+                res = res.Where(ln => ln.GroupUser.Name.ToUpper().Contains(worker.GroupUser.Name.ToUpper())).Select(ln => ln).ToList();
+            }
+
             return View(res);
         }
 
         [Authorize(Roles = "Директор, Администратор")]
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewBag.Genders = new SelectList(_context.Genders, "Id", "GenderName"); 
-            ViewBag.Positions = new SelectList(_context.Positions, "Id", "PositionName");
+            ViewBag.GroupUsers = new SelectList(await _context.GroupUsers.ToListAsync(), "Id", "Name"); 
+            ViewBag.Positions = new SelectList(await _context.Positions.ToListAsync(), "Id", "PositionName");
             return View();
         }
 
@@ -82,18 +75,18 @@ namespace MyKursach2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("List");
             }
-            ViewBag.Genders = new SelectList(_context.Genders, "Id", "GenderName");
-            ViewBag.Positions = new SelectList(_context.Positions, "Id", "PositionName");
+            ViewBag.GroupUsers = new SelectList(await _context.GroupUsers.ToListAsync(), "Id", "Name");
+            ViewBag.Positions = new SelectList(await _context.Positions.ToListAsync(), "Id", "PositionName");
             return View();
         }
         [Authorize(Roles = "Директор, Администратор")]
         [AcceptVerbs("Get", "Post")]
-        public IActionResult CheckPhoneNumber(int? Id, string PhoneNumber)
+        public async Task<IActionResult> CheckPhoneNumber(int? Id, string PhoneNumber)
         {
             if (Id != null)
             {
-                var res1 = _context.Workers.Where(t => t.Id == Id).Select(t => t).FirstOrDefault();
-                var res2 = _context.Workers.Where(t => t.PhoneNumber == PhoneNumber).Select(t => t).FirstOrDefault();
+                var res1 = await _context.Workers.Where(t => t.Id == Id).Select(t => t).FirstOrDefaultAsync();
+                var res2 = await _context.Workers.Where(t => t.PhoneNumber == PhoneNumber).Select(t => t).FirstOrDefaultAsync();
                 if (res2 == null || res1.Id == res2?.Id)
                 {
                     return Json(true);
@@ -102,7 +95,7 @@ namespace MyKursach2.Controllers
             }
             else
             {
-                var res3 = _context.Workers.Where(t => t.PhoneNumber == PhoneNumber).Select(t => t).FirstOrDefault();
+                var res3 = await _context.Workers.Where(t => t.PhoneNumber == PhoneNumber).Select(t => t).FirstOrDefaultAsync();
                 if (res3 != null)
                     return Json(false);
                 return Json(true);
@@ -111,21 +104,17 @@ namespace MyKursach2.Controllers
 
         [Authorize(Roles = "Директор, Администратор")]
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == 0)
             {
                 return RedirectToAction("List");
             }
-            Worker worker = _context.Workers.Find(id);
+            Worker worker = await _context.Workers.Include(t=>t.GroupUser).Include(t=>t.Position).Include(t=>t.Operations).Where(t=>t.Id == id.Value).FirstOrDefaultAsync();
             if (worker != null)
             {
-                var gend = _context.Genders;
-                var pos = _context.Positions;
-                worker.Gender = gend.Where(t => t.Id == worker.GenderId).Select(t => t).FirstOrDefault();
-                worker.Position = pos.Where(t => t.Id == worker.PositionId).Select(t => t).FirstOrDefault();
-                ViewBag.Genders = new SelectList(gend, "Id", "GenderName");
-                ViewBag.Positions = new SelectList(pos, "Id", "PositionName");
+                ViewBag.GroupUsers = new SelectList(await _context.GroupUsers.ToListAsync(), "Id", "Name");
+                ViewBag.Positions = new SelectList(await _context.Positions.ToListAsync(), "Id", "PositionName");
                 return View(worker);
             }
             return RedirectToAction("List");
@@ -140,8 +129,8 @@ namespace MyKursach2.Controllers
             {
                 if (worker.Id == AuthorizedUser.GetInstance().GetWorker().Id)
                 {
-                    worker.Position = _context.Positions.Find(worker.PositionId);
-                    worker.Gender = _context.Genders.Find(worker.GenderId);
+                    worker.Position = await _context.Positions.Where(t=>t.Id == worker.PositionId).FirstOrDefaultAsync();
+                    worker.GroupUser = await _context.GroupUsers.Where(t => t.Id == worker.GroupUserId).FirstOrDefaultAsync();
                     AuthorizedUser.GetInstance().ClearUser();
                     AuthorizedUser.GetInstance().SetUser(worker);
                 }
@@ -150,20 +139,18 @@ namespace MyKursach2.Controllers
                 return RedirectToAction("List");
             }
 
-            var gend = _context.Genders;
-            var pos = _context.Positions;
-            ViewBag.Genders = new SelectList(gend, "Id", "GenderName");
-            ViewBag.Positions = new SelectList(pos, "Id", "PositionName");
+            ViewBag.GroupUsers = new SelectList(await _context.GroupUsers.ToListAsync(), "Id", "Name");
+            ViewBag.Positions = new SelectList(await _context.Positions.ToListAsync(), "Id", "PositionName");
             return View(worker);
         }
 
         [HttpGet]
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            Worker worker = _context.Workers.Find(id);
+            Worker worker = await _context.Workers.Include(t=>t.Position).Include(t=>t.GroupUser).Include(t=>t.Operations).Where(t => t.Id == id).FirstOrDefaultAsync();
             if (worker == null)
             {
-                //return HttpNotFound();
+                return RedirectToAction("Edit", new { id = id });
             }
             else if (worker?.Id == AuthorizedUser.GetInstance().GetWorker().Id)
             {
@@ -174,16 +161,21 @@ namespace MyKursach2.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(int? id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
-            Worker worker = _context.Workers.Find(id);
+            Worker worker = await _context.Workers.Include(t => t.Position).Include(t => t.GroupUser).Include(t => t.Operations).Where(t => t.Id == id).FirstOrDefaultAsync();
             if (worker == null)
             {
-                //return HttpNotFound();
+                return RedirectToAction("Edit", new { id = id });
             }
-            _context.Workers.Remove(worker);
-            _context.SaveChanges();
-            return RedirectToAction("List");
+            else if (worker?.Id == AuthorizedUser.GetInstance().GetWorker().Id)
+            {
+                _context.Workers.Remove(worker);
+                _context.SaveChanges();                
+                return RedirectToAction("Logout", "Account");
+
+            }
+            return RedirectToAction("Edit", new { id = id });
         }
 
     }

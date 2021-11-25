@@ -26,5 +26,7 @@ namespace MyKursach2.Models
         [Column("count_good")]
         public int CountGood { get; set; }
 
+
+        
     }
 }

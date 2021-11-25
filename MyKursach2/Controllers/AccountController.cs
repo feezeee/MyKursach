@@ -64,11 +64,9 @@ namespace MyKursach2.Controllers
         {
             if (ModelState.IsValid)
             {
-                Worker user = await _context.Workers.FirstOrDefaultAsync(u => u.PhoneNumber == model.PhoneNumber && u.Password == model.Password);
+                Worker user = await _context.Workers.Include(t=>t.Position).Include(t=>t.GroupUser).FirstOrDefaultAsync(u => u.PhoneNumber == model.PhoneNumber && u.Password == model.Password);
                 if (user != null)
                 {
-                    user.Position = _context.Positions.Where(p => p.Id == user.PositionId).FirstOrDefault();
-                    user.Gender = _context.Genders.Where(p => p.Id == user.GenderId).FirstOrDefault();
                     await Authenticate(user); // аутентификация
                     AuthorizedUser.GetInstance().SetUser(user);
                     return RedirectToAction("Index", "Home");
@@ -94,7 +92,7 @@ namespace MyKursach2.Controllers
             var claims = new List<Claim>
             {                
                 new Claim(ClaimsIdentity.DefaultNameClaimType, worker.Id.ToString()),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, worker?.Position?.PositionName)
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, worker?.GroupUser?.Name)
             };
             // создаем объект ClaimsIdentity
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType,

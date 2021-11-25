@@ -22,5 +22,8 @@ namespace MyKursach2.Models
         [Remote(action: "CheckDeliveryCountryName", controller: "DeliveryCountry", AdditionalFields = "Id", ErrorMessage = "Такая страна уже используется", HttpMethod = "POST")]
         [Column("country_delivery_name")] 
         public string DeliveryCountryName { get; set; }
+
+
+        public virtual List<DeliveryGood> DeliveryGoods { get; set; } = new List<DeliveryGood>();
     }
 }

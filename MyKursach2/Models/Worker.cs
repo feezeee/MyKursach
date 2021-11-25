@@ -40,7 +40,6 @@ namespace MyKursach2.Models
 
 
         [Required(ErrorMessage = "Не указана дата рождения")]
-        [DataType(DataType.Date)]
         [Column("worker_date_of_birth")]
         public DateTime DateOfBirth { get; set; }
 
