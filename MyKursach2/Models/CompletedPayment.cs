@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace MyKursach2.Models
 {
-    [Table("making_payments")]
-    public class MakingPayment
+    [Table("completed_payments")]
+    public class CompletedPayment
     {
         [Column("making_payment_id")]
         public int Id { get; set; }

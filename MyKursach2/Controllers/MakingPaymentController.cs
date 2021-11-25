@@ -23,7 +23,7 @@ namespace MyKursach2.Controllers
         [HttpGet]
         public IActionResult Create(int operationId)
         {
-            MakingPayment makingPayment = new MakingPayment();
+            CompletedPayment makingPayment = new CompletedPayment();
             makingPayment.OperationId = operationId;
             ViewBag.AvailablePayments = new SelectList(_context.AvailablePayments, "Id", "AvailablePaymentName"); 
             ViewBag.PaymentMethods = new SelectList(_context.PaymentMethods, "Id", "PaymentMethodName"); 
@@ -32,7 +32,7 @@ namespace MyKursach2.Controllers
 
         [Authorize(Roles = "Директор, Администратор")]
         [HttpPost]
-        public async Task<IActionResult> Create(MakingPayment makingPayment)
+        public async Task<IActionResult> Create(CompletedPayment makingPayment)
         {
             if (ModelState.IsValid)
             {
@@ -54,7 +54,7 @@ namespace MyKursach2.Controllers
             {
                 return RedirectToAction("/Operation/List");
             }
-            MakingPayment makingPayment = _context.MakingPayments.Find(id);
+            CompletedPayment makingPayment = _context.MakingPayments.Find(id);
             if (makingPayment != null)
             {                
                 ViewBag.AvailablePayments = new SelectList(_context.AvailablePayments, "Id", "AvailablePaymentName");
@@ -67,7 +67,7 @@ namespace MyKursach2.Controllers
 
         [Authorize(Roles = "Директор, Администратор")]
         [HttpPost]
-        public async Task<IActionResult> Edit(MakingPayment makingPayment)
+        public async Task<IActionResult> Edit(CompletedPayment makingPayment)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace MyKursach2.Controllers
         [HttpGet]
         public IActionResult Delete(int? id)
         {
-            MakingPayment makingPayment = _context.MakingPayments.Find(id);
+            CompletedPayment makingPayment = _context.MakingPayments.Find(id);
             if (makingPayment == null)
             {
                 return RedirectToAction("/Operation/List");
@@ -98,7 +98,7 @@ namespace MyKursach2.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int? id)
         {
-            MakingPayment makingPayment = _context.MakingPayments.Find(id);
+            CompletedPayment makingPayment = _context.MakingPayments.Find(id);
             if (makingPayment == null)
             {
                 return RedirectToAction("/Operation/List");

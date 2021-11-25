@@ -8,25 +8,30 @@ using System.Threading.Tasks;
 
 namespace MyKursach2.Models
 {
+    [Table("providers")]
     public class Provider
     {
-        [Required]
         [Column("provider_id")]
         public int Id { get; set; }
 
 
         [Required(ErrorMessage = "Не указан поставщик")]
-        [StringLength(19, ErrorMessage = "Длина строки должна быть до 19 символов")]
+        [MaxLength(32)]
+        [StringLength(32, ErrorMessage = "Длина строки должна быть до 32 символов")]
         [Remote(action: "CheckName", controller: "Provider", AdditionalFields = "Id", ErrorMessage = "Такой поставщик уже существует", HttpMethod = "POST")]
         [Column("provider_name")]
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
-        [StringLength(30, ErrorMessage = "Длина строки должна быть до 20 символов")]
-        [Column("phone_number")]
+        [MaxLength(32)]
+        [StringLength(32, ErrorMessage = "Длина строки должна быть до 32 символов")]
+        [Column("provider_phone_number")]
         public string PhoneNumber { get; set; }
 
-        [Column("email")]
-        public string? Email { get; set; }
+
+        [MaxLength(64)]
+        [StringLength(64, ErrorMessage = "Длина строки должна быть до 32 символов")]
+        [Column("provider_email")]
+        public string Email { get; set; }
 
         public virtual List<GoodForSale> GoodsForSale { get; set; } = new List<GoodForSale>();
         public virtual List<GoodForSale_Provider> GoodsForSale_Providers { get; set; } = new List<GoodForSale_Provider>();

@@ -14,8 +14,8 @@
             </li>
             <li>
                 <span>Количество на складе*</span>
-                <input asp-for="QuantityInStock" type="text" placeholder="Введите количество на складе" />
-                @Html.ValidationMessageFor(model => model.QuantityInStock, null, new { style = "color:red" })
+                <input asp-for="GoodAmount" type="text" placeholder="Введите количество на складе" />
+                @Html.ValidationMessageFor(model => model.GoodAmount, null, new { style = "color:red" })
             </li>            
             <li style="width:100%;">
                 <span>Выберите поставщиков*</span>

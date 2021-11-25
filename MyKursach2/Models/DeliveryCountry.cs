@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 
 namespace MyKursach2.Models
 {
-    [Table("delivery_countries")]
+    [Table("countries_delivery")]
     public class DeliveryCountry
     {
 
-        [Required]
-        [Column("delivery_country_id")]
+        [Column("country_delivery_id")]
         public int Id { get; set; }
 
 
         [Required(ErrorMessage = "Не указана страна доставки")]
-        [StringLength(20, ErrorMessage = "Длина строки должна быть до 19 символов")]
+        [MaxLength(64)]
+        [StringLength(64, ErrorMessage = "Длина строки должна быть до 64 символов")]
         [Remote(action: "CheckDeliveryCountryName", controller: "DeliveryCountry", AdditionalFields = "Id", ErrorMessage = "Такая страна уже используется", HttpMethod = "POST")]
-        [Column("delivery_country_name")] 
+        [Column("country_delivery_name")] 
         public string DeliveryCountryName { get; set; }
     }
 }

@@ -7,15 +7,11 @@ using System.Threading.Tasks;
 
 namespace MyKursach2.Models
 {
-    [Table("goodsforsale_providers")]
+    [Table("goods_for_sale_providers")]
     public class GoodForSale_Provider
     {
         [Required]
-        [Column("goodforsale_provider_id")]
-        public int Id { get; set; }
-
-        [Required]
-        [Column("goodforsale_id")]
+        [Column("good_for_sale_id")]
         public int GoodForSaleId { get; set; }
         public GoodForSale GoodForSale { get; set; }
 
@@ -24,6 +20,11 @@ namespace MyKursach2.Models
         [Column("provider_id")]
         public int ProviderId { get; set; }
         public Provider Provider { get; set; }
+
+
+        [Required]
+        [Column("count_good")]
+        public int CountGood { get; set; }
 
     }
 }

@@ -8,25 +8,28 @@ using System.Threading.Tasks;
 
 namespace MyKursach2.Models
 {
+    [Table("goods_for_sale")]
     public class GoodForSale
     {
-        [Required]
-        [Column("goodforsale_id")]
+        [Column("good_for_sale_id")]
         public int Id { get; set; }
 
 
         [Required(ErrorMessage = "Не указано имя товара")]
-        [StringLength(19, ErrorMessage = "Длина строки должна быть до 19 символов")]
+        [MaxLength(32)]
+        [StringLength(32, ErrorMessage = "Длина строки должна быть до 32 символов")]
         [Remote(action: "CheckName", controller: "GoodForSale", AdditionalFields = "Id", ErrorMessage = "Такой товар уже существует", HttpMethod = "POST")]
-
-        [Column("goodforsale_name")] 
+        [Column("good_name")]
         public string Name { get; set; }
 
         [Required]
-        [Column("quantity_in_stock")]
-        public int? QuantityInStock { get; set; }
+        [Column("good_amount")]
+        public int GoodAmount { get; set; }
 
         public virtual List<Provider> Providers { get; set; } = new List<Provider>();
         public virtual List<GoodForSale_Provider> GoodsForSale_Providers { get; set; } = new List<GoodForSale_Provider>();
+
+
+        
     }
 }

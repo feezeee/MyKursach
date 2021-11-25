@@ -21,7 +21,7 @@ namespace MyKursach2.Data
         public DbSet<GoodForSale> GoodsForSale { get; set; }
         public DbSet<Provider> Providers { get; set; }
         public DbSet<Operation> Operations { get; set; }
-        public DbSet<MakingPayment> MakingPayments { get; set; }
+        public DbSet<CompletedPayment> MakingPayments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

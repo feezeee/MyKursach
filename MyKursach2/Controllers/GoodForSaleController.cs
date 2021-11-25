@@ -45,9 +45,9 @@ namespace MyKursach2.Controllers
             {
                 res = res.Where(fn => fn.Name.ToUpper().Contains(goodForSale.Name.ToUpper())).Select(fn => fn);
             }
-            if (goodForSale?.QuantityInStock != null)
+            if (goodForSale?.GoodAmount != null)
             {
-                res = res.Where(fn => fn.QuantityInStock == goodForSale.QuantityInStock).Select(fn => fn);
+                res = res.Where(fn => fn.GoodAmount == goodForSale.GoodAmount).Select(fn => fn);
             }
             return View(res);
         }
@@ -156,7 +156,7 @@ namespace MyKursach2.Controllers
 
                 GoodForSale newgoodForSale = res.FirstOrDefault();
                 newgoodForSale.Name = goodForSale.Name;
-                newgoodForSale.QuantityInStock = goodForSale.QuantityInStock;
+                newgoodForSale.GoodAmount = goodForSale.GoodAmount;
 
                 newgoodForSale.Providers.Clear();
                 _context.Entry(newgoodForSale).State = EntityState.Modified;
