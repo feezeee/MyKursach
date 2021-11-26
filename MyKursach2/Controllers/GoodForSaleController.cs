@@ -74,16 +74,17 @@ namespace MyKursach2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("List");
             }
-            return View();
+            ViewBag.Providers = await _context.Providers.ToListAsync();
+            return View(goodForSale);
         }
         [Authorize(Roles = "Директор, Администратор")]
         [AcceptVerbs("Get", "Post")]
-        public IActionResult CheckName(int? Id, string Name)
+        public async Task<IActionResult> CheckName(int? Id, string Name)
         {
             if (Id != null)
             {
-                var res1 = _context.GoodsForSale.Where(t => t.Id == Id).Select(t => t).FirstOrDefault();
-                var res2 = _context.GoodsForSale.Where(t => t.Name == Name).Select(t => t).FirstOrDefault();
+                var res1 = await _context.GoodsForSale.Where(t => t.Id == Id).Select(t => t).FirstOrDefaultAsync();
+                var res2 = await _context.GoodsForSale.Where(t => t.Name == Name).Select(t => t).FirstOrDefaultAsync();
                 if (res2 == null || res1.Id == res2?.Id)
                 {
                     return Json(true);
@@ -92,7 +93,7 @@ namespace MyKursach2.Controllers
             }
             else
             {
-                var res3 = _context.GoodsForSale.Where(t => t.Name == Name).Select(t => t).FirstOrDefault();
+                var res3 = await _context.GoodsForSale.Where(t => t.Name == Name).Select(t => t).FirstOrDefaultAsync();
                 if (res3 != null)
                     return Json(false);
                 return Json(true);
@@ -101,29 +102,18 @@ namespace MyKursach2.Controllers
 
         [Authorize(Roles = "Директор, Администратор")]
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == 0)
             {
                 return RedirectToAction("List");
             }
 
-            //var res = from gfs in _context.GoodsForSale
-            //          where gfs.Id == id
-            //          select new GoodForSale
-            //          {
-            //              Id = gfs.Id,
-            //              Name = gfs.Name,
-            //              QuantityInStock = gfs.QuantityInStock,
-            //              Providers = gfs.Providers
-            //          };
-            var res = _context.GoodsForSale.Include(c => c.Providers).Where(t => t.Id == id).Select(t => t);
-
-            GoodForSale goodForSale = res.FirstOrDefault();
+            GoodForSale goodForSale = await _context.GoodsForSale.Where(t => t.Id == id).Include(t=>t.Providers).Include(t=>t.SoldGoods).Include(t=>t.GoodForSale_Providers).Select(t => t).FirstOrDefaultAsync();
 
             if (goodForSale != null)
             {
-                ViewBag.Provider = _context.Providers;
+                ViewBag.Provider = await _context.Providers.ToListAsync();
                 return View(goodForSale);
             }
             return RedirectToAction("List");
@@ -136,21 +126,10 @@ namespace MyKursach2.Controllers
         {
             if (ModelState.IsValid)
             {
-                //var res = from gfs in _context.GoodsForSale
-                //          where gfs.Id == goodForSale.Id
-                //          select new GoodForSale
-                //          {
-                //              Id = gfs.Id,
-                //              Name = gfs.Name,
-                //              QuantityInStock = gfs.QuantityInStock,
-                //              Providers = gfs.Providers
-                //          };
-
-                var res = _context.GoodsForSale.Include(c => c.Providers).Where(t => t.Id == goodForSale.Id).Select(t => t);
-
-                GoodForSale newgoodForSale = res.FirstOrDefault();
+                GoodForSale newgoodForSale = await _context.GoodsForSale.Where(t => t.Id == goodForSale.Id).Select(t => t).FirstOrDefaultAsync();
                 newgoodForSale.Name = goodForSale.Name;
                 newgoodForSale.GoodAmount = goodForSale.GoodAmount;
+                newgoodForSale.GoodPrice = goodForSale.GoodPrice;
 
                 newgoodForSale.Providers.Clear();
                 _context.Entry(newgoodForSale).State = EntityState.Modified;
@@ -173,24 +152,25 @@ namespace MyKursach2.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            GoodForSale goodForSale = _context.GoodsForSale.Find(id);
-            if (goodForSale == null)
+            GoodForSale goodForSale = await _context.GoodsForSale.Where(t=>t.Id == id).Include(t=>t.SoldGoods).FirstOrDefaultAsync();
+            if (goodForSale == null || goodForSale.SoldGoods.Count != 0)
             {
-                return View("List");
+                return RedirectToAction("Edit", new { id = id });
             }
 
             return View(goodForSale);
         }
 
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(int? id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
-            GoodForSale goodForSale = _context.GoodsForSale.Find(id);
-            if (goodForSale == null)
+            GoodForSale goodForSale = await _context.GoodsForSale.Where(t => t.Id == id).Include(t => t.SoldGoods).Include(t=>t.Providers).Include(t=>t.GoodForSale_Providers).FirstOrDefaultAsync();
+
+            if (goodForSale == null || goodForSale.SoldGoods.Count != 0)
             {
-                return View("List");
+                return RedirectToAction("Edit", new { id = id });
             }
 
             goodForSale.Providers.Clear();

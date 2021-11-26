@@ -110,24 +110,25 @@ namespace MyKursach2.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
-            AvailablePayment availablePayment = _context.AvailablePayments.Find(id);
-            if (availablePayment == null)
+            AvailablePayment availablePayment = await _context.AvailablePayments.Where(t=>t.Id == id).Include(t=>t.CompletedPayment).FirstOrDefaultAsync();
+            if (availablePayment == null || availablePayment.CompletedPayment.Count != 0)
             {
-                //return HttpNotFound();
+                return RedirectToAction("Edit", new { id = id });
             }
 
             return View(availablePayment);
         }
 
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(int? id)
+        public async Task<IActionResult> DeleteConfirmed(int? id)
         {
-            AvailablePayment availablePayment = _context.AvailablePayments.Find(id);
-            if (availablePayment == null)
+            AvailablePayment availablePayment = await _context.AvailablePayments.Where(t => t.Id == id).Include(t => t.CompletedPayment).FirstOrDefaultAsync();
+
+            if (availablePayment == null || availablePayment.CompletedPayment.Count != 0)
             {
-                //return HttpNotFound();
+                return RedirectToAction("Edit", new { id = id });
             }
             _context.AvailablePayments.Remove(availablePayment);
             _context.SaveChanges();
