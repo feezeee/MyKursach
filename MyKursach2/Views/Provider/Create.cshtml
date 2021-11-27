@@ -1,6 +1,8 @@
-﻿@model MyKursach2.Models.Provider
+﻿@model Provider
 @{
-    Layout = "_Layout";
+    Layout = "_Layout";    
+    ViewData["Title"] = "Добавление поставщика";
+
 }
 
 <form class="popup" asp-controller="Provider" asp-action="Create">
@@ -13,12 +15,12 @@
                 @Html.ValidationMessageFor(model => model.Name, null, new { style = "color:red" })
             </li>
             <li>
-                <span>Номер телефона*</span>
-                <input required asp-for="PhoneNumber" type="text" placeholder="Введите номер телефона" />
+                <span>Номер телефона</span>
+                <input asp-for="PhoneNumber" type="text" placeholder="Введите номер телефона" />
                 @Html.ValidationMessageFor(model => model.PhoneNumber, null, new { style = "color:red" })
             </li>
             <li>
-                <span>Эл. почта*</span>
+                <span>Эл. почта</span>
                 <input asp-for="Email" type="text" placeholder="Введите электронную почту" />
                 @Html.ValidationMessageFor(model => model.Email, null, new { style = "color:red" })
             </li>

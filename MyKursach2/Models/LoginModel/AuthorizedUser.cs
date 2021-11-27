@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyKursach2.Models
 {
-    public class AuthorizedUser
+    public class AuthorizedUser : Controller
     {
         private static AuthorizedUser instance;
 
@@ -46,6 +47,5 @@ namespace MyKursach2.Models
                 _IsAutorized = false;
             }
         }
-
     }
 }

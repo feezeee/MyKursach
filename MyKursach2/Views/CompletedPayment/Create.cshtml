@@ -1,9 +1,9 @@
-﻿@model MyKursach2.Models.CompletedPayment
+﻿@model CompletedPayment
 @{
     Layout = "_Layout";
 }
 
-<form class="popup" asp-controller="MakingPayment" asp-action="Create" method="post">
+<form class="popup" asp-controller="CompletedPayment" asp-action="Create" method="post">
     <div class="popup-inner">
         <p class="addingWorkerPopup">Выберите платеж</p>
         <ul class="popupinput">
@@ -21,7 +21,7 @@
                 <input required asp-for="Price" type="text" placeholder="Сумма к оплате" />
             </li>
         </ul>
-        <a type="button" asp-controller="Operation"  asp-action="Create" asp-route-id="@Model.OperationId" class="closepopup">X</a>
+        <a type="button" asp-controller="Operation"  asp-action="Create" asp-route-operationId="@Model.OperationId" class="closepopup">X</a>
         <div class="popup_button">
             <button class="popupsubmit" type="submit">
                 Создать

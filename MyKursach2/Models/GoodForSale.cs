@@ -24,10 +24,12 @@ namespace MyKursach2.Models
 
         [Required]
         [Column("good_amount")]
+        [Range(0, int.MaxValue, ErrorMessage = "Количество не может быть отрицательным!")]
         public int GoodAmount { get; set; }
 
         [Required]
         [Column("good_price")]
+        [Range(0, int.MaxValue, ErrorMessage = "Цена не может быть отрицательной!")]
         public int GoodPrice { get; set; }
 
 

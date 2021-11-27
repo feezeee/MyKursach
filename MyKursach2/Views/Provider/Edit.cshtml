@@ -1,6 +1,7 @@
-﻿@model MyKursach2.Models.Provider
+﻿@model Provider
 @{
     Layout = "_Layout";
+    ViewData["Title"] = "Изменение поставщика";
 }
 
 <script src="@Url.Content("~/lib/jquery-validation/dist/jquery.validate.js")" type="text/javascript"></script>
@@ -13,17 +14,17 @@
             <li>
                 <span>Поставщик*</span>
                 <input type="hidden" name="Id" value="@Model.Id" />
-                <input asp-for="Name" required type="text" placeholder="Введите поставщика" />
+                <input asp-for="Name" required type="text" placeholder="Введите поставщика" value="@Model.Name" />
                 @Html.ValidationMessageFor(model => model.Name, null, new { style = "color:red" })
             </li>
             <li>
                 <span>Номер телефона*</span>
-                <input required asp-for="PhoneNumber" type="text" placeholder="Введите номер телефона" />
+                <input required asp-for="PhoneNumber" type="text" placeholder="Введите номер телефона" value="@Model.PhoneNumber"/>
                 @Html.ValidationMessageFor(model => model.PhoneNumber, null, new { style = "color:red" })
             </li>
             <li>
                 <span>Эл. почта</span>
-                <input asp-for="Email" type="text" placeholder="Введите электронную почту" />
+                <input asp-for="Email" type="text" placeholder="Введите электронную почту" value="@Model.Email" />
                 @Html.ValidationMessageFor(model => model.Email, null, new { style = "color:red" })
             </li>
 
@@ -36,7 +37,10 @@
                 Сохранить
             </button>
                
-            <a class="popupdelete" type="button" asp-action="Delete" asp-controller="Provider" asp-route-id=@Model.Id>Удалить</a>
+            if(@Model.GoodsForSale?.Count == 0)
+            {
+                <a class="popupdelete" type="button" asp-action="Delete" asp-controller="Provider" asp-route-id=@Model.Id>Удалить</a>
+            }
                  
         </div>
 

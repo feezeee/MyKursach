@@ -63,7 +63,7 @@ namespace MyKursach2.Controllers
         public async Task<IActionResult> Login(Login model)
         {
             if (ModelState.IsValid)
-            {
+            {                
                 Worker user = await _context.Workers.Include(t=>t.Position).Include(t=>t.GroupUser).FirstOrDefaultAsync(u => u.PhoneNumber == model.PhoneNumber && u.Password == model.Password);
                 if (user != null)
                 {

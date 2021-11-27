@@ -214,10 +214,10 @@
             <li class="profile">
                 <div class="profile-details">
                     @{
-                        Worker user = AuthorizedUser.GetInstance().GetWorker();
+                        var user = AuthorizedUser.GetInstance();
                         <div class="name_job">
-                            <div class="name">@user?.LastName @user?.FirstName</div>
-                            <div class="job">@user?.Position?.PositionName</div>
+                            <div class="name">@user?.GetWorker()?.LastName @user?.GetWorker()?.FirstName</div>
+                            <div class="job">@user?.GetWorker()?.Position?.PositionName</div>
                         </div>
                     }
                 </div>

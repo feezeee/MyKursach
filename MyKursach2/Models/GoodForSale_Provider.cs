@@ -22,9 +22,9 @@ namespace MyKursach2.Models
         public Provider Provider { get; set; }
 
 
-        [Required]
-        [Column("count_good")]
-        public int CountGood { get; set; }
+        //[Required]
+        //[Column("count_good")]
+        //public int CountGood { get; set; }
 
 
         

@@ -17,7 +17,7 @@
 
         <input class="form-control" name="operation.Id" type="text" placeholder="Id операции:" />
         <input class="form-control" name="operation.Worker.LastName" type="text" placeholder="Фамилия сотрудника:" />
-        <input id="operationList_date" class="form-control" name="operation.DateTime" type="text" placeholder="Дата операции (гг.мм.дд):" />
+        <input id="operationList_date" class="form-control" name="operation.DateTime" type="date" placeholder="Дата операции (гг.мм.дд):" />
         <div>
             <button class="btn btn-success" type="submit">
                 Поиск
@@ -48,7 +48,7 @@
                             @el?.Id
                         </th>
                         <td>
-                            @el?.DateTime.Value.Date.Year.@el?.DateTime.Value.Date.Month.@el?.DateTime.Value.Date.Day
+                            @el?.DateTime.Value.ToShortDateString();
                         </td>
                         <td>
                             @el?.Worker?.LastName
@@ -64,8 +64,4 @@
 
 </script>
 <script src="~/js/jquery.maskedinput.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $("#operationList_date").mask("9999.99.99");
-    });
-</script>
+

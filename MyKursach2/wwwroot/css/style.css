@@ -354,8 +354,7 @@
 .operation_table {
     margin-top: 18px;
     width: 700px;
-    /* height: 500px; */
-    /*background-color: blueviolet;*/
+    height: 400px; 
 }
 
 .operation_cont_type li a {

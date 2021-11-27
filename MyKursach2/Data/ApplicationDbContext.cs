@@ -45,7 +45,7 @@ namespace MyKursach2.Data
                {
                    //j.Property(t => new { t.CountGood }).HasColumnName("count_good").HasColumnType("int").HasDefaultValue(0);
                    j.HasKey(t => new { t.ProviderId, t.GoodForSaleId });
-                   j.ToTable("goodsforsale_providers");
+                   j.ToTable("goods_for_sale_providers");
                });
         }
     }

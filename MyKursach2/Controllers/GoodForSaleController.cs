@@ -35,11 +35,11 @@ namespace MyKursach2.Controllers
             {
                 res = res.Where(fn => fn.Name.ToUpper().Contains(goodForSale.Name.ToUpper())).Select(fn => fn).ToList();
             }
-            if (goodForSale?.GoodAmount != null)
+            if (goodForSale?.GoodAmount > 0)
             {
                 res = res.Where(fn => fn.GoodAmount == goodForSale.GoodAmount).Select(fn => fn).ToList();
             }
-            if (goodForSale?.GoodPrice != null)
+            if (goodForSale?.GoodPrice > 0)
             {
                 res = res.Where(fn => fn.GoodPrice == goodForSale.GoodPrice).Select(fn => fn).ToList();
             }

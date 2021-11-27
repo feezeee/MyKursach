@@ -1,6 +1,8 @@
-﻿@model MyKursach2.Models.GoodForSale
+﻿@model GoodForSale
 @{
     Layout = "_Layout";
+    ViewData["Title"] = "Изменение товара";
+
 }
 
 <script src="@Url.Content("~/lib/jquery-validation/dist/jquery.validate.js")" type="text/javascript"></script>
@@ -13,14 +15,19 @@
             <li>
                 <span>Наименование товара*</span>
                 <input type="hidden" name="Id" value="@Model.Id" />
-                <input asp-for="Name" required type="text" placeholder="Введите наименование товара" />
+                <input asp-for="Name" required type="text" placeholder="Введите наименование товара" value="@Model.Name"/>
                 @Html.ValidationMessageFor(model => model.Name, null, new { style = "color:red" })
             </li>
             <li>
                 <span>Количество на складе*</span>
-                <input asp-for="GoodAmount" type="text" placeholder="Введите количество на складе" />
+                <input asp-for="GoodAmount" type="text" placeholder="Введите количество на складе" value="@Model.GoodAmount"/>
                 @Html.ValidationMessageFor(model => model.GoodAmount, null, new { style = "color:red" })
             </li>
+            <li>
+                <span>Цена 1 ед.</span>
+                <input asp-for="GoodPrice" type="number" placeholder="Введите цену 1 ед. товара" value="@Model.GoodPrice"/>
+                @Html.ValidationMessageFor(model => model.GoodPrice, null, new { style = "color:red" })
+            </li>  
             <li style="width:100%;">
                 <span>Выберите поставщиков*</span>
                 <div style="display: flex; justify-content:space-between; flex-wrap:wrap;">
@@ -58,8 +65,12 @@
             <button class="popupsubmit" type="submit">
                 Сохранить
             </button>
+            @if (Model.SoldGoods?.Count == 0)
+            {
+                <a class="popupdelete" type="button" asp-action="Delete" asp-controller="GoodForSale" asp-route-id=@Model.Id>Удалить</a>
 
-            <a class="popupdelete" type="button" asp-action="Delete" asp-controller="GoodForSale" asp-route-id=@Model.Id>Удалить</a>
+            }
+
                     
         </div>
 
