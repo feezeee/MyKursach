@@ -20,16 +20,16 @@
             </li>
             <li>
                 <span>Количество на складе*</span>
-                <input asp-for="GoodAmount" type="text" placeholder="Введите количество на складе" value="@Model.GoodAmount"/>
+                <input required asp-for="GoodAmount" type="text" placeholder="Введите количество на складе" value="@Model.GoodAmount"/>
                 @Html.ValidationMessageFor(model => model.GoodAmount, null, new { style = "color:red" })
             </li>
             <li>
                 <span>Цена 1 ед.</span>
-                <input asp-for="GoodPrice" type="number" placeholder="Введите цену 1 ед. товара" value="@Model.GoodPrice"/>
+                <input required asp-for="GoodPrice" type="number" placeholder="Введите цену 1 ед. товара" value="@Model.GoodPrice"/>
                 @Html.ValidationMessageFor(model => model.GoodPrice, null, new { style = "color:red" })
             </li>  
             <li style="width:100%;">
-                <span>Выберите поставщиков*</span>
+                <span>Выберите поставщиков</span>
                 <div style="display: flex; justify-content:space-between; flex-wrap:wrap;">
                     @foreach (var el in ViewBag.Provider)
                     {

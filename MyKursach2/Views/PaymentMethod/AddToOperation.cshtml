@@ -1,0 +1,38 @@
+﻿@model Operation_PaymentMethod
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Способ оплаты";
+
+}
+
+<form class="popup" asp-controller="PaymentMethod" asp-action="AddToOperation" method="post">
+    <div class="popup-inner">
+        <p class="addingWorkerPopup">Способ оплаты</p>
+        <ul class="popupinput">
+            <li>
+                <span>Выберите способ оплаты</span>                
+                <select required asp-for="PaymentMethodId" asp-items="ViewBag.PaymentMethods"></select>
+            </li>
+            <li>
+                <span>Укажите сумму*</span>
+                <input hidden asp-for="OperationId" type="text" placeholder="Индентификатор операции" value="@Model.OperationId"/>
+                @{
+                    int maxSum = Model.Sum;
+                }
+                <input required max="@maxSum" asp-for="Sum" type="number" placeholder="Сумма" />
+                @Html.ValidationMessageFor(model => model.Sum, null, new { style = "color:red" })
+            </li>
+        </ul>
+        <a type="button" asp-controller="Operation"  asp-action="Create" asp-route-operationId="@Model.OperationId" class="closepopup">X</a>
+        <div class="popup_button">
+            <button class="popupsubmit" type="submit">
+                Создать
+            </button>
+            <button class="popupclear" type="reset">
+                Очистить
+            </button>
+        </div>
+
+    </div>
+</form>
+

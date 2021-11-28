@@ -4,9 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyKursach2.Data;
 using MyKursach2.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -63,14 +61,14 @@ namespace MyKursach2.Controllers
         public async Task<IActionResult> Login(Login model)
         {
             if (ModelState.IsValid)
-            {                
-                Worker user = await _context.Workers.Include(t=>t.Position).Include(t=>t.GroupUser).FirstOrDefaultAsync(u => u.PhoneNumber == model.PhoneNumber && u.Password == model.Password);
+            {
+                Worker user = await _context.Workers.Include(t => t.Position).Include(t => t.GroupUser).FirstOrDefaultAsync(u => u.PhoneNumber == model.PhoneNumber && u.Password == model.Password);
                 if (user != null)
                 {
                     await Authenticate(user); // аутентификация
                     AuthorizedUser.GetInstance().SetUser(user);
                     return RedirectToAction("Index", "Home");
-                    
+
                 }
                 ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }
@@ -90,7 +88,7 @@ namespace MyKursach2.Controllers
         {
             // создаем один claim
             var claims = new List<Claim>
-            {                
+            {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, worker.Id.ToString()),
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, worker?.GroupUser?.Name)
             };

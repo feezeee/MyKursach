@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MyKursach2.Models
 {
@@ -20,7 +17,7 @@ namespace MyKursach2.Models
         [MaxLength(64)]
         [StringLength(64, ErrorMessage = "Длина строки должна быть до 64 символов")]
         [Remote(action: "CheckDeliveryCountryName", controller: "DeliveryCountry", AdditionalFields = "Id", ErrorMessage = "Такая страна уже используется", HttpMethod = "POST")]
-        [Column("country_delivery_name")] 
+        [Column("country_delivery_name")]
         public string DeliveryCountryName { get; set; }
 
 

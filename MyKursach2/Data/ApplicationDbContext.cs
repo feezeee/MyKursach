@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyKursach2.Models;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyKursach2.Data
 {
@@ -25,6 +24,7 @@ namespace MyKursach2.Data
         public DbSet<SoldGood> SoldGoods { get; set; }
         public DbSet<CompletedPayment> CompletedPayments { get; set; }
         public DbSet<GoodForSale_Provider> GoodForSale_Providers { get; set; }
+        public DbSet<Operation_PaymentMethod> Operation_PaymentMethods { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -46,6 +46,27 @@ namespace MyKursach2.Data
                    //j.Property(t => new { t.CountGood }).HasColumnName("count_good").HasColumnType("int").HasDefaultValue(0);
                    j.HasKey(t => new { t.ProviderId, t.GoodForSaleId });
                    j.ToTable("goods_for_sale_providers");
+               });
+
+
+            modelBuilder
+               .Entity<Operation>()
+               .HasMany(c => c.PaymentMethods)
+               .WithMany(s => s.Operations)
+               .UsingEntity<Operation_PaymentMethod>(
+                  j => j
+                   .HasOne(pt => pt.PaymentMethod)
+                   .WithMany(t => t.Operations_PaymentMethods)
+                   .HasForeignKey(pt => pt.PaymentMethodId),
+               j => j
+                   .HasOne(pt => pt.Operation)
+                   .WithMany(p => p.Operations_PaymentMethods)
+                   .HasForeignKey(pt => pt.OperationId),
+               j =>
+               {
+                   //j.Property(t => new { t.CountGood }).HasColumnName("count_good").HasColumnType("int").HasDefaultValue(0);
+                   j.HasKey(t => new { t.OperationId, t.PaymentMethodId });
+                   j.ToTable("operations_payment_methods");
                });
         }
     }

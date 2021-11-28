@@ -38,6 +38,7 @@ namespace MyKursach2.Controllers
             return View(res);
         }
 
+
         [Authorize(Roles = "Директор, Администратор")]
         [HttpGet]
         public async Task<IActionResult> Create(int? operationId)
@@ -52,33 +53,31 @@ namespace MyKursach2.Controllers
                 operation = await _context.Operations
                 .Include(t => t.CompletedPayments)
                     .ThenInclude(t => t.AvailablePayment)
-                .Include(t => t.CompletedPayments)
-                    .ThenInclude(t => t.PaymentMethod)
                 .Include(t => t.SoldGoods)
                     .ThenInclude(t => t.GoodForSale)
-                .Include(t => t.SoldGoods)
-                    .ThenInclude(t => t.PaymentMethod)
                 .Include(t => t.DeliveryGoods)
                     .ThenInclude(t => t.DeliveryCountry)
-                .Include(t => t.DeliveryGoods)
-                    .ThenInclude(t => t.PaymentMethod)
+                .Include(t => t.PaymentMethods)
+                .Include(t => t.Operations_PaymentMethods)
+                .ThenInclude(t => t.Operation)
+                .Include(t => t.Operations_PaymentMethods)
+                .ThenInclude(t => t.PaymentMethod)
                 .Where(t => t.Worker.Id == AuthorizedUser.GetInstance().GetWorker().Id).OrderBy(t => t.Id).LastOrDefaultAsync();
             }
             else
             {
                 operation = _context.Operations
-                .Include(t => t.CompletedPayments)
+                 .Include(t => t.CompletedPayments)
                     .ThenInclude(t => t.AvailablePayment)
-                .Include(t => t.CompletedPayments)
-                    .ThenInclude(t => t.PaymentMethod)
                 .Include(t => t.SoldGoods)
                     .ThenInclude(t => t.GoodForSale)
-                .Include(t => t.SoldGoods)
-                    .ThenInclude(t => t.PaymentMethod)
                 .Include(t => t.DeliveryGoods)
                     .ThenInclude(t => t.DeliveryCountry)
-                .Include(t => t.DeliveryGoods)
-                    .ThenInclude(t => t.PaymentMethod)
+                .Include(t => t.PaymentMethods)
+                .Include(t => t.Operations_PaymentMethods)
+                .ThenInclude(t => t.Operation)
+                .Include(t => t.Operations_PaymentMethods)
+                .ThenInclude(t => t.PaymentMethod)
                 .Where(t => t.Id == operationId).Select(t => t).FirstOrDefault();
             }           
             return View(operation);

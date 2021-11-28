@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyKursach2.Data;
 using MyKursach2.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -87,7 +85,7 @@ namespace MyKursach2.Controllers
             {
                 return RedirectToAction("List");
             }
-            AvailablePayment availablePayment = await _context.AvailablePayments.Include(t => t.CompletedPayment).Where(t=>t.Id == id).FirstOrDefaultAsync();
+            AvailablePayment availablePayment = await _context.AvailablePayments.Include(t => t.CompletedPayment).Where(t => t.Id == id).FirstOrDefaultAsync();
             if (availablePayment != null)
             {
                 return View(availablePayment);
@@ -112,7 +110,7 @@ namespace MyKursach2.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
-            AvailablePayment availablePayment = await _context.AvailablePayments.Where(t=>t.Id == id).Include(t=>t.CompletedPayment).FirstOrDefaultAsync();
+            AvailablePayment availablePayment = await _context.AvailablePayments.Where(t => t.Id == id).Include(t => t.CompletedPayment).FirstOrDefaultAsync();
             if (availablePayment == null || availablePayment.CompletedPayment.Count != 0)
             {
                 return RedirectToAction("Edit", new { id = id });

@@ -4,9 +4,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MyKursach2.Data;
 using MyKursach2.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyKursach2.Controllers
@@ -26,7 +23,7 @@ namespace MyKursach2.Controllers
             CompletedPayment makingPayment = new CompletedPayment();
             makingPayment.OperationId = operationId;
             ViewBag.AvailablePayments = new SelectList(_context.AvailablePayments, "Id", "AvailablePaymentName");
-            ViewBag.PaymentMethods = new SelectList(_context.PaymentMethods, "Id", "PaymentMethodName");
+           
             return View(makingPayment);
         }
 
@@ -42,7 +39,7 @@ namespace MyKursach2.Controllers
                 return RedirectToRoute("default", new { controller = "Operation", action = "Create", operationId = makingPayment.OperationId });
             }
             ViewBag.AvailablePayments = new SelectList(_context.AvailablePayments, "Id", "AvailablePaymentName");
-            ViewBag.PaymentMethods = new SelectList(_context.PaymentMethods, "Id", "PaymentMethodName");
+           
             return View(makingPayment);
         }
 
@@ -78,7 +75,6 @@ namespace MyKursach2.Controllers
             }
 
             ViewBag.AvailablePayments = new SelectList(_context.AvailablePayments, "Id", "AvailablePaymentName");
-            ViewBag.PaymentMethods = new SelectList(_context.PaymentMethods, "Id", "PaymentMethodName");
             return View(makingPayment);
         }
 

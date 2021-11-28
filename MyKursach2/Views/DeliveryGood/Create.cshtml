@@ -1,0 +1,65 @@
+﻿@model DeliveryGood
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Оформление доставки";
+}
+
+<form class="popup" asp-controller="DeliveryGood" asp-action="Create" method="post">
+    <div class="popup-inner">
+        <p class="addingWorkerPopup">Оформление доставки</p>
+        <ul class="popupinput">            
+            <li>
+                <span>Укажите адрес доставки*</span>
+                <input hidden asp-for="OperationId" type="text" placeholder="Сумма к оплате" value="@Model.OperationId"/>
+                <input required asp-for="Address" type="text" placeholder="Адрес доставки" />
+                @Html.ValidationMessageFor(model => model.Address, null, new { style = "color:red" })
+
+            </li>
+            <li>
+                <span>Имя отправителя*</span>                
+                <input required asp-for="SenderFirstName" type="text" placeholder="Имя отправителя" />
+                @Html.ValidationMessageFor(model => model.SenderFirstName, null, new { style = "color:red" })
+
+            </li>
+            <li>
+                <span>Фамилия отправителя*</span>                
+                <input required asp-for="SenderLastName" type="text" placeholder="Фамилия отправителя" />
+                @Html.ValidationMessageFor(model => model.SenderLastName, null, new { style = "color:red" })
+ 
+            </li>
+            <li>
+                <span>Имя получателя*</span>                
+                <input required asp-for="ReciverFirstName" type="text" placeholder="Имя получателя" />
+                @Html.ValidationMessageFor(model => model.ReciverFirstName, null, new { style = "color:red" })
+
+            </li>
+            <li>
+                <span>Фамилия получателя*</span>                
+                <input required asp-for="ReciverLastName" type="text" placeholder="Фамилия получателя" />
+                @Html.ValidationMessageFor(model => model.ReciverLastName, null, new { style = "color:red" })
+
+            </li>
+            <li>
+                <span>Выберите страну доставки*</span>
+                <select required asp-for="DeliveryCountryId" asp-items="ViewBag.DeliveryCountries"></select>
+            </li>
+            <li>
+                <span>Цена доставки*</span>                
+                <input required asp-for="Price" type="number" placeholder="Цена доставки" />
+                @Html.ValidationMessageFor(model => model.Price, null, new { style = "color:red" })
+
+            </li>
+        </ul>
+        <a type="button" asp-controller="Operation"  asp-action="Create" asp-route-operationId="@Model.OperationId" class="closepopup">X</a>
+        <div class="popup_button">
+            <button class="popupsubmit" type="submit">
+                Создать
+            </button>
+            <button class="popupclear" type="reset">
+                Очистить
+            </button>
+        </div>
+
+    </div>
+</form>
+

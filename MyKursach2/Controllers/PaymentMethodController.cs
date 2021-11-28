@@ -23,7 +23,7 @@ namespace MyKursach2.Controllers
         [Authorize(Roles = "Директор, Администратор")]
         public async Task<IActionResult> List(PaymentMethod pay)
         {
-            var res = await _context.PaymentMethods.Include(t => t.CompletedPayments).Include(t => t.SoldGoods).Include(t=>t.DeliveryGoods).OrderBy(t => t.Id).ToListAsync();
+            var res = await _context.PaymentMethods.Include(t => t.Operations).Include(t => t.Operations_PaymentMethods).OrderBy(t => t.Id).ToListAsync();
 
             if (pay?.Id > 0)
             {
@@ -54,9 +54,43 @@ namespace MyKursach2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("List");
             }
-            pay.CompletedPayments = await _context.CompletedPayments.Where(t => t.PaymentMethodId == pay.Id).ToListAsync();
             return View(pay);
         }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<IActionResult> AddToOperation(int? operationId, int? sum)
+        {
+            if (operationId != null && sum != null)
+            {
+                Operation_PaymentMethod operation_PaymentMethod = new Operation_PaymentMethod();
+                operation_PaymentMethod.OperationId = operationId.Value;
+                operation_PaymentMethod.Sum = sum.Value;
+                ViewBag.PaymentMethods = new SelectList(await _context.PaymentMethods.ToListAsync(), "Id", "PaymentMethodName");
+                return View(operation_PaymentMethod);
+            }
+            return RedirectToAction("Create", "Operation",new { id = operationId });
+
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> AddToOperation(Operation_PaymentMethod operation_PaymentMethod)
+        {
+
+            if (ModelState.IsValid)
+            {
+                _context.Add(operation_PaymentMethod);
+
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Create", "Operation", new { operationId = operation_PaymentMethod.OperationId });
+            }
+            ViewBag.PaymentMethods = new SelectList(await _context.PaymentMethods.ToListAsync(), "Id", "Name");
+            return View(operation_PaymentMethod);
+
+        }
+
+
         [Authorize(Roles = "Директор, Администратор")]
         [AcceptVerbs("Get", "Post")]
         public async Task<IActionResult> CheckPaymentMethodName(int? Id, string PaymentMethodName)
@@ -88,7 +122,7 @@ namespace MyKursach2.Controllers
             {
                 return RedirectToAction("List");
             }
-            PaymentMethod pay = await _context.PaymentMethods.Include(t => t.CompletedPayments).Include(t => t.SoldGoods).Include(t => t.DeliveryGoods).Where(t=>t.Id == id).FirstOrDefaultAsync();
+            PaymentMethod pay = await _context.PaymentMethods.Include(t => t.Operations_PaymentMethods).Include(t => t.Operations).Where(t=>t.Id == id).FirstOrDefaultAsync();
             if (pay != null)
             {
                 return View(pay);
@@ -107,19 +141,19 @@ namespace MyKursach2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("List");
             }
-            pay.CompletedPayments = await _context.CompletedPayments.Where(t => t.PaymentMethodId == pay.Id).ToListAsync();
+            pay.Operations_PaymentMethods = await _context.Operation_PaymentMethods.Where(t => t.PaymentMethodId == pay.Id).ToListAsync();
             return View(pay);
         }
 
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
-            PaymentMethod payment = await _context.PaymentMethods.Include(t => t.CompletedPayments).Include(t => t.SoldGoods).Include(t => t.DeliveryGoods).Where(t => t.Id == id).FirstOrDefaultAsync();
+            PaymentMethod payment = await _context.PaymentMethods.Include(t => t.Operations).Where(t => t.Id == id).FirstOrDefaultAsync();
             if (payment == null)
             {
                 return RedirectToAction("Edit", new { id = id });
             }
-            else if(payment.CompletedPayments?.Count == 0 && payment.SoldGoods?.Count == 0 && payment.DeliveryGoods?.Count == 0)
+            else if(payment.Operations?.Count == 0)
             {
                 return View(payment);
             }
@@ -130,13 +164,12 @@ namespace MyKursach2.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
-            PaymentMethod payment = await _context.PaymentMethods.Include(t => t.CompletedPayments).Include(t => t.SoldGoods).Include(t => t.DeliveryGoods).Where(t => t.Id == id).FirstOrDefaultAsync();
-
+            PaymentMethod payment = await _context.PaymentMethods.Include(t => t.Operations).Where(t => t.Id == id).FirstOrDefaultAsync();
             if (payment == null)
             {
                 return RedirectToAction("Edit", new { id = id });
             }
-            else if (payment.CompletedPayments?.Count == 0 && payment.SoldGoods?.Count == 0 && payment.DeliveryGoods?.Count == 0)
+            else if (payment.Operations?.Count == 0)
             {
                 _context.PaymentMethods.Remove(payment);
                 await _context.SaveChangesAsync();

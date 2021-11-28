@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MyKursach2.Models
 {
@@ -23,9 +20,9 @@ namespace MyKursach2.Models
         public string PaymentMethodName { get; set; }
 
 
-        public virtual List<CompletedPayment> CompletedPayments { get; set; } = new List<CompletedPayment>();
-        public virtual List<DeliveryGood> DeliveryGoods { get; set; } = new List<DeliveryGood>();
-        public virtual List<SoldGood> SoldGoods { get; set; } = new List<SoldGood>();
+        public virtual List<Operation> Operations { get; set; } = new List<Operation>();
+        public virtual List<Operation_PaymentMethod> Operations_PaymentMethods { get; set; } = new List<Operation_PaymentMethod>();
+
 
     }
 }

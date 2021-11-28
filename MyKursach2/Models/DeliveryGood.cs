@@ -12,8 +12,8 @@ namespace MyKursach2.Models
 
 
         [Required(ErrorMessage = "Не указан адрес доставки")]
-        [MaxLength(32)]
-        [StringLength(32, ErrorMessage = "Длина строки должна быть до 32 символов")]
+        [MaxLength(64)]
+        [StringLength(64, ErrorMessage = "Длина строки должна быть до 64 символов")]
         [Column("address_delivery")]
         public string Address { get; set; }
 
@@ -50,13 +50,15 @@ namespace MyKursach2.Models
         public Operation Operation { get; set; }
 
 
-        [Column("payment_method_id")]
-        public int PaymentMethodId { get; set; }
-        public PaymentMethod PaymentMethod { get; set; }
-
 
         [Column("country_delivery_id")]
         public int DeliveryCountryId { get; set; }
         public DeliveryCountry DeliveryCountry { get; set; }
+
+
+        [Required(ErrorMessage = "Не указана сумма")]
+        [Range(0, int.MaxValue, ErrorMessage = "Цена не может быть отрицательной!")]
+        [Column("delivery_good_price")]
+        public int Price { get; set; }
     }
 }

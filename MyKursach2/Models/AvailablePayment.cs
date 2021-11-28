@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MyKursach2.Models
 {
@@ -19,7 +16,7 @@ namespace MyKursach2.Models
         [MaxLength(32)]
         [StringLength(32, ErrorMessage = "Длина строки должна быть до 32 символов")]
         [Remote(action: "CheckAvailablePaymentName", controller: "AvailablePayment", AdditionalFields = "Id", ErrorMessage = "Такое наименование платежа уже используется", HttpMethod = "POST")]
-        [Column("payment_name")]         
+        [Column("payment_name")]
         public string AvailablePaymentName { get; set; }
 
 

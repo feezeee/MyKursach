@@ -12,6 +12,7 @@ namespace MyKursach2.Models
 
 
         [Column("number_sold")]
+        [Range(0,int.MaxValue,ErrorMessage = "Количество товаров не может быть отрицательным!")]
         public int NumberSold { get; set; }
 
 
@@ -21,10 +22,6 @@ namespace MyKursach2.Models
         public Operation Operation { get; set; }
 
 
-        [Column("payment_method_id")]
-        public int PaymentMethodId { get; set; }
-        public PaymentMethod PaymentMethod { get; set; }
-
 
         [Column("good_for_sale_id")]
         public int GoodForSaleId { get; set; }
@@ -32,6 +29,7 @@ namespace MyKursach2.Models
 
 
         [Column("sold_goods_price")]
+        [Range(0, int.MaxValue, ErrorMessage = "Цена не может быть отрицательной!")]
         public int SoldGoodsPrice { get; set; }
     }
 }

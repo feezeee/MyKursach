@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyKursach2.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Security.Principal;
 
 namespace MyKursach2.Models
 {
@@ -47,7 +45,7 @@ namespace MyKursach2.Models
         [Required(ErrorMessage = "Не указан номер телефона")]
         [MaxLength(20)]
         [StringLength(20, ErrorMessage = "Длина строки должна быть до 32 символов")]
-        [Remote(action: "CheckPhoneNumber", controller: "Worker", AdditionalFields ="Id", ErrorMessage = "Номер телефона уже используется", HttpMethod = "POST")]
+        [Remote(action: "CheckPhoneNumber", controller: "Worker", AdditionalFields = "Id", ErrorMessage = "Номер телефона уже используется", HttpMethod = "POST")]
         [RegularExpression(@"[+][0-9]{3}[ ][(][0-9]{2}[)][ ][0-9]{3}[-][0-9]{2}[-][0-9]{2}", ErrorMessage = "Некорректный номер телефона")]
         [Column("worker_phone_number")]
         public string PhoneNumber { get; set; }
