@@ -4,10 +4,10 @@
 }
 
 <div class="main_operation container-fluid">
-    <form class="operation" asp-action="List" asp-controller="Operation">
+    <form class="operation" asp-action="Create" asp-controller="Operation" method="post">
         <div class="operation_cont">
             <p class="addingWorkerPopup">Операция</p>
-            @*<input hidden asp-for="Id" value="@Model.Id"/>*@
+            <input hidden asp-for="Id" value="@Model.Id"/>
             <ul class="operation_cont_type">
                 @{
                         int sum = 0;

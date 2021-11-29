@@ -277,14 +277,15 @@
 
 .home-section {
     position: relative;
-    background: #E4E9F7;
+    background: #1f454e;
     min-height: 100vh;
     top: 0;
     left: 78px;
     width: calc(100% - 78px);
-    min-width:fit-content;
+    min-width: fit-content;
     transition: all 0.5s ease;
     z-index: 2;
+    color: #d9eef7;
 }
 
 .sidebar.open ~ .home-section {
@@ -292,11 +293,11 @@
     width: calc(100% - 250px);
 }
 
-.home-section .text {
+/*.home-section .text {
     color: #11101d;
     font-size: 25px;
     font-weight: 500;
-}
+}*/
 
 @media (max-width: 420px) {
     .sidebar li .tooltip {
@@ -317,13 +318,13 @@
     align-items: center;
     justify-content: space-around;
     position: absolute;
-    background: #E4E9F7;
+    background: #1f454e;
 }
 
 .operation {
     width: 1100px;
     margin: 0;
-    background-color: #fff;
+    background: #24515c;
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 0 20px rgb(0 0 0 / 15%);
@@ -343,7 +344,7 @@
 }
 
     .operation_cont_type li {
-        border-top: 1px solid black;
+        border-top: 1px solid #267e7c;
         height: auto;
         display: flex;
         justify-content: space-between;
@@ -359,7 +360,8 @@
 
 .operation_cont_type li a {
     border-radius: 5px;
-    border: 2px solid lightgreen;
+    /*border: 2px solid #d9eee1;*/
+    background-color: #d9eee1;
     width: 200px;
     height: fit-content;
     padding: 10px;
@@ -369,5 +371,5 @@
 }
 
     .operation_cont_type li a:hover {
-        background-color: rgb(159, 253, 214);
+        background-color: rgb(120 214 223);
     }

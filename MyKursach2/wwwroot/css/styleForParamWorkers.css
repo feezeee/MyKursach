@@ -1,6 +1,6 @@
 ﻿.param_workers {
     /*border: 2px solid black;*/
-    background: white;
+    background: #2e5960;
     border-radius: 1em;
     display: flex;
     justify-content: space-between;
@@ -10,10 +10,11 @@
     margin-right: 25px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
-.param_workers input {
-    width: 40%;
-    margin: 20px;
-}
+    .param_workers input {
+        background-color: #d9eef7;
+        width: 40%;
+        margin: 20px;
+    }
 
 .param_workers div {
     display:block;
@@ -58,7 +59,7 @@
     min-width: 500px;
     width: fit-content;
     height: fit-content;
-    background-color: #fff;
+    background-color: #24515c;
     /*transform: rotate(32deg);*/
     transition: .64s ease-in-out;
     padding: 20px;
