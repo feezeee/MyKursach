@@ -22,8 +22,7 @@ namespace MyKursach2.Controllers
         [Authorize(Roles = "Директор, Администратор, ")]
         public async Task<IActionResult> List(Provider provider)
         {
-           
-            var res = await _context.Providers.Include(c => c.GoodsForSale).Select(t => t).ToListAsync();
+            var res = await _context.Providers.FromSqlRaw("get_providers").ToListAsync();
 
             if (provider?.Id > 0)
             {

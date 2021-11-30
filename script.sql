@@ -1,4 +1,3 @@
-SET SQL_SAFE_UPDATES = 0;
 USE postal_office;
 
 INSERT INTO positions (position_name)
@@ -37,23 +36,15 @@ INSERT INTO available_payments (payment_name)
     ("Марцев", "Артем", "Андреевич", "2001-04-23", "+375 (29) 222-22-22", 3, 3),
     ("Денис", "Скурат", "Андреевич", "2001-04-23", "+375 (29) 830-63-61", 4, 3);
     
-INSERT INTO `postal_office`.`goods_for_sale`
-(`good_name`,`good_amount`,`good_price`)
-VALUES
-("test", 100, 10);
     
     
-INSERT INTO `postal_office`.`operations`
-(`operation_date_time`,`worker_id`)
-VALUES
-("2001-04-23",1);
-    
-    
-INSERT INTO `sold_goods`
-(`number_sold`,
-`operation_id`,
-`good_for_sale_id`)
-VALUES
-(10,1,1);
-
+DELIMITER //  
   
+DROP PROCEDURE IF EXISTS get_good_price_by_id;
+
+CREATE PROCEDURE get_good_price_by_id (IN good_id INT)  
+BEGIN      
+    SELECT good_price FROM goods_for_sale WHERE good_id = 1;     
+END //
+
+CALL get_good_price_by_id(1);

@@ -23,7 +23,7 @@ namespace MyKursach2.Controllers
         [Authorize(Roles = "Директор, Администратор, Кассир, Почтальон")]
         public async Task<IActionResult> List(DeliveryCountry deliveryCountry)
         {
-            var res = await _context.DeliveryCountries.Include(t => t.DeliveryGoods).OrderBy(t => t.Id).ToListAsync();
+            var res = await _context.DeliveryCountries.FromSqlRaw("get_countries_delivery").ToListAsync();
 
             if (deliveryCountry?.Id > 0)
             {

@@ -20,7 +20,7 @@ namespace MyKursach2.Controllers
         [Authorize(Roles = "Директор, Администратор, ")]
         public async Task<IActionResult> List(AvailablePayment availablePayment)
         {
-            var res = await _context.AvailablePayments.Include(t => t.CompletedPayment).OrderBy(t => t.Id).ToListAsync();
+            var res = await _context.AvailablePayments.FromSqlRaw("get_available_payments").ToListAsync();            
 
             if (availablePayment?.Id > 0)
             {
