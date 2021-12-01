@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MyKursach2.Data;
 using MyKursach2.Models;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MyKursach2.Controllers
@@ -43,6 +44,27 @@ namespace MyKursach2.Controllers
             return View(makingPayment);
         }
 
+
+        [Authorize(Roles = "Директор, Администратор")]
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == 0)
+            {
+                return RedirectToAction("List", "Operation");
+            }
+            CompletedPayment completedPayment = await _context.CompletedPayments.Include(t => t.AvailablePayment).Include(t => t.Operation).Where(t => t.Id == id.Value).FirstOrDefaultAsync();
+            if (completedPayment != null)
+            {
+                _context.CompletedPayments.Remove(completedPayment);
+                await _context.SaveChangesAsync();
+                completedPayment.Id = 0;
+                ViewBag.AvailablePayments = new SelectList(_context.AvailablePayments, "Id", "AvailablePaymentName");
+                return View("Create", completedPayment);
+            }
+            return RedirectToAction("List", "Operation");
+        }
+
         //[Authorize(Roles = "Директор, Администратор")]
         //[HttpGet]
         //public IActionResult Edit(int? id)
@@ -62,21 +84,21 @@ namespace MyKursach2.Controllers
 
         //}
 
-        [Authorize(Roles = "Директор, Администратор")]
-        [HttpPost]
-        public async Task<IActionResult> Edit(CompletedPayment makingPayment)
-        {
-            if (ModelState.IsValid)
-            {
+        //[Authorize(Roles = "Директор, Администратор")]
+        //[HttpPost]
+        //public async Task<IActionResult> Edit(CompletedPayment makingPayment)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
 
-                _context.Entry(makingPayment).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-                return RedirectToAction("List");
-            }
+        //        _context.Entry(makingPayment).State = EntityState.Modified;
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction("List");
+        //    }
 
-            ViewBag.AvailablePayments = new SelectList(_context.AvailablePayments, "Id", "AvailablePaymentName");
-            return View(makingPayment);
-        }
+        //    ViewBag.AvailablePayments = new SelectList(_context.AvailablePayments, "Id", "AvailablePaymentName");
+        //    return View(makingPayment);
+        //}
 
         //[HttpGet]
         //public IActionResult Delete(int? id)

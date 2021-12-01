@@ -56,4 +56,7 @@ INSERT INTO `sold_goods`
 VALUES
 (10,1,1);
 
+
+DELETE FROM sold_goods WHERE sold_good_id = 2;
+
   

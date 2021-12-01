@@ -119,7 +119,16 @@ namespace MyKursach2.Controllers
             {
                 return View(operation);
             }
-            return RedirectToAction("List","Operation",null);
+            int sum = 0;
+            foreach(var count in operation?.Operations_PaymentMethods)
+            {
+                sum += count.Sum;
+            }
+            if(sum != operation?.TotalPrice)
+            {
+                return View(operation);
+            }
+            return RedirectToAction("List","Operation");
         }
 
 

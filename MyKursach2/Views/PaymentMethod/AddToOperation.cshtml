@@ -19,7 +19,7 @@
                 @{
                     int maxSum = Model.Sum;
                 }
-                <input required max="@maxSum" asp-for="Sum" type="number" placeholder="Сумма" />
+                <input required max="@maxSum" asp-for="Sum" type="number" placeholder="Сумма" value="@Model.Sum"/>
                 @Html.ValidationMessageFor(model => model.Sum, null, new { style = "color:red" })
             </li>
         </ul>

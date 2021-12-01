@@ -65,8 +65,15 @@ namespace MyKursach2.Controllers
             {
                 Operation_PaymentMethod operation_PaymentMethod = new Operation_PaymentMethod();
                 operation_PaymentMethod.OperationId = operationId.Value;
-                operation_PaymentMethod.Sum = sum.Value;
-                ViewBag.PaymentMethods = new SelectList(await _context.PaymentMethods.ToListAsync(), "Id", "PaymentMethodName");
+
+                int _sum = 0;
+                foreach (var allsum in _context.Operation_PaymentMethods.Where(t => t.OperationId == operationId.Value).ToList())
+                {
+                    _sum += allsum.Sum;
+                }
+                operation_PaymentMethod.Sum = sum.Value - _sum;
+                var op = await _context.Operations.Include(t => t.PaymentMethods).Where(t => t.Id == operationId.Value).FirstOrDefaultAsync();
+                ViewBag.PaymentMethods = new SelectList((await _context.PaymentMethods.ToListAsync()).Except(op.PaymentMethods), "Id", "PaymentMethodName");
                 return View(operation_PaymentMethod);
             }
             return RedirectToAction("Create", "Operation",new { id = operationId });
@@ -85,11 +92,40 @@ namespace MyKursach2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Create", "Operation", new { operationId = operation_PaymentMethod.OperationId });
             }
-            ViewBag.PaymentMethods = new SelectList(await _context.PaymentMethods.ToListAsync(), "Id", "Name");
+            var op = await _context.Operations.Include(t => t.PaymentMethods).Where(t => t.Id == operation_PaymentMethod.OperationId).FirstOrDefaultAsync();
+            ViewBag.PaymentMethods = new SelectList((await _context.PaymentMethods.ToListAsync()).Except(op.PaymentMethods), "Id", "PaymentMethodName");
+
             return View(operation_PaymentMethod);
 
         }
 
+        [Authorize(Roles = "Директор, Администратор")]
+        [HttpGet]
+        public async Task<IActionResult> DeleteInOperation(string id)
+        {
+            if(String.IsNullOrEmpty(id))
+            {
+                return RedirectToAction("List", "Operation");
+            }
+
+            string[] new_id = id.Split('_');
+            if(new_id.Length != 2)
+            {
+                return RedirectToAction("List", "Operation");
+            }
+            int operation_id = int.Parse(new_id[0]);
+            int payment_id = int.Parse(new_id[1]);
+
+            Operation operation = await _context.Operations.Include(t => t.PaymentMethods).Include(t => t.Operations_PaymentMethods).Where(t => t.Id == operation_id).FirstOrDefaultAsync();
+            PaymentMethod paymentMethod = await _context.PaymentMethods.Include(t => t.Operations).Include(t => t.Operations_PaymentMethods).Where(t => t.Id == payment_id).FirstOrDefaultAsync();
+            if (operation != null && paymentMethod != null)
+            {
+                var perem = operation.Operations_PaymentMethods.FirstOrDefault(t => t.PaymentMethodId == paymentMethod.Id);
+                operation.Operations_PaymentMethods.Remove(perem);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToRoute("default", new { controller = "Operation", action = "Create", operationId = operation_id });
+        }
 
         [Authorize(Roles = "Директор, Администратор")]
         [AcceptVerbs("Get", "Post")]

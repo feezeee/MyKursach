@@ -9,7 +9,7 @@ fillInputs(document.forms.test);
 $(function () {
     $('#editClickbodyOperation').on('click', '.rowEditStart', function () {
         var id = parseInt($(this).find('.editId').html());
-        document.location.href = '/Operation/Edit?id=' + id;
+        document.location.href = '/Operation/Check?operationId=' + id;
         //alert($(this).find('.editId').html());
     });
 });

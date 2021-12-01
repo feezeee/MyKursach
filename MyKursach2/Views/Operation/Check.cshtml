@@ -4,13 +4,13 @@
 }
 
 <div class="main_operation container-fluid">
-    <form class="operation" asp-action="Create" asp-controller="Operation" method="post">
+    <form class="operation" asp-action="List" asp-controller="Operation">
         <div class="operation_cont">
             <p class="addingWorkerPopup">Операция</p>
             <input hidden asp-for="Id" value="@Model.Id"/>
             <ul class="operation_cont_type">
                 <li>
-                    <a asp-controller="SoldGood" asp-action="Create" asp-route-operationId="@Model.Id">Продажа товара</a>
+                   
                     <div class="operation_table table-responsive">
                         <table class="content-table overflow-auto" id="myTable">
                             <thead>
@@ -48,7 +48,7 @@
                     </div>
                 </li>
                <li>
-                    <a asp-controller="DeliveryGood" asp-action="Create" asp-route-operationId="@Model.Id">Оформить доставку</a>
+                 
                     <div class="operation_table table-responsive">
                         <table class="content-table overflow-auto" id="myTable">
                             <thead>
@@ -99,7 +99,7 @@
                     </div>
                 </li>
                 <li>
-                    <a asp-controller="CompletedPayment" asp-action="Create" asp-route-operationId="@Model.Id">Выполнить платеж</a>
+
                     <div class="operation_table table-responsive">
                         <table class="content-table overflow-auto" id="myTable">
                             <thead>
@@ -132,7 +132,7 @@
                     <h1 class="text-right align-self-center" style="width: 100%;">Итого: @Model.TotalPrice</h1>
                 </li>
                 <li>
-                    <a asp-controller="PaymentMethod" asp-action="AddToOperation" asp-route-operationId="@Model.Id" asp-route-sum="@Model.TotalPrice">Выбрать способ оплаты</a>
+                   
                     <div class="operation_table table-responsive">
                         <table class="content-table overflow-auto" id="myTable">
                             <thead>
@@ -174,16 +174,3 @@
         </div>
     </form>
 </div>
-<script src="~/js/operation/sold_good.js">
-
-</script>
-<script src="~/js/operation/delivery_good.js">
-
-</script>
-<script src="~/js/operation/completed_payment.js">
-
-</script>
-
-<script src="~/js/operation/payment_method.js">
-
-</script>

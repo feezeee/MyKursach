@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
@@ -13,6 +14,7 @@ namespace MyKursach2.Models
 
         [Column("number_sold")]
         [Range(0,int.MaxValue,ErrorMessage = "Количество товаров не может быть отрицательным!")]
+        [Remote(action: "CheckCount", controller: "SoldGood", AdditionalFields = "GoodForSaleId", ErrorMessage = "На складе нет такого количества!", HttpMethod = "POST")]
         public int NumberSold { get; set; }
 
 
