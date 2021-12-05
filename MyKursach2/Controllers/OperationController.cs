@@ -132,118 +132,120 @@ namespace MyKursach2.Controllers
         }
 
 
-            //[Authorize(Roles = "Директор, Администратор")]
-            //[HttpPost]
-            //public async Task<IActionResult> Create(Worker worker)
-            //{
-            //    if (ModelState.IsValid)
-            //    {
-            //        _context.Add(worker);
+        //[Authorize(Roles = "Директор, Администратор")]
+        //[HttpPost]
+        //public async Task<IActionResult> Create(Worker worker)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(worker);
 
-            //        await _context.SaveChangesAsync();
-            //        return RedirectToAction("List");
-            //    }
-            //    ViewBag.Positions = new SelectList(_context.Positions, "Id", "PositionName");
-            //    return View();
-            //}
-            //[Authorize(Roles = "Директор, Администратор")]
-            //[AcceptVerbs("Get", "Post")]
-            //public IActionResult CheckPhoneNumber(int? Id, string PhoneNumber)
-            //{
-            //    if (Id != null)
-            //    {
-            //        var res1 = _context.Workers.Where(t => t.Id == Id).Select(t => t).FirstOrDefault();
-            //        var res2 = _context.Workers.Where(t => t.PhoneNumber == PhoneNumber).Select(t => t).FirstOrDefault();
-            //        if (res2 == null || res1.Id == res2?.Id)
-            //        {
-            //            return Json(true);
-            //        }
-            //        return Json(false);
-            //    }
-            //    else
-            //    {
-            //        var res3 = _context.Workers.Where(t => t.PhoneNumber == PhoneNumber).Select(t => t).FirstOrDefault();
-            //        if (res3 != null)
-            //            return Json(false);
-            //        return Json(true);
-            //    }
-            //}
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction("List");
+        //    }
+        //    ViewBag.Positions = new SelectList(_context.Positions, "Id", "PositionName");
+        //    return View();
+        //}
+        //[Authorize(Roles = "Директор, Администратор")]
+        //[AcceptVerbs("Get", "Post")]
+        //public IActionResult CheckPhoneNumber(int? Id, string PhoneNumber)
+        //{
+        //    if (Id != null)
+        //    {
+        //        var res1 = _context.Workers.Where(t => t.Id == Id).Select(t => t).FirstOrDefault();
+        //        var res2 = _context.Workers.Where(t => t.PhoneNumber == PhoneNumber).Select(t => t).FirstOrDefault();
+        //        if (res2 == null || res1.Id == res2?.Id)
+        //        {
+        //            return Json(true);
+        //        }
+        //        return Json(false);
+        //    }
+        //    else
+        //    {
+        //        var res3 = _context.Workers.Where(t => t.PhoneNumber == PhoneNumber).Select(t => t).FirstOrDefault();
+        //        if (res3 != null)
+        //            return Json(false);
+        //        return Json(true);
+        //    }
+        //}
 
-            //[Authorize(Roles = "Директор, Администратор")]
-            //[HttpGet]
-            //public IActionResult Edit(int? id)
-            //{
-            //    if (id == 0)
-            //    {
-            //        return RedirectToAction("List");
-            //    }
-            //    Worker worker = _context.Workers.Find(id);
-            //    if (worker != null)
-            //    {
-            //        var gend = _context.Genders;
-            //        var pos = _context.Positions;
-            //        worker.Gender = gend.Where(t => t.Id == worker.GenderId).Select(t => t).FirstOrDefault();
-            //        worker.Position = pos.Where(t => t.Id == worker.PositionId).Select(t => t).FirstOrDefault();
-            //        ViewBag.Genders = new SelectList(gend, "Id", "GenderName");
-            //        ViewBag.Positions = new SelectList(pos, "Id", "PositionName");
-            //        return View(worker);
-            //    }
-            //    return RedirectToAction("List");
+        [Authorize(Roles = "Кассир")]
+        [HttpGet]
+        public IActionResult Check(int operationId)
+        {
+            var operation = _context.Operations
+                 .Include(t => t.CompletedPayments)
+                    .ThenInclude(t => t.AvailablePayment)
+                .Include(t => t.SoldGoods)
+                    .ThenInclude(t => t.GoodForSale)
+                .Include(t => t.DeliveryGoods)
+                    .ThenInclude(t => t.DeliveryCountry)
+                .Include(t => t.PaymentMethods)
+                .Include(t => t.Operations_PaymentMethods)
+                .ThenInclude(t => t.Operation)
+                .Include(t => t.Operations_PaymentMethods)
+                .ThenInclude(t => t.PaymentMethod)
+                .Where(t => t.Id == operationId).Select(t => t).FirstOrDefault();
+            if (operation == null)
+            {
+                return RedirectToAction("List");
+            }
+            return View(operation);         
 
-            //}
-
-            //[Authorize(Roles = "Директор, Администратор")]
-            //[HttpPost]
-            //public async Task<IActionResult> Edit(Worker worker)
-            //{
-            //    if (ModelState.IsValid)
-            //    {
-            //        if (worker.Id == AuthorizedUser.GetInstance().GetWorker().Id)
-            //        {
-            //            worker.Position = _context.Positions.Find(worker.PositionId);
-            //            worker.Gender = _context.Genders.Find(worker.GenderId);
-            //            AuthorizedUser.GetInstance().ClearUser();
-            //            AuthorizedUser.GetInstance().SetUser(worker);
-            //        }
-            //        _context.Entry(worker).State = EntityState.Modified;
-            //        await _context.SaveChangesAsync();
-            //        return RedirectToAction("List");
-            //    }
-
-            //    var gend = _context.Genders;
-            //    var pos = _context.Positions;
-            //    ViewBag.Genders = new SelectList(gend, "Id", "GenderName");
-            //    ViewBag.Positions = new SelectList(pos, "Id", "PositionName");
-            //    return View(worker);
-            //}
-
-            //[HttpGet]
-            //public IActionResult Delete(int? id)
-            //{
-            //    Worker worker = _context.Workers.Find(id);
-            //    if (worker == null)
-            //    {
-            //        //return HttpNotFound();
-            //    }
-            //    else if (worker?.Id == AuthorizedUser.GetInstance().GetWorker().Id)
-            //    {
-            //        return RedirectToRoute("default", new { controller = "Worker", action = "Edit", id = id });
-            //    }
-
-            //    return View(worker);
-            //}
-
-            //[HttpPost, ActionName("Delete")]
-            //public IActionResult DeleteConfirmed(int? id)
-            //{
-            //    Worker worker = _context.Workers.Find(id);
-            //    if (worker == null)
-            //    {
-            //        //return HttpNotFound();
-            //    }
-            //    _context.Workers.Remove(worker);
-            //    _context.SaveChanges();
-            //    return RedirectToAction("List");
-            //}
         }
+
+        //[Authorize(Roles = "Директор, Администратор")]
+        //[HttpPost]
+        //public async Task<IActionResult> Edit(Worker worker)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        if (worker.Id == AuthorizedUser.GetInstance().GetWorker().Id)
+        //        {
+        //            worker.Position = _context.Positions.Find(worker.PositionId);
+        //            worker.Gender = _context.Genders.Find(worker.GenderId);
+        //            AuthorizedUser.GetInstance().ClearUser();
+        //            AuthorizedUser.GetInstance().SetUser(worker);
+        //        }
+        //        _context.Entry(worker).State = EntityState.Modified;
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction("List");
+        //    }
+
+        //    var gend = _context.Genders;
+        //    var pos = _context.Positions;
+        //    ViewBag.Genders = new SelectList(gend, "Id", "GenderName");
+        //    ViewBag.Positions = new SelectList(pos, "Id", "PositionName");
+        //    return View(worker);
+        //}
+
+        //[HttpGet]
+        //public IActionResult Delete(int? id)
+        //{
+        //    Worker worker = _context.Workers.Find(id);
+        //    if (worker == null)
+        //    {
+        //        //return HttpNotFound();
+        //    }
+        //    else if (worker?.Id == AuthorizedUser.GetInstance().GetWorker().Id)
+        //    {
+        //        return RedirectToRoute("default", new { controller = "Worker", action = "Edit", id = id });
+        //    }
+
+        //    return View(worker);
+        //}
+
+        //[HttpPost, ActionName("Delete")]
+        //public IActionResult DeleteConfirmed(int? id)
+        //{
+        //    Worker worker = _context.Workers.Find(id);
+        //    if (worker == null)
+        //    {
+        //        //return HttpNotFound();
+        //    }
+        //    _context.Workers.Remove(worker);
+        //    _context.SaveChanges();
+        //    return RedirectToAction("List");
+        //}
+    }
 }
