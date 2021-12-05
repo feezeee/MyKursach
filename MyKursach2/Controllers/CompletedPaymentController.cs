@@ -17,7 +17,7 @@ namespace MyKursach2.Controllers
             _context = context;
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = "Директор, Администратор, Кассир")]
         [HttpGet]
         public IActionResult Create(int operationId)
         {
@@ -28,7 +28,7 @@ namespace MyKursach2.Controllers
             return View(makingPayment);
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = "Директор, Администратор, Кассир")]
         [HttpPost]
         public async Task<IActionResult> Create(CompletedPayment makingPayment)
         {
@@ -45,7 +45,7 @@ namespace MyKursach2.Controllers
         }
 
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = "Директор, Администратор, Кассир")]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {

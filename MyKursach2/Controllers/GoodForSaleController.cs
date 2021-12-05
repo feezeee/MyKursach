@@ -20,7 +20,7 @@ namespace MyKursach2.Controllers
         }
 
 
-        [Authorize(Roles = "Директор, Администратор, ")]
+        [Authorize(Roles = "Директор, Администратор, Кассир")]
         public async Task<IActionResult> List(GoodForSale goodForSale)
         {
             var res = await _context.GoodsForSale.Include(t=>t.Providers).Include(t=>t.SoldGoods).Include(t=>t.GoodForSale_Providers).OrderBy(t => t.Id).ToListAsync();

@@ -20,7 +20,7 @@ namespace MyKursach2.Controllers
         }
 
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = "Директор, Администратор, Кассир")]
         public async Task<IActionResult> List(PaymentMethod pay)
         {
             var res = await _context.PaymentMethods.Include(t => t.Operations).Include(t => t.Operations_PaymentMethods).OrderBy(t => t.Id).ToListAsync();

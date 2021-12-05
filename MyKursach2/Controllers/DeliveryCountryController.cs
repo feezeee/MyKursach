@@ -20,7 +20,7 @@ namespace MyKursach2.Controllers
         }
 
 
-        [Authorize(Roles = "Директор, Администратор, Кассир, Почтальон")]
+        [Authorize(Roles = "Директор, Администратор, Кассир")]
         public async Task<IActionResult> List(DeliveryCountry deliveryCountry)
         {
             var res = await _context.DeliveryCountries.FromSqlRaw("get_countries_delivery").ToListAsync();
@@ -36,14 +36,14 @@ namespace MyKursach2.Controllers
             return View(res);
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = "Директор, Администратор, Кассир")]
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = "Директор, Администратор, Кассир")]
         [HttpPost]
         public async Task<IActionResult> Create(DeliveryCountry deliveryCountry)
         {
@@ -83,7 +83,7 @@ namespace MyKursach2.Controllers
 
 
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = "Директор, Администратор, Кассир")]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -100,7 +100,7 @@ namespace MyKursach2.Controllers
 
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = "Директор, Администратор, Кассир")]
         [HttpPost]
         public async Task<IActionResult> Edit(DeliveryCountry deliveryCountry)
         {
@@ -116,7 +116,7 @@ namespace MyKursach2.Controllers
             return View(deliveryCountry);
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = "Директор, Администратор, Кассир")]
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -130,7 +130,7 @@ namespace MyKursach2.Controllers
         }
 
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = "Директор, Администратор, Кассир")]
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {

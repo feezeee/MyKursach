@@ -39,7 +39,7 @@ namespace MyKursach2.Controllers
         }
 
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = "Директор, Администратор, Кассир")]
         [HttpGet]
         public async Task<IActionResult> Create(int? operationId)
         {
@@ -90,7 +90,7 @@ namespace MyKursach2.Controllers
         }
 
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = "Директор, Администратор, Кассир")]
         [HttpPost]
         public async Task<IActionResult> Create(Operation operation)
         {

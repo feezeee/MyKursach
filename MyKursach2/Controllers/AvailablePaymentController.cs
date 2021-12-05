@@ -17,7 +17,7 @@ namespace MyKursach2.Controllers
         }
 
 
-        [Authorize(Roles = "Директор, Администратор, ")]
+        [Authorize(Roles = "Директор, Администратор, Кассир")]
         public async Task<IActionResult> List(AvailablePayment availablePayment)
         {
             var res = await _context.AvailablePayments.FromSqlRaw("get_available_payments").ToListAsync();            

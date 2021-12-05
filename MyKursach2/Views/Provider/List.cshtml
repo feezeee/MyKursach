@@ -24,10 +24,13 @@
         </div>
     </form>
     <div class="div-contenet-table">
-        <a asp-controller="Provider" asp-action="Create" style="">
-            <i class='bx bx-user-plus'></i>
-            Добавить поставщика
-        </a>
+        @if (User.IsInRole("Администратор") || User.IsInRole("Директор"))
+        {
+            <a asp-controller="Provider" asp-action="Create" style="">
+                <i class='bx bx-user-plus'></i>
+                Добавить поставщика
+            </a>
+        }
         <table class="content-table" id="myTable">
             <thead>
                 <tr>                    

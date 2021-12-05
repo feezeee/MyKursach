@@ -19,7 +19,7 @@ namespace MyKursach2.Controllers
         }
 
 
-        [Authorize(Roles = "Директор, Администратор, ")]
+        [Authorize(Roles = "Директор, Администратор, Кассир")]
         public async Task<IActionResult> List(Provider provider)
         {
             var res = await _context.Providers.FromSqlRaw("get_providers").ToListAsync();
