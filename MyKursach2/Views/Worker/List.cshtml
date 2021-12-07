@@ -46,7 +46,7 @@
                     <th>Должность</th>
                 </tr>
             </thead>            
-            <tbody id="editClickbody">
+            <tbody id="editClickbodyWorker">
                 @foreach (var el in Model)
                 {                    
                     <tr class="rowEditStart">
@@ -87,7 +87,16 @@
 
     </div>
 </div>
-<script src="~/js/test.js">
+@{
+    if (User.IsInRole("Администратор") || User.IsInRole("Директор"))
+    {
+        <script src="~/js/Worker.js">
 
-</script>
+        </script>
+    }
+    else
+    {
+        
+    }
+}
 

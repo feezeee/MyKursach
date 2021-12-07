@@ -18,8 +18,12 @@ namespace MyKursach2.Controllers
             _context = context;
         }
 
+        const string DirectorAdminKassir = "Директор, Администратор, Кассир";
+        const string DirectorAdmin = "Директор, Администратор";
+        const string Kassir = "Кассир";
 
-        [Authorize(Roles = "Директор, Администратор, Кассир")]
+
+        [Authorize(Roles = DirectorAdmin)]
         public async Task<IActionResult> List(Provider provider)
         {
             var res = await _context.Providers.FromSqlRaw("get_providers").ToListAsync();
@@ -35,14 +39,14 @@ namespace MyKursach2.Controllers
             return View(res);
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdmin)]
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdmin)]
         [HttpPost]
         public async Task<IActionResult> Create(Provider provider)
         {
@@ -55,7 +59,7 @@ namespace MyKursach2.Controllers
             }
             return View(provider);
         }
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdmin)]
         [AcceptVerbs("Get", "Post")]
         public async Task<IActionResult> CheckName(int? Id, string Name)
         {
@@ -78,7 +82,7 @@ namespace MyKursach2.Controllers
             }
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdmin)]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -97,7 +101,7 @@ namespace MyKursach2.Controllers
 
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdmin)]
         [HttpPost]
         public async Task<IActionResult> Edit(Provider provider)
         {
@@ -116,6 +120,8 @@ namespace MyKursach2.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = DirectorAdmin)]
+
         public async Task<IActionResult> Delete(int? id)
         {
             Provider provider = await _context.Providers.Include(t => t.GoodsForSale).Where(t => t.Id == id).FirstOrDefaultAsync();
@@ -128,6 +134,8 @@ namespace MyKursach2.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = DirectorAdmin)]
+
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
             Provider provider = await _context.Providers.Include(t=>t.GoodsForSale).Where(t=>t.Id == id).FirstOrDefaultAsync();

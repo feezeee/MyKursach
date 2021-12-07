@@ -19,8 +19,11 @@ namespace MyKursach2.Controllers
             _context = context;
         }
 
+        const string DirectorAdminKassir = "Директор, Администратор, Кассир";
+        const string DirectorAdmin = "Директор, Администратор";
+        const string Kassir = "Кассир";
 
-        [Authorize(Roles = "Директор, Администратор, Кассир")]
+        [Authorize(Roles = DirectorAdminKassir)]
         public async Task<IActionResult> List(PaymentMethod pay)
         {
             var res = await _context.PaymentMethods.Include(t => t.Operations).Include(t => t.Operations_PaymentMethods).OrderBy(t => t.Id).ToListAsync();
@@ -36,14 +39,14 @@ namespace MyKursach2.Controllers
             return View(res);
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdmin)]
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdmin)]
         [HttpPost]
         public async Task<IActionResult> Create(PaymentMethod pay)
         {
@@ -99,7 +102,7 @@ namespace MyKursach2.Controllers
 
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdminKassir)]
         [HttpGet]
         public async Task<IActionResult> DeleteInOperation(string id)
         {
@@ -127,7 +130,7 @@ namespace MyKursach2.Controllers
             return RedirectToRoute("default", new { controller = "Operation", action = "Create", operationId = operation_id });
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdmin)]
         [AcceptVerbs("Get", "Post")]
         public async Task<IActionResult> CheckPaymentMethodName(int? Id, string PaymentMethodName)
         {
@@ -150,7 +153,7 @@ namespace MyKursach2.Controllers
             }
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdmin)]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -167,7 +170,7 @@ namespace MyKursach2.Controllers
 
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdmin)]
         [HttpPost]
         public async Task<IActionResult> Edit(PaymentMethod pay)
         {
@@ -181,6 +184,8 @@ namespace MyKursach2.Controllers
             return View(pay);
         }
 
+
+        [Authorize(Roles = DirectorAdmin)]
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -197,6 +202,8 @@ namespace MyKursach2.Controllers
             return RedirectToAction("Edit", new { id = id });
         }
 
+
+        [Authorize(Roles = DirectorAdmin)]
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {

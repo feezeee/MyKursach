@@ -9,6 +9,12 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
 
+    <link rel="stylesheet" href="~/css/site.css">
+    <link rel="stylesheet" href="~/css/styleForTable.css">
+    <link rel="stylesheet" href="~/css/styleForParamWorkers.css">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/popper/dist/popper.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -17,11 +23,9 @@
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" type="text/javascript"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" type="text/javascript"></script>
 
+    <script src="~/js/site.js"></script>
 
-    <link rel="stylesheet" href="~/css/style.css">
-    <link rel="stylesheet" href="~/css/styleForTable.css">
-    <link rel="stylesheet" href="~/css/styleForParamWorkers.css">
-    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+
 
 </head>
 <body>
@@ -143,23 +147,24 @@
                     document.getElementById('_goodForSale').classList.remove('bx-tada');
                 }
             </script>
-
-            <li id="area_provider">
-                <a asp-controller="Provider" asp-action="List">
+            @if (User.IsInRole("Администратор") || User.IsInRole("Директор"))
+            {
+                <li id="area_provider">
+                    <a asp-controller="Provider" asp-action="List">
                         <i id="_provider" class='bx bx-user'></i>
-                    <span class="links_name">Поставщики</span>
-                </a>
-                <span class="tooltip">Поставщики</span>
-            </li>
-            <script>
-                document.getElementById('area_provider').onmouseenter = function () {
+                        <span class="links_name">Поставщики</span>
+                    </a>
+                    <span class="tooltip">Поставщики</span>
+                </li>
+                <script>
+                    document.getElementById('area_provider').onmouseenter = function () {
                     document.getElementById('_provider').classList.add('bx-tada');
                 }
                 document.getElementById('area_provider').onmouseleave = function () {
                     document.getElementById('_provider').classList.remove('bx-tada');
                 }
-            </script>
-
+                </script>
+            }
 
             <li id="area_operation">
                 <a asp-controller="Operation" asp-action="List">
@@ -179,37 +184,6 @@
 
 
 
-
-            @*<li id="area_operations">
-            <a href="#">
-                <i id="_operations" class='bx bx-plus-circle'></i>
-                <span class="links_name">Операции</span>
-            </a>
-            <span class="tooltip">Операции</span>
-        </li>
-        <script>
-            document.getElementById('area_operations').onmouseenter = function () {
-                document.getElementById('_operations').classList.add('bx-tada');
-            }
-            document.getElementById('area_operations').onmouseleave = function () {
-                document.getElementById('_operations').classList.remove('bx-tada');
-            }
-        </script>
-        <li id="area_products">
-            <a href="#">
-                <i id="_proudcts" class='bx bxs-component'></i>
-                <span class="links_name">Товары</span>
-            </a>
-            <span class="tooltip">Товары</span>
-        </li>
-        <script>
-            document.getElementById('area_products').onmouseenter = function () {
-                document.getElementById('_proudcts').classList.add('bx-tada');
-            }
-            document.getElementById('area_products').onmouseleave = function () {
-                document.getElementById('_proudcts').classList.remove('bx-tada');
-            }
-        </script>*@
 
             <li class="profile">
                 <div class="profile-details">
@@ -248,8 +222,6 @@
     <script>
         let sidebar = document.querySelector(".sidebar");
         let closeBtn = document.querySelector("#btn_nav_menu");
-        let searchBtn = document.querySelector(".bx-search");
-
         closeBtn.addEventListener("click", () => {
             sidebar.classList.toggle("open");
             menuBtnChange();//calling the function(optional)
@@ -270,80 +242,8 @@
         }
     </script>
 </body>
-
-@*<body style="height: max-content; background-color: rgb(242, 255, 255);">
-    <header>
-        <nav class="mx-auto navbar navbar-expand-lg navbar-light border-bottom " style="background-color: rgb(181, 234, 255); max-width: 1440px;">
-            <a class="navbar-brand" asp-controller="Home" asp-action="Index">Почта РБ</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-                <ul class="list-group list-group-horizontal-lg " style="list-style: none;">
-                    <li class="dropdown mx-3">
-                        <a class="dropdown-toggle" type="button" id="dropdownMenuButtonStaff" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Сотрудники
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonStaff">
-                            <a class="dropdown-item" asp-controller="Worker" asp-action="List">Список сотрудников</a>
-                            <a class="dropdown-item" asp-controller="Position" asp-action="List">Должности</a>
-                        </div>
-                    </li>
-                    @if (User.IsInRole("Администратор"))
-                    {
-                        <li class="mx-3 dropdown">
-                            <a class="dropdown-toggle" type="button" id="dropdownMenuButtonOperation" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Операция
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonOperation">
-                                <a class="dropdown-item" asp-controller="Operation" asp-action="NewOperation">Новая операция</a>
-                                <a class="dropdown-item" asp-controller="Operation" asp-action="List">Список операций</a>
-                            </div>
-                        </li>
-                    }
-
-
-                    <li class="mx-3 dropdown">
-                        <a class="dropdown-toggle" type="button" id="dropdownMenuButtonOrder" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Заказы
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButtonOrder">
-                            <a class="dropdown-item" href="#">Список заказов</a>
-                        </div>
-
-                    </li>
-                </ul>
-            </div>
-            <div class="d-flex justify-content-xl-between float-right">
-                @{
-                    Worker user = AuthorizedUser.GetInstance().GetWorker();
-                    <a>@user.LastName @user.FirstName (@user.Position.PositionName)</a>
-                }
-
-            <form method="post" asp-controller="Account" asp-action="Logout">
-                <style>
-                    .myHover {                        
-                        background-color:transparent; 
-                        color: #808080;
-                    }
-                    .myHover:hover {
-                        color: black;
-                    }
-                </style>
-                <input class="myHover border-0 ml-3" type="submit" value="Выход" />                
-            </form>
-            </div>
-        </nav>
-    </header>
-
-    <main class="mx-auto bg-light" style="height: 845px; max-width: 1440px;">
-        @RenderBody()
-    </main>
-
-    <footer class="mx-auto" style="max-width: 1440px; background-color: rgb(0, 103, 121); height: 70px;">
-    </footer>
-
-</body>*@
 </html>
+
+
+   
+

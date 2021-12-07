@@ -17,7 +17,12 @@ namespace MyKursach2.Controllers
             _context = context;
         }
 
-        [Authorize(Roles = "Директор, Администратор, Кассир")]
+
+        const string DirectorAdminKassir = "Директор, Администратор, Кассир";
+        const string DirectorAdmin = "Директор, Администратор";
+        const string Kassir = "Кассир";
+
+        [Authorize(Roles = DirectorAdminKassir)]
         [HttpGet]
         public IActionResult Create(int operationId)
         {
@@ -31,7 +36,7 @@ namespace MyKursach2.Controllers
             return View(soldGood);
         }
 
-        [Authorize(Roles = "Директор, Администратор, Кассир")]
+        [Authorize(Roles = DirectorAdminKassir)]
         [HttpPost]
         public async Task<IActionResult> Create(SoldGood soldGood)
         {
@@ -60,7 +65,7 @@ namespace MyKursach2.Controllers
             }           
         }
 
-        [Authorize(Roles = "Директор, Администратор, Кассир")]
+        [Authorize(Roles = DirectorAdminKassir)]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {

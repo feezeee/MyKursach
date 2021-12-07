@@ -19,8 +19,10 @@ namespace MyKursach2.Controllers
             _context = context;
         }
 
+        const string DirectorAdminKassir = "Директор, Администратор, Кассир";
+        const string DirectorAdmin = "Директор, Администратор";
 
-        [Authorize(Roles = "Директор, Администратор, Кассир")]
+        [Authorize(Roles = DirectorAdminKassir)]
         public async Task<IActionResult> List(GoodForSale goodForSale)
         {
             var res = await _context.GoodsForSale.Include(t=>t.Providers).Include(t=>t.SoldGoods).Include(t=>t.GoodForSale_Providers).OrderBy(t => t.Id).ToListAsync();
@@ -46,7 +48,7 @@ namespace MyKursach2.Controllers
             return View(res);
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdmin)]
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -54,7 +56,7 @@ namespace MyKursach2.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdmin)]
         [HttpPost]
         public async Task<IActionResult> Create(GoodForSale goodForSale, int[] selectedProviders)
         {
@@ -77,7 +79,7 @@ namespace MyKursach2.Controllers
             ViewBag.Providers = await _context.Providers.ToListAsync();
             return View(goodForSale);
         }
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdmin)]
         [AcceptVerbs("Get", "Post")]
         public async Task<IActionResult> CheckName(int? Id, string Name)
         {
@@ -100,7 +102,7 @@ namespace MyKursach2.Controllers
             }
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdmin)]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -120,7 +122,7 @@ namespace MyKursach2.Controllers
 
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdmin)]
         [HttpPost]
         public async Task<IActionResult> Edit(GoodForSale goodForSale, int[] selectedProviders)
         {
@@ -151,6 +153,7 @@ namespace MyKursach2.Controllers
             return View(goodForSale);
         }
 
+        [Authorize(Roles = DirectorAdmin)]
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -163,6 +166,7 @@ namespace MyKursach2.Controllers
             return View(goodForSale);
         }
 
+        [Authorize(Roles = DirectorAdmin)]
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {

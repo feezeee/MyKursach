@@ -19,8 +19,12 @@ namespace MyKursach2.Controllers
             _context = context;
         }
 
+        const string DirectorAdminKassir = "Директор, Администратор, Кассир";
+        const string DirectorAdmin = "Директор, Администратор";
+        const string Kassir = "Кассир";
 
-        [Authorize(Roles = "Директор, Администратор")]
+
+        [Authorize(Roles = DirectorAdmin)]
         public async Task<IActionResult> List(Worker worker)
         {
             //var res = _context.Workers.Join(_context.Positions);
@@ -55,7 +59,7 @@ namespace MyKursach2.Controllers
             return View(res);
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdmin)]
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -64,7 +68,7 @@ namespace MyKursach2.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdmin)]
         [HttpPost]
         public async Task<IActionResult> Create(Worker worker)
         {
@@ -79,7 +83,7 @@ namespace MyKursach2.Controllers
             ViewBag.Positions = new SelectList(await _context.Positions.ToListAsync(), "Id", "PositionName");
             return View();
         }
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdmin)]
         [AcceptVerbs("Get", "Post")]
         public async Task<IActionResult> CheckPhoneNumber(int? Id, string PhoneNumber)
         {
@@ -102,7 +106,7 @@ namespace MyKursach2.Controllers
             }
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdmin)]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -121,7 +125,7 @@ namespace MyKursach2.Controllers
         
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdmin)]
         [HttpPost]
         public async Task<IActionResult> Edit(Worker worker)
         {
@@ -144,6 +148,8 @@ namespace MyKursach2.Controllers
             return View(worker);
         }
 
+        [Authorize(Roles = DirectorAdmin)]
+
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -160,6 +166,7 @@ namespace MyKursach2.Controllers
             return View(worker);            
         }
 
+        [Authorize(Roles = DirectorAdmin)]
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {

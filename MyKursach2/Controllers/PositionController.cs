@@ -19,8 +19,12 @@ namespace MyKursach2.Controllers
             _context = context;
         }
 
+        const string DirectorAdminKassir = "Директор, Администратор, Кассир";
+        const string DirectorAdmin = "Директор, Администратор";
+        const string Kassir = "Кассир";
 
-        [Authorize(Roles = "Директор, Администратор")]
+
+        [Authorize(Roles = DirectorAdmin)]
         public async Task<IActionResult> List(Position position)
         {
             var res = await _context.Positions.Include(t => t.Workers).OrderBy(t => t.Id).ToListAsync();
@@ -38,14 +42,14 @@ namespace MyKursach2.Controllers
         }
 
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdmin)]
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdmin)]
         [HttpPost]
         public async Task<IActionResult> Create(Position position)
         {
@@ -60,7 +64,7 @@ namespace MyKursach2.Controllers
             return View(position);
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdmin)]
         [AcceptVerbs("Get", "Post")]
         public async Task<IActionResult> CheckPositionName(int? Id, string PositionName)
         {
@@ -85,7 +89,7 @@ namespace MyKursach2.Controllers
 
 
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdmin)]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -102,7 +106,7 @@ namespace MyKursach2.Controllers
 
         }
 
-        [Authorize(Roles = "Директор, Администратор")]
+        [Authorize(Roles = DirectorAdmin)]
         [HttpPost]
         public async Task<IActionResult> Edit(Position position)
         {
@@ -120,6 +124,8 @@ namespace MyKursach2.Controllers
             return View(position);
         }
 
+        [Authorize(Roles = DirectorAdmin)]
+
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -135,6 +141,9 @@ namespace MyKursach2.Controllers
 
             return View(position);
         }
+
+
+        [Authorize(Roles = DirectorAdmin)]
 
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int? id)

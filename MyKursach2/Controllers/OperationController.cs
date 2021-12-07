@@ -19,6 +19,12 @@ namespace MyKursach2.Controllers
             _context = context;
         }
 
+
+        const string DirectorAdminKassir = "Директор, Администратор, Кассир";
+        const string DirectorAdmin = "Директор, Администратор";
+        const string Kassir = "Кассир";
+
+        [Authorize(Roles = DirectorAdminKassir)]
         public async Task<IActionResult> List(Operation operation)
         {
             var res = await _context.Operations.Include(c => c.Worker).Include(t => t.SoldGoods).Include(t => t.DeliveryGoods).Include(t => t.CompletedPayments).Select(t => t).ToListAsync();
@@ -39,7 +45,7 @@ namespace MyKursach2.Controllers
         }
 
 
-        [Authorize(Roles = "Директор, Администратор, Кассир")]
+        [Authorize(Roles = DirectorAdminKassir)]
         [HttpGet]
         public async Task<IActionResult> Create(int? operationId)
         {
@@ -90,7 +96,7 @@ namespace MyKursach2.Controllers
         }
 
 
-        [Authorize(Roles = "Директор, Администратор, Кассир")]
+        [Authorize(Roles = DirectorAdminKassir)]
         [HttpPost]
         public async Task<IActionResult> Create(Operation operation)
         {
@@ -169,7 +175,7 @@ namespace MyKursach2.Controllers
         //    }
         //}
 
-        [Authorize(Roles = "Кассир")]
+        [Authorize(Roles = Kassir)]
         [HttpGet]
         public IActionResult Check(int operationId)
         {
