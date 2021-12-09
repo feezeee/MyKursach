@@ -1,0 +1,67 @@
+﻿@model IEnumerable<AvailablePayment>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Доступные платежи";
+}
+
+
+
+<div class="container-fluid" style="height: 100%; width:contain;">
+
+    <h1 class="text-center pt-5">
+        Доступные платежи
+    </h1>
+
+
+    <form name="test" method="get" asp-controller="AvailablePayment" asp-action="List" class="param_workers">
+
+        <input class="form-control" name="availablePayment.Id" type="text" placeholder="Id метода:" />
+        <input class="form-control" name="availablePayment.AvailablePaymentName" type="text" placeholder="Наименование доступного платежа:" />
+        <div>
+            <button class="btn btn-success" type="submit">
+                Поиск
+            </button>
+        </div>
+    </form>
+    <div class="div-contenet-table">
+        @if (User.IsInRole("Администратор") || User.IsInRole("Директор"))
+        {
+            <a asp-controller="AvailablePayment" asp-action="Create" style="">
+                <i class='bx bx-user-plus'></i>
+                Добавить доступный платеж
+            </a>
+        }
+        <table class="content-table" id="myTable">
+            <thead>
+                <tr>                    
+                    <th>#</th>
+                    <th>Доступный платеж</th>
+                </tr>
+            </thead>            
+            <tbody id="editClickbodyAvailablePayment">
+                @foreach (var el in Model)
+                {                    
+                    <tr class="rowEditStart">
+                        <th class="editId">
+                            @*<a class="popupdelete" asp-action="Delete" asp-controller="Worker" asp-route-id="@el.Id">
+                                Удалить пользователя
+                            </a>*@
+                            @el.Id
+                        </th>
+                        <td>
+                            @el.AvailablePaymentName
+                        </td>                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+@if (User.IsInRole("Администратор") || User.IsInRole("Директор"))
+{
+    <script src="~/js/AvailablePayment.js">
+
+    </script>
+}
+

@@ -1,0 +1,71 @@
+﻿@model IEnumerable<DeliveryCountry>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Страны доставки";
+}
+
+
+
+<div class="container-fluid" style="height: 100%; width:contain;">
+
+    <h1 class="text-center pt-5">
+        Страны доставки
+    </h1>
+
+
+    <form name="test" method="get" asp-controller="DeliveryCountry" asp-action="List" class="param_workers">
+
+        <input class="form-control" name="deliveryCountry.Id" type="text" placeholder="Id метода:" />
+        <input class="form-control" name="deliveryCountry.DeliveryCountryName" type="text" placeholder="Наименование страны:" />
+        <div>
+            <button class="btn btn-success" type="submit">
+                Поиск
+            </button>
+        </div>
+    </form>
+    <div class="div-contenet-table">
+        @if (User.IsInRole("Администратор") || User.IsInRole("Директор"))
+        {
+            <a asp-controller="DeliveryCountry" asp-action="Create" style="">
+                <i class='bx bx-user-plus'></i>
+                Добавить страну для доставки
+            </a>
+        }
+        <table class="content-table" id="myTable">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Страна</th>
+                </tr>
+            </thead>
+            <tbody id="editClickbodyDeliveryCountry">
+                @foreach (var el in Model)
+                {
+                    <tr class="rowEditStart">
+                        <th class="editId">
+                            @*<a class="popupdelete" asp-action="Delete" asp-controller="Worker" asp-route-id="@el.Id">
+                                    Удалить пользователя
+                                </a>*@
+                            @el.Id
+                        </th>
+                        <td>
+                            @el.DeliveryCountryName
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<script src="~/js/test.js">
+
+</script>
+
+@if (User.IsInRole("Администратор") || User.IsInRole("Директор")) 
+{
+    <script src="~/js/DeliveryCountry.js">
+
+    </script>
+}

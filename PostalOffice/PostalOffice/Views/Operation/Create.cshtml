@@ -1,0 +1,189 @@
+﻿@model Operation
+@{
+    Layout = "_Layout";
+}
+
+<div class="main_operation container-fluid">
+    <form class="operation" asp-action="Create" asp-controller="Operation" method="post">
+        <div class="operation_cont">
+            <p class="addingWorkerPopup">Операция</p>
+            <input hidden asp-for="Id" value="@Model.Id"/>
+            <ul class="operation_cont_type">
+                <li>
+                    <a asp-controller="SoldGood" asp-action="Create" asp-route-operationId="@Model.Id">Продажа товара</a>
+                    <div class="operation_table table-responsive">
+                        <table class="content-table overflow-auto" id="myTable">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Наименование товара</th>
+                                    <th>Цена 1 ед. товара</th>
+                                    <th>Количество проданных</th>
+                                    <th>Общая сумма</th>
+                                </tr>
+                            </thead>
+                            <tbody id="editClickbodySoldGood">
+                                @foreach (var el in Model.SoldGoods)
+                                {
+                                    <tr class="rowEditStart">
+                                        <th class="editId">
+                                            @el.Id
+                                        </th>
+                                        <td>
+                                            @el.GoodForSale?.Name
+                                        </td>
+                                        <td>
+                                            @el.GoodForSale?.GoodPrice
+                                        </td>      
+                                        <td>
+                                            @el.NumberSold
+                                        </td>   
+                                        <td>
+                                            @el.SoldGoodsPrice
+                                        </td>   
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </li>
+               <li>
+                    <a asp-controller="DeliveryGood" asp-action="Create" asp-route-operationId="@Model.Id">Оформить доставку</a>
+                    <div class="operation_table table-responsive">
+                        <table class="content-table overflow-auto" id="myTable">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Адрес доставки</th>
+                                    <th>Имя отправителя</th>
+                                    <th>Фамилия отправителя</th>
+                                    <th>Имя получателя</th>
+                                    <th>Фамилия получателя</th>    
+                                    <th>Страна</th>
+                                    <th>Цена доставки</th>
+
+                                </tr>
+                            </thead>
+                            <tbody id="editClickbodyDeliveryGood">
+                                @foreach (var el in Model.DeliveryGoods)
+                                {
+                                    <tr class="rowEditStart">
+                                        <th class="editId">
+                                            @el.Id
+                                        </th>
+                                        <td>
+                                            @el.Address
+                                        </td>
+                                        <td>
+                                            @el.SenderFirstName
+                                        </td>
+                                        <td>
+                                            @el.SenderLastName
+                                        </td>
+                                        <td>
+                                            @el.ReciverFirstName
+                                        </td>
+                                        <td>
+                                            @el.ReciverLastName
+                                        </td>
+                                        <td>
+                                            @el.DeliveryCountry?.DeliveryCountryName
+                                        </td>
+                                        <td>
+                                                @el.Price
+                                        </td>                                     
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </li>
+                <li>
+                    <a asp-controller="CompletedPayment" asp-action="Create" asp-route-operationId="@Model.Id">Выполнить платеж</a>
+                    <div class="operation_table table-responsive">
+                        <table class="content-table overflow-auto" id="myTable">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Наименование платежа</th>
+                                    <th>Цена</th>
+                                </tr>
+                            </thead>
+                            <tbody id="editClickbodyCompletedPayment">
+                                @foreach (var el in Model.CompletedPayments)
+                                {
+                                    <tr class="rowEditStart">
+                                        <th class="editId">
+                                            @el.Id
+                                        </th>
+                                        <td>
+                                            @el.AvailablePayment?.AvailablePaymentName
+                                        </td>
+                                        <td>
+                                            @el.Price
+                                        </td>                                  
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </li>
+                <li>
+                    <h1 class="text-right align-self-center" style="width: 100%;">Итого: @Model.TotalPrice</h1>
+                </li>
+                <li>
+                    <a asp-controller="PaymentMethod" asp-action="AddToOperation" asp-route-operationId="@Model.Id" asp-route-sum="@Model.TotalPrice">Выбрать способ оплаты</a>
+                    <div class="operation_table table-responsive">
+                        <table class="content-table overflow-auto" id="myTable">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Способ оплаты</th>
+                                    <th>Сумма</th>
+                                </tr>
+                            </thead>
+                            <tbody id="editClickbodyPaymentMethod">
+                                @foreach (var el in Model.Operations_PaymentMethods)
+                                {
+                                    <tr class="rowEditStart">
+                                        <th class="editId">
+                                            @{
+                                                string str = $"{el.OperationId}_{@el.PaymentMethodId}";
+                                            }
+                                            @str
+                                        </th>
+                                        <td>
+                                            @el?.PaymentMethod?.PaymentMethodName
+                                        </td>
+                                        <td>
+                                            @el.Sum
+                                        </td>                                  
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </li>
+
+            </ul>
+             <div class="popup_button">
+            <button class="popupsubmit" type="submit">
+                Готово
+            </button>
+        </div>
+        </div>
+    </form>
+</div>
+<script src="~/js/operation/sold_good.js">
+
+</script>
+<script src="~/js/operation/delivery_good.js">
+
+</script>
+<script src="~/js/operation/completed_payment.js">
+
+</script>
+
+<script src="~/js/operation/payment_method.js">
+
+</script>

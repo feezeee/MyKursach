@@ -16,6 +16,7 @@ namespace MyKursach2.Models
         public PaymentMethod PaymentMethod { get; set; }
 
         [Range(0, int.MaxValue, ErrorMessage = "Сумма не может быть отрицательной!")]
+        [Column("sum")]
         public int Sum { get; set; }
     }
 }

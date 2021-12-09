@@ -1,0 +1,32 @@
+﻿@model PaymentMethod
+@{
+    Layout = "_Layout";
+}
+
+<script src="@Url.Content("~/lib/jquery-validation/dist/jquery.validate.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js")" type="text/javascript"></script>
+
+<form class="popup" asp-controller="PaymentMethod" asp-action="Edit">
+    <div class="popup-inner">
+        <p class="addingWorkerPopup">Изменение способа оплаты</p>
+        <ul class="popupinput">
+            <li style="width:100%;">
+                <span>Наименование способа оплаты*</span>
+                <input type="hidden" name="Id" value="@Model.Id" />
+                <input asp-for="PaymentMethodName" required type="text" placeholder="Введите наименование способа оплаты" value="@Model.PaymentMethodName" />
+                @Html.ValidationMessageFor(model => model.PaymentMethodName, null, new { style = "color:red" })
+            </li>           
+        </ul>
+        <a type="button" asp-action="List" asp-controller="PaymentMethod" class="closepopup">X</a>
+        <div class="popup_button">
+            <button class="popupsubmit" type="submit">
+                Сохранить
+            </button>             
+            @if(Model.Operations_PaymentMethods?.Count == 0)
+            {
+                <a class="popupdelete" type="button" asp-action="Delete" asp-controller="PaymentMethod" asp-route-id=@Model.Id>Удалить</a>            
+            }
+        </div>
+    </div>
+</form>
+

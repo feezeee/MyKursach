@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Provider>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Поставщики";
+}
+
+
+
+<div class="container-fluid" style="height: 100%; width:contain;">
+
+    <h1 class="text-center pt-5">
+        Поставщики
+    </h1>
+
+
+    <form name="test" method="get" asp-controller="Provider" asp-action="List" class="param_workers">
+
+        <input class="form-control" name="provider.Id" type="text" placeholder="Id товара:" />
+        <input class="form-control" name="provider.Name" type="text" placeholder="Поставщик:" />
+        <div>
+            <button class="btn btn-success" type="submit">
+                Поиск
+            </button>
+        </div>
+    </form>
+    <div class="div-contenet-table">
+        @if (User.IsInRole("Администратор") || User.IsInRole("Директор"))
+        {
+            <a asp-controller="Provider" asp-action="Create" style="">
+                <i class='bx bx-user-plus'></i>
+                Добавить поставщика
+            </a>
+        }
+        <table class="content-table" id="myTable">
+            <thead>
+                <tr>                    
+                    <th>#</th>
+                    <th>Поставщик</th>
+                    <th>Мобильный телефон</th>
+                    <th>Эл. почта</th>
+                </tr>
+            </thead>            
+            <tbody id="editClickbodyProvider">
+                @foreach (var el in Model)
+                {                    
+                <tr class="rowEditStart">
+                    <th class="editId">
+                        @*<a class="popupdelete" asp-action="Delete" asp-controller="Worker" asp-route-id="@el.Id">
+                Удалить пользователя
+            </a>*@
+                        @el.Id
+                    </th>
+                    <td>
+                        @el.Name
+                    </td>
+                    <td>
+                        @el.PhoneNumber
+                    </td>
+                    <td>
+                        @el.Email
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<script src="~/js/Provider.js">
+
+</script>
+

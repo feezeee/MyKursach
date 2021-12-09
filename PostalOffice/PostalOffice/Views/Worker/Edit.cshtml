@@ -1,0 +1,85 @@
+﻿@model Worker
+@{
+    Layout = "_Layout";
+}
+
+<script src="@Url.Content("~/lib/jquery-validation/dist/jquery.validate.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js")" type="text/javascript"></script>
+
+<form class="popup" asp-controller="Worker" asp-action="Edit">
+    <div class="popup-inner">
+        <p class="addingWorkerPopup">Изменение работника</p>
+        <ul class="popupinput">
+            <li>
+                <span>Фамилия*</span>
+                <input required asp-for="LastName" type="text" placeholder="Введите фамилию" value="@Model.LastName"/>
+                @Html.ValidationMessageFor(model => model.LastName, null, new { style = "color:red" })
+            </li>
+            <li>
+                <span>Имя*</span>
+                <input required asp-for="FirstName" type="text" placeholder="Введите имя" value="@Model.FirstName"/>
+                @Html.ValidationMessageFor(model => model.FirstName, null, new { style = "color:red" })
+            </li>
+            <li>
+                <span>Отчество*</span>
+                <input required asp-for="MiddleName" type="text" placeholder="Введите отчество" value="@Model.MiddleName"/>
+                @Html.ValidationMessageFor(model => model.MiddleName, null, new { style = "color:red" })
+            </li>
+            <li>
+                <span>Дата рождения*</span>
+                 @{
+                    string mydate = "";                    
+                     mydate = DateTime.Parse($"{Model.DateOfBirth}").ToString("yyyy-MM-dd"); 
+                }
+                <input required id="_dateofbirth" asp-for="DateOfBirth" type="date" placeholder="Дата рождения" value="@mydate" />
+                @Html.ValidationMessageFor(model => model.DateOfBirth, null, new { style = "color:red" })
+            </li>
+            <li>
+                <span>Электронная почта</span>
+                <input asp-for="Email" type="text" placeholder="Введите Email" value="@Model.Email" />
+                @Html.ValidationMessageFor(model => model.Email, null, new { style = "color:red" })
+            </li>
+            <li>
+                <span>Выберите группу пользователей*</span>
+                <select asp-for="GroupUserId" asp-items="ViewBag.GroupUsers" value="@Model.GroupUserId"></select>
+                @Html.ValidationMessageFor(model => model.GroupUserId, null, new { style = "color:red" })
+            </li>
+            <li>
+                <span>Выберите должность*</span>
+                <select asp-for="PositionId" asp-items="ViewBag.Positions" value="@Model.Position.PositionName"></select>
+                @Html.ValidationMessageFor(model => model.PositionId, null, new { style = "color:red" })
+            </li>
+            <li>
+                <span>Номер телефона*</span>
+                <input type="hidden" name="Id" value="@Model.Id" />
+                <input required autocomplete="off" id="_phonenumber" asp-for="PhoneNumber" type="text" placeholder="Номер телефона" value="@Model.PhoneNumber" />
+                @Html.ValidationMessageFor(model => model.PhoneNumber, null, new { style = "color:red" })
+            </li>
+            <li>
+                <span>Введите пароль*</span>
+                <input required asp-for="Password" type="text" placeholder="Введите пароль" value="@Model.Password" />
+                @Html.ValidationMessageFor(model => model.Password, null, new { style = "color:red" })
+            </li>
+
+
+        </ul>
+        <a type="button" asp-action="List" asp-controller="Worker" class="closepopup">X</a>
+        <div class="popup_button">
+            <button class="popupsubmit" type="submit">
+                Сохранить
+            </button>
+            @if (AuthorizedUser.GetInstance().GetWorker().Id != Model.Id && Model.Operations?.Count == 0)
+            {
+                <a class="popupdelete" type="button" asp-action="Delete" asp-controller="Worker" asp-route-id=@Model.Id>Удалить</a>
+            }
+        </div>
+
+    </div>
+</form>
+<script src="~/js/jquery.maskedinput.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#_phonenumber").mask("+375 (99) 999-99-99");
+    });
+</script>
+

@@ -1,0 +1,11 @@
+﻿@model Provider
+@{
+    Layout = "_Layout";
+}
+
+<form class="popup" method="post" asp-controller="Provider" asp-action="Delete" asp-route-id="@Model.Id">
+    <p>Вы уверены?</p>
+    <button type="submit">Да</button>
+    <a type="button" asp-action="Edit" asp-controller="Provider" asp-route-id=@Model.Id>Нет</a>
+</form>>
+

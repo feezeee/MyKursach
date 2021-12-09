@@ -21,8 +21,14 @@
         <div class="popup_button">
             <button class="popupsubmit" type="submit">
                 Сохранить
-            </button>                
-            <a class="popupdelete" type="button" asp-action="Delete" asp-controller="AvailablePayment" asp-route-id=@Model.Id>Удалить</a>            
+            </button>   
+            @{
+                if(Model.CompletedPayment?.Count == 0)
+                {
+                    <a class="popupdelete" type="button" asp-action="Delete" asp-controller="AvailablePayment" asp-route-id=@Model.Id>Удалить</a>  
+                }
+            }
+                      
         </div>
     </div>
 </form>

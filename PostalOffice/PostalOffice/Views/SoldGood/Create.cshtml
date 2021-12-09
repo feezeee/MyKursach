@@ -1,0 +1,35 @@
+﻿@model SoldGood
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Выбор товара";
+
+}
+
+<form class="popup" asp-controller="SoldGood" asp-action="Create" method="post">
+    <div class="popup-inner">
+        <p class="addingWorkerPopup">Выберите товар</p>
+        <ul class="popupinput">
+            <li>
+                <span>Выберите товар</span>
+                <select required asp-for="GoodForSaleId" asp-items="ViewBag.GoodsForSale"></select>
+            </li>
+            <li>
+                <span>Укажите число товаров*</span>
+                <input hidden asp-for="OperationId" type="text" placeholder="Индентификатор операции" value="@Model.OperationId"/>
+                <input required asp-for="NumberSold" type="number" placeholder="Количество товара" />
+                @Html.ValidationMessageFor(model => model.NumberSold, null, new { style = "color:red" })
+            </li>
+        </ul>
+        <a type="button" asp-controller="Operation"  asp-action="Create" asp-route-operationId="@Model.OperationId" class="closepopup">X</a>
+        <div class="popup_button">
+            <button class="popupsubmit" type="submit">
+                Создать
+            </button>
+            <button class="popupclear" type="reset">
+                Очистить
+            </button>
+        </div>
+
+    </div>
+</form>
+

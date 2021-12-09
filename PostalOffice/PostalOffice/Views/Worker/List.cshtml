@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Worker>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Сотрудники";
+}
+
+
+
+<div class="container-fluid" style="height: 100%; width:contain;">
+
+    <h1 class="text-center pt-5">
+        Сотрудники
+    </h1>
+
+
+    <form name="test" method="get" asp-controller="Worker" asp-action="List" class="param_workers">
+
+        <input class="form-control" name="worker.Id" type="text" placeholder="Id работника:" />
+        <input class="form-control" name="worker.FirstName" type="text" placeholder="Имя работника:" />
+        <input class="form-control" name="worker.LastName" type="text" placeholder="Фамилия работника:" />        
+        <input class="form-control" name="worker.MiddleName" type="text" placeholder="Отчество работника:" />
+        <input class="form-control" name="worker.GroupUser.Name" type="text" placeholder="Группа пользователей:" />
+        <input class="form-control" name="worker.Position.PositionName" type="text" placeholder="Должность работника:" />
+        <div>
+            <button class="btn btn-success" type="submit">
+                Поиск
+            </button>
+        </div>
+    </form>
+    <div class="div-contenet-table">
+        <a asp-controller="Worker" asp-action="Create" style="">
+            <i class='bx bx-user-plus'></i>
+            Добавить сотрудника
+        </a>
+        <table class="content-table" id="myTable">
+            <thead>
+                <tr>                    
+                    <th>#</th>
+                    <th>Фамилия</th>
+                    <th>Имя</th>
+                    <th>Отчество</th>
+                    <th>Группа пользователей</th>
+                    <th>Дата рождения</th>
+                    <th>Email</th>
+                    <th>Номер телефона</th>
+                    <th>Должность</th>
+                </tr>
+            </thead>            
+            <tbody id="editClickbodyWorker">
+                @foreach (var el in Model)
+                {                    
+                    <tr class="rowEditStart">
+                        <th class="editId">
+                            @*<a class="popupdelete" asp-action="Delete" asp-controller="Worker" asp-route-id="@el.Id">
+                                Удалить пользователя
+                            </a>*@
+                            @el.Id
+                        </th>
+                        <td>
+                            @el.LastName
+                        </td>
+                        <td>
+                            @el.FirstName
+                        </td>
+                        <td>
+                            @el.MiddleName
+                        </td>
+                        <td>
+                            @el.GroupUser?.Name
+                        </td>
+                        <td>
+                            @el.DateOfBirth.ToShortDateString()
+                        </td>
+                        <td>
+                            @el.Email
+                        </td>
+                        <td>
+                            @el.PhoneNumber
+                        </td>
+                        <td>
+                            @el.Position?.PositionName
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+@{
+    if (User.IsInRole("Администратор") || User.IsInRole("Директор"))
+    {
+        <script src="~/js/Worker.js">
+
+        </script>
+    }
+    else
+    {
+        
+    }
+}
+

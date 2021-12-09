@@ -1,0 +1,35 @@
+﻿@model CompletedPayment
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Выбор платежа";
+}
+
+<form class="popup" asp-controller="CompletedPayment" asp-action="Create" method="post">
+    <div class="popup-inner">
+        <p class="addingWorkerPopup">Выберите платеж</p>
+        <ul class="popupinput">
+            <li>
+                <span>Выберите тип платежа</span>
+                <select required asp-for="AvailablePaymentId" asp-items="ViewBag.AvailablePayments"></select>
+            </li>
+            <li>
+                <span>Укажите сумму*</span>
+                <input hidden asp-for="OperationId" type="text" placeholder="Сумма к оплате" value="@Model.OperationId"/>
+                <input required asp-for="Price" type="number" placeholder="Сумма к оплате" />
+                @Html.ValidationMessageFor(model => model.Price, null, new { style = "color:red" })
+
+            </li>
+        </ul>
+        <a type="button" asp-controller="Operation"  asp-action="Create" asp-route-operationId="@Model.OperationId" class="closepopup">X</a>
+        <div class="popup_button">
+            <button class="popupsubmit" type="submit">
+                Создать
+            </button>
+            <button class="popupclear" type="reset">
+                Очистить
+            </button>
+        </div>
+
+    </div>
+</form>
+

@@ -1,0 +1,37 @@
+﻿@model Position
+@{
+    Layout = "_Layout";
+}
+
+<script src="@Url.Content("~/lib/jquery-validation/dist/jquery.validate.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js")" type="text/javascript"></script>
+
+<form class="popup" asp-controller="Position" asp-action="Edit">
+    <div class="popup-inner">
+        <p class="addingWorkerPopup">Изменение должности</p>
+        <ul class="popupinput">
+            <li style="width:100%;">
+                <span>Наименование должности*</span>
+                <input type="hidden" name="Id" value="@Model.Id" />
+                <input asp-for="PositionName" required type="text" placeholder="Введите наименование должности" value="@Model.PositionName" />
+                @Html.ValidationMessageFor(model => model.PositionName, null, new { style = "color:red" })
+            </li>
+        </ul>
+        <a type="button" asp-action="List" asp-controller="Position" class="closepopup">X</a>
+        <div class="popup_button">
+            <button class="popupsubmit" type="submit">
+                Сохранить
+            </button>
+            @if (AuthorizedUser.GetInstance().GetWorker().PositionId != Model.Id && Model.Workers?.Count == 0)
+            {
+                <a class="popupdelete" type="button" asp-action="Delete" asp-controller="Position" asp-route-id=@Model.Id>Удалить</a>
+            }
+            @*<a class="popupdelete" type="button" asp-action="Delete" asp-controller="Worker" asp-route-id=@Model.Id>Удалить</a>*@
+
+            @*@Html.ActionLink("DisplayText", "Delete", "Worker", "post",);*@
+            @*<input id="deleteClickUser" type="button" class="popupdelete" value="Удалить"/>*@
+        </div>
+
+    </div>
+</form>
+

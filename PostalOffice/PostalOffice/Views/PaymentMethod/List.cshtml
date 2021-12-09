@@ -1,0 +1,61 @@
+﻿@model IEnumerable<PaymentMethod>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Способы оплаты";
+}
+
+
+
+<div class="container-fluid" style="height: 100%; width:contain;">
+
+    <h1 class="text-center pt-5">
+        Способы оплаты
+    </h1>
+
+
+    <form name="test" method="get" asp-controller="PaymentMethod" asp-action="List" class="param_workers">
+
+        <input class="form-control" name="pay.Id" type="text" placeholder="Id метода:" />
+        <input class="form-control" name="pay.PaymentMethodName" type="text" placeholder="Наименование метода:" />
+        <div>
+            <button class="btn btn-success" type="submit">
+                Поиск
+            </button>
+        </div>
+    </form>
+    <div class="div-contenet-table">
+        <a asp-controller="PaymentMethod" asp-action="Create" style="">
+            <i class='bx bx-user-plus'></i>
+            Добавить метод оплаты
+        </a>
+        <table class="content-table" id="myTable">
+            <thead>
+                <tr>                    
+                    <th>#</th>
+                    <th>Метод оплаты</th>
+                </tr>
+            </thead>            
+            <tbody id="editClickbodyPaymentMethod">
+                @foreach (var el in Model)
+                {                    
+                    <tr class="rowEditStart">
+                        <th class="editId">
+                            @*<a class="popupdelete" asp-action="Delete" asp-controller="Worker" asp-route-id="@el.Id">
+                                Удалить пользователя
+                            </a>*@
+                            @el.Id
+                        </th>
+                        <td>
+                            @el.PaymentMethodName
+                        </td>                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<script src="~/js/PaymentMethod.js">
+
+</script>
+
