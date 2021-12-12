@@ -11,7 +11,6 @@ INSERT INTO positions (position_name)
 INSERT INTO group_users (group_name)
 	VALUES 
     ("Администратор"),
-    ("Директор"),
     ("Кассир");
     
 INSERT INTO countries_delivery (country_delivery_name)
@@ -33,9 +32,9 @@ INSERT INTO available_payments (payment_name)
  INSERT INTO workers (worker_last_name, worker_first_name, worker_middle_name, worker_date_of_birth, worker_phone_number, position_id, group_user_id)
 	VALUES 
     ("Админович", "Админ", "Админ", "2001-04-23", "+375 (29) 111-11-11", 1, 1),
-    ("Сащеко", "Максим", "Андреевич", "2001-04-23", "+375 (29) 358-17-24", 2, 2),
-    ("Марцев", "Артем", "Андреевич", "2001-04-23", "+375 (29) 222-22-22", 3, 3),
-    ("Денис", "Скурат", "Андреевич", "2001-04-23", "+375 (29) 830-63-61", 4, 3);
+    ("Сащеко", "Максим", "Андреевич", "2001-04-23", "+375 (29) 358-17-24", 2, 1),
+    ("Марцев", "Артем", "Андреевич", "2001-04-23", "+375 (29) 222-22-22", 3, 2),
+    ("Денис", "Скурат", "Андреевич", "2001-04-23", "+375 (29) 830-63-61", 4, 2);
     
 INSERT INTO `postal_office`.`goods_for_sale`
 (`good_name`,`good_amount`,`good_price`)

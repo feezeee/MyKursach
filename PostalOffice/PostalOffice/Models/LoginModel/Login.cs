@@ -8,7 +8,7 @@ namespace PostalOffice.Models
 {
     public class Login
     {
-        [Required(ErrorMessage = "Не указан Мобильный телефон")]
+        [Required(ErrorMessage = "Не указан мобильный телефон")]
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Не указан пароль")]

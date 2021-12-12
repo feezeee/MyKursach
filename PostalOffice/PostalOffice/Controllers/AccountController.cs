@@ -16,39 +16,7 @@ namespace PostalOffice.Controllers
         public AccountController(ApplicationDbContext context)
         {
             _context = context;
-        }
-        //[HttpGet]
-        //public IActionResult Register()
-        //{
-        //    return View();
-        //}
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Register(Register model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        Worker worker = await _context.Worker.FirstOrDefaultAsync(u => u.FirstName == model.FirstName && u.LastName == model.LastName && u.PhoneNumber == model.PhoneNumber);
-        //        if (worker == null)
-        //        {
-        //            // добавляем пользователя в бд
-        //            worker = new Worker { FirstName = worker.FirstName, LastName = worker.LastName, DateOfBirth = model.DateOfBirth, Email = model.Email, Password = model.Password, PhoneNumber=model.PhoneNumber };
-        //            Position workerPosition = await _context.Position.FirstOrDefaultAsync(r => r.PositionName == "Директор");
-        //            if (workerPosition != null)
-        //                worker.Position = workerPosition;
-
-        //            _context.Worker.Add(worker);
-        //            await _context.SaveChangesAsync();
-
-        //            await Authenticate(worker); // аутентификация
-
-        //            return RedirectToAction("Index", "Home");
-        //        }
-        //        else
-        //            ModelState.AddModelError("", "Некорректные логин и(или) пароль");
-        //    }
-        //    return View(model);
-        //}
+        }       
 
         [HttpGet]
         public IActionResult Login()

@@ -63,14 +63,15 @@ namespace PostalOffice.Models
         [Required(ErrorMessage = "Не указана должность")]
         [Column("position_id")]
         public int? PositionId { get; set; }
-        public Position Position { get; set; }
+        public Position? Position { get; set; }
 
 
 
         [Required(ErrorMessage = "Не указана группа пользователей")]
         [Column("group_user_id")]
         public int? GroupUserId { get; set; }
-        public GroupUser GroupUser { get; set; }
+
+        public GroupUser? GroupUser { get; set; }
 
 
 

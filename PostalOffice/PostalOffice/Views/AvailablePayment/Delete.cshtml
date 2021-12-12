@@ -4,8 +4,10 @@
 }
 
 <form class="popup" method="post" asp-controller="AvailablePayment" asp-action="Delete" asp-route-id="@Model.Id">
-    <p>Вы уверены?</p>
-    <button type="submit">Да</button>
-    <a type="button" asp-action="Edit" asp-controller="AvailablePayment" asp-route-id=@Model.Id>Нет</a>
+    <div class="popup-inner d-flex justify-content-around flex-lg-wrap">
+        <p style="width:100%;" class="text-center">Вы уверены?</p>
+        <button class="btn btn-success" type="submit">Да</button>
+        <a class="btn btn-danger" type="button" asp-action="Edit" asp-controller="AvailablePayment" asp-route-id=@Model.Id>Нет</a>
+    </div>
 </form>>
 

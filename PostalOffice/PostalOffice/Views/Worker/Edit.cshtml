@@ -36,22 +36,22 @@
             </li>
             <li>
                 <span>Электронная почта</span>
-                <input asp-for="Email" type="text" placeholder="Введите Email" value="@Model.Email" />
+                <input asp-for="Email" type="email" placeholder="Введите Email" value="@Model.Email" />
                 @Html.ValidationMessageFor(model => model.Email, null, new { style = "color:red" })
             </li>
             <li>
                 <span>Выберите группу пользователей*</span>
-                <select asp-for="GroupUserId" asp-items="ViewBag.GroupUsers" value="@Model.GroupUserId"></select>
+                <select required asp-for="GroupUserId" asp-items="ViewBag.GroupUsers" value="@Model.GroupUserId"></select>
                 @Html.ValidationMessageFor(model => model.GroupUserId, null, new { style = "color:red" })
             </li>
             <li>
                 <span>Выберите должность*</span>
-                <select asp-for="PositionId" asp-items="ViewBag.Positions" value="@Model.Position.PositionName"></select>
+                <select required asp-for="PositionId" asp-items="ViewBag.Positions" value="@Model.PositionId"></select>
                 @Html.ValidationMessageFor(model => model.PositionId, null, new { style = "color:red" })
             </li>
             <li>
                 <span>Номер телефона*</span>
-                <input type="hidden" name="Id" value="@Model.Id" />
+                <input type="hidden" asp-for="Id" value="@Model.Id" />
                 <input required autocomplete="off" id="_phonenumber" asp-for="PhoneNumber" type="text" placeholder="Номер телефона" value="@Model.PhoneNumber" />
                 @Html.ValidationMessageFor(model => model.PhoneNumber, null, new { style = "color:red" })
             </li>
