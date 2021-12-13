@@ -13,13 +13,13 @@ namespace PostalOffice.Models
         [Column("operation_id")]
         public int OperationId { get; set; }
 
-        public Operation Operation { get; set; }
+        public Operation? Operation { get; set; }
 
 
 
         [Column("available_payment_id")]
         public int AvailablePaymentId { get; set; }
-        public AvailablePayment AvailablePayment { get; set; }
+        public AvailablePayment? AvailablePayment { get; set; }
 
         [Column("payment_price")]
         [Range(0, int.MaxValue, ErrorMessage = "Цена не может быть отрицательной!")]

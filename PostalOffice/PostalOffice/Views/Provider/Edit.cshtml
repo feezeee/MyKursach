@@ -18,13 +18,13 @@
                 @Html.ValidationMessageFor(model => model.Name, null, new { style = "color:red" })
             </li>
             <li>
-                <span>Номер телефона*</span>
-                <input required asp-for="PhoneNumber" type="text" placeholder="Введите номер телефона" value="@Model.PhoneNumber"/>
+                <span>Номер телефона</span>
+                <input asp-for="PhoneNumber" type="number" placeholder="Введите номер телефона" value="@Model.PhoneNumber"/>
                 @Html.ValidationMessageFor(model => model.PhoneNumber, null, new { style = "color:red" })
             </li>
             <li>
                 <span>Эл. почта</span>
-                <input asp-for="Email" type="text" placeholder="Введите электронную почту" value="@Model.Email" />
+                <input asp-for="Email" type="email" placeholder="Введите электронную почту" value="@Model.Email" />
                 @Html.ValidationMessageFor(model => model.Email, null, new { style = "color:red" })
             </li>
 

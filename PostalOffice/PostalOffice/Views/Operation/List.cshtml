@@ -33,7 +33,7 @@
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Дата операции (гг.мм.дд)</th>
+                    <th>Дата и время операции (гг.мм.дд чч:мм)</th>
                     <th>Сотрудник</th>
                 </tr>
             </thead>
@@ -48,7 +48,7 @@
                             @el?.Id
                         </th>
                         <td>
-                            @el?.DateTime.Value.ToShortDateString()
+                            @el?.DateTime.Value
                         </td>
                         <td>
                             @el?.Worker?.LastName

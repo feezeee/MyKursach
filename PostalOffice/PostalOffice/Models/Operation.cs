@@ -19,7 +19,7 @@ namespace PostalOffice.Models
 
         [Column("worker_id")]
         public int WorkerId { get; set; }
-        public Worker Worker { get; set; }
+        public Worker? Worker { get; set; }
 
 
         [Column("total_price")]

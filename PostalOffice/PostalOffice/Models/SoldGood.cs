@@ -21,13 +21,13 @@ namespace PostalOffice.Models
 
         [Column("operation_id")]
         public int OperationId { get; set; }
-        public Operation Operation { get; set; }
+        public Operation? Operation { get; set; }
 
 
 
         [Column("good_for_sale_id")]
         public int GoodForSaleId { get; set; }
-        public GoodForSale GoodForSale { get; set; }
+        public GoodForSale? GoodForSale { get; set; }
 
 
         [Column("sold_goods_price")]

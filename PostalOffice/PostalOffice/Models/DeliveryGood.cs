@@ -47,13 +47,13 @@ namespace PostalOffice.Models
 
         [Column("operation_id")]
         public int OperationId { get; set; }
-        public Operation Operation { get; set; }
+        public Operation? Operation { get; set; }
 
 
 
         [Column("country_delivery_id")]
         public int DeliveryCountryId { get; set; }
-        public DeliveryCountry DeliveryCountry { get; set; }
+        public DeliveryCountry? DeliveryCountry { get; set; }
 
 
         [Required(ErrorMessage = "Не указана сумма")]
