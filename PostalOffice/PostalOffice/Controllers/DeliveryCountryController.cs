@@ -20,10 +20,10 @@ namespace PostalOffice.Controllers
         }
 
 
-        const string DirectorAdminKassir = "Директор, Администратор, Кассир";
-        const string DirectorAdmin = "Директор, Администратор";
+        const string AdminKassir = "Администратор, Кассир";
+        const string Admin = "Администратор";
 
-        [Authorize(Roles = DirectorAdminKassir)]
+        [Authorize(Roles = AdminKassir)]
         public async Task<IActionResult> List(DeliveryCountry deliveryCountry)
         {
             var res = await _context.DeliveryCountries.FromSqlRaw("get_countries_delivery").ToListAsync();
@@ -39,14 +39,14 @@ namespace PostalOffice.Controllers
             return View(res);
         }
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [HttpPost]
         public async Task<IActionResult> Create(DeliveryCountry deliveryCountry)
         {
@@ -61,7 +61,7 @@ namespace PostalOffice.Controllers
             return View(deliveryCountry);
         }
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [AcceptVerbs("Get", "Post")]
         public async Task<IActionResult> CheckDeliveryCountryName(int? Id, string DeliveryCountryName)
         {
@@ -86,7 +86,7 @@ namespace PostalOffice.Controllers
 
 
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -103,7 +103,7 @@ namespace PostalOffice.Controllers
 
         }
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [HttpPost]
         public async Task<IActionResult> Edit(DeliveryCountry deliveryCountry)
         {
@@ -119,7 +119,7 @@ namespace PostalOffice.Controllers
             return View(deliveryCountry);
         }
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -133,7 +133,7 @@ namespace PostalOffice.Controllers
         }
 
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {

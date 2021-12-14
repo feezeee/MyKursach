@@ -344,6 +344,26 @@ BEGIN
     update operations set operations.total_price = (operations.total_price - @perem) where operations.operation_id LIKE @oper_id;
 END$$
 
+USE `postal_office`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_available_payments`()
+BEGIN
+	SELECT * FROM available_payments
+    ORDER BY `available_payments`.`available_payment_id`;
+END$$
+
+USE `postal_office`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_countries_delivery`()
+BEGIN
+	SELECT * FROM countries_delivery
+    ORDER BY `countries_delivery`.`country_delivery_id`;
+END$$
+
+USE `postal_office`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_providers`()
+BEGIN
+	SELECT * FROM providers
+    ORDER BY `providers`.`provider_id`;
+END$$
 
 DELIMITER ;
 

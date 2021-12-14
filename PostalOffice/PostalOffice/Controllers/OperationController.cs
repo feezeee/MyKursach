@@ -20,11 +20,10 @@ namespace PostalOffice.Controllers
         }
 
 
-        const string DirectorAdminKassir = "Директор, Администратор, Кассир";
-        const string DirectorAdmin = "Директор, Администратор";
+        const string AdminKassir = "Администратор, Кассир";
         const string Kassir = "Кассир";
 
-        [Authorize(Roles = DirectorAdminKassir)]
+        [Authorize(Roles = AdminKassir)]
         public async Task<IActionResult> List(Operation operation)
         {
             var res = await _context.Operations.Include(c => c.Worker).Include(t => t.SoldGoods).Include(t => t.DeliveryGoods).Include(t => t.CompletedPayments).Select(t => t).ToListAsync();
@@ -45,7 +44,7 @@ namespace PostalOffice.Controllers
         }
 
 
-        [Authorize(Roles = DirectorAdminKassir)]
+        [Authorize(Roles = AdminKassir)]
         [HttpGet]
         public async Task<IActionResult> Create(int? operationId)
         {
@@ -96,7 +95,7 @@ namespace PostalOffice.Controllers
         }
 
 
-        [Authorize(Roles = DirectorAdminKassir)]
+        [Authorize(Roles = AdminKassir)]
         [HttpPost]
         public async Task<IActionResult> Create(Operation operation)
         {

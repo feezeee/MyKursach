@@ -36,7 +36,7 @@
         </div>
 
         <ul class="nav-list">
-            @if (User.IsInRole("Администратор") || User.IsInRole("Директор"))
+            @if (User.IsInRole("Администратор"))
             {
                 <li id="area_users">
                     <a asp-controller="Worker" asp-action="List">
@@ -75,27 +75,25 @@
                     document.getElementById('area_genders').onmouseleave = function () {
                         document.getElementById('_genders').classList.remove('bx-tada');
                     }
-                </script>
+                </script>              
 
+            }
 
-                <li id="area_paymentMethod">
+            <li id="area_paymentMethod">
                     <a asp-controller="PaymentMethod" asp-action="List">
                         <i id="_paymentMethod" class='bx bx-wallet'></i>
                         <span class="links_name">Способы оплаты</span>
                     </a>
                     <span class="tooltip">Способы оплаты</span>
-                </li>
-                <script>
-                    document.getElementById('area_paymentMethod').onmouseenter = function () {
-                        document.getElementById('_paymentMethod').classList.add('bx-tada');
-                    }
-                    document.getElementById('area_paymentMethod').onmouseleave = function () {
-                        document.getElementById('_paymentMethod').classList.remove('bx-tada');
-                    }
-                </script>
-
-
-            }
+            </li>
+            <script>
+                document.getElementById('area_paymentMethod').onmouseenter = function () {
+                    document.getElementById('_paymentMethod').classList.add('bx-tada');
+                }
+                document.getElementById('area_paymentMethod').onmouseleave = function () {
+                    document.getElementById('_paymentMethod').classList.remove('bx-tada');
+                }
+            </script>
 
             <li id="area_deliveryCountry">
                 <a asp-controller="DeliveryCountry" asp-action="List">
@@ -144,7 +142,7 @@
                     document.getElementById('_goodForSale').classList.remove('bx-tada');
                 }
             </script>
-            @if (User.IsInRole("Администратор") || User.IsInRole("Директор"))
+            @if (User.IsInRole("Администратор"))
             {
                 <li id="area_provider">
                     <a asp-controller="Provider" asp-action="List">

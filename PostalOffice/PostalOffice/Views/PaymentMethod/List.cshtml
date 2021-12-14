@@ -24,10 +24,15 @@
         </div>
     </form>
     <div class="div-contenet-table">
-        <a asp-controller="PaymentMethod" asp-action="Create" style="">
-            <i class='bx bx-user-plus'></i>
-            Добавить метод оплаты
-        </a>
+        @{
+            if (User.IsInRole("Администратор"))
+            {
+                <a asp-controller="PaymentMethod" asp-action="Create" style="">
+                    <i class='bx bx-user-plus'></i>
+                    Добавить метод оплаты
+                </a>
+            }
+        }
         <table class="content-table" id="myTable">
             <thead>
                 <tr>                    
@@ -55,7 +60,12 @@
 
     </div>
 </div>
-<script src="~/js/PaymentMethod.js">
+@{
+    if (User.IsInRole("Администратор"))
+    {
+        <script src="~/js/PaymentMethod.js">
 
-</script>
+        </script>
+    }
+}
 

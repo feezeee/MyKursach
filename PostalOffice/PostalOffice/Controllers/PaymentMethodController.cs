@@ -19,11 +19,10 @@ namespace PostalOffice.Controllers
             _context = context;
         }
 
-        const string DirectorAdminKassir = "Директор, Администратор, Кассир";
-        const string DirectorAdmin = "Директор, Администратор";
-        const string Kassir = "Кассир";
+        const string AdminKassir = "Администратор, Кассир";
+        const string Admin = "Администратор";
 
-        [Authorize(Roles = DirectorAdminKassir)]
+        [Authorize(Roles = AdminKassir)]
         public async Task<IActionResult> List(PaymentMethod pay)
         {
             var res = await _context.PaymentMethods.Include(t => t.Operations).Include(t => t.Operations_PaymentMethods).OrderBy(t => t.Id).ToListAsync();
@@ -39,14 +38,14 @@ namespace PostalOffice.Controllers
             return View(res);
         }
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [HttpPost]
         public async Task<IActionResult> Create(PaymentMethod pay)
         {
@@ -102,7 +101,7 @@ namespace PostalOffice.Controllers
 
         }
 
-        [Authorize(Roles = DirectorAdminKassir)]
+        [Authorize(Roles = AdminKassir)]
         [HttpGet]
         public async Task<IActionResult> DeleteInOperation(string id)
         {
@@ -130,7 +129,7 @@ namespace PostalOffice.Controllers
             return RedirectToRoute("default", new { controller = "Operation", action = "Create", operationId = operation_id });
         }
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [AcceptVerbs("Get", "Post")]
         public async Task<IActionResult> CheckPaymentMethodName(int? Id, string PaymentMethodName)
         {
@@ -153,7 +152,7 @@ namespace PostalOffice.Controllers
             }
         }
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -170,7 +169,7 @@ namespace PostalOffice.Controllers
 
         }
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [HttpPost]
         public async Task<IActionResult> Edit(PaymentMethod pay)
         {
@@ -185,7 +184,7 @@ namespace PostalOffice.Controllers
         }
 
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -203,7 +202,7 @@ namespace PostalOffice.Controllers
         }
 
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {

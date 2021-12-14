@@ -19,16 +19,11 @@ namespace PostalOffice.Controllers
             _context = context;
         }
 
-        const string DirectorAdminKassir = "Директор, Администратор, Кассир";
-        const string DirectorAdmin = "Директор, Администратор";
-        const string Kassir = "Кассир";
+        const string Admin = "Администратор";
 
-
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         public async Task<IActionResult> List(Worker worker)
         {
-            //var res = _context.Workers.Join(_context.Positions);
-
             var res = await _context.Workers.Include(t => t.Position).Include(t => t.GroupUser).OrderBy(t=>t.Id).ToListAsync();            
 
             if (worker?.Id > 0)
@@ -59,7 +54,7 @@ namespace PostalOffice.Controllers
             return View(res);
         }
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -68,7 +63,7 @@ namespace PostalOffice.Controllers
             return View();
         }
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [HttpPost]
         public async Task<IActionResult> Create(Worker worker)
         {
@@ -83,7 +78,7 @@ namespace PostalOffice.Controllers
             ViewBag.Positions = new SelectList(await _context.Positions.ToListAsync(), "Id", "PositionName");
             return View();
         }
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [AcceptVerbs("Get", "Post")]
         public async Task<IActionResult> CheckPhoneNumber(int? Id, string PhoneNumber)
         {
@@ -106,7 +101,7 @@ namespace PostalOffice.Controllers
             }
         }
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -125,7 +120,7 @@ namespace PostalOffice.Controllers
         
         }
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [HttpPost]
         public async Task<IActionResult> Edit(Worker worker)
         {
@@ -148,7 +143,7 @@ namespace PostalOffice.Controllers
             return View(worker);
         }
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
 
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
@@ -166,7 +161,7 @@ namespace PostalOffice.Controllers
             return View(worker);            
         }
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {

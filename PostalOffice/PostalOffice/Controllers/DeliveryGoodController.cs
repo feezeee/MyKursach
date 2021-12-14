@@ -19,11 +19,11 @@ namespace PostalOffice.Controllers
 
 
 
-        const string DirectorAdminKassir = "Директор, Администратор, Кассир";
-        const string DirectorAdmin = "Директор, Администратор";
+        const string AdminKassir = "Администратор, Кассир";
+        const string Admin = "Администратор";
 
 
-        [Authorize(Roles = DirectorAdminKassir)]
+        [Authorize(Roles = AdminKassir)]
         [HttpGet]
         public IActionResult Create(int operationId)
         {
@@ -34,7 +34,7 @@ namespace PostalOffice.Controllers
             return View(deliveryGood);
         }
 
-        [Authorize(Roles = DirectorAdminKassir)]
+        [Authorize(Roles = AdminKassir)]
         [HttpPost]
         public async Task<IActionResult> Create(DeliveryGood deliveryGood)
         {
@@ -50,7 +50,7 @@ namespace PostalOffice.Controllers
             return View(deliveryGood);
         }
 
-        [Authorize(Roles = DirectorAdminKassir)]
+        [Authorize(Roles = AdminKassir)]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {

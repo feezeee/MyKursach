@@ -24,7 +24,7 @@
         </div>
     </form>
     <div class="div-contenet-table">
-        @if (User.IsInRole("Администратор") || User.IsInRole("Директор"))
+        @if (User.IsInRole("Администратор"))
         {
             <a asp-controller="DeliveryCountry" asp-action="Create" style="">
                 <i class='bx bx-user-plus'></i>
@@ -63,7 +63,7 @@
 
 </script>
 
-@if (User.IsInRole("Администратор") || User.IsInRole("Директор")) 
+@if (User.IsInRole("Администратор")) 
 {
     <script src="~/js/DeliveryCountry.js">
 

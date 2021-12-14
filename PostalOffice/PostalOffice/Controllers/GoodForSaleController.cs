@@ -19,10 +19,10 @@ namespace PostalOffice.Controllers
             _context = context;
         }
 
-        const string DirectorAdminKassir = "Директор, Администратор, Кассир";
-        const string DirectorAdmin = "Директор, Администратор";
+        const string AdminKassir = "Администратор, Кассир";
+        const string Admin = "Администратор";
 
-        [Authorize(Roles = DirectorAdminKassir)]
+        [Authorize(Roles = AdminKassir)]
         public async Task<IActionResult> List(GoodForSale goodForSale)
         {
             var res = await _context.GoodsForSale.Include(t=>t.Providers).Include(t=>t.SoldGoods).Include(t=>t.GoodForSale_Providers).OrderBy(t => t.Id).ToListAsync();
@@ -48,7 +48,7 @@ namespace PostalOffice.Controllers
             return View(res);
         }
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -56,7 +56,7 @@ namespace PostalOffice.Controllers
             return View();
         }
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [HttpPost]
         public async Task<IActionResult> Create(GoodForSale goodForSale, int[] selectedProviders)
         {
@@ -79,7 +79,7 @@ namespace PostalOffice.Controllers
             ViewBag.Providers = await _context.Providers.ToListAsync();
             return View(goodForSale);
         }
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [AcceptVerbs("Get", "Post")]
         public async Task<IActionResult> CheckName(int? Id, string Name)
         {
@@ -102,7 +102,7 @@ namespace PostalOffice.Controllers
             }
         }
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -122,7 +122,7 @@ namespace PostalOffice.Controllers
 
         }
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [HttpPost]
         public async Task<IActionResult> Edit(GoodForSale goodForSale, int[] selectedProviders)
         {
@@ -153,7 +153,7 @@ namespace PostalOffice.Controllers
             return View(goodForSale);
         }
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -166,7 +166,7 @@ namespace PostalOffice.Controllers
             return View(goodForSale);
         }
 
-        [Authorize(Roles = DirectorAdmin)]
+        [Authorize(Roles = Admin)]
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
