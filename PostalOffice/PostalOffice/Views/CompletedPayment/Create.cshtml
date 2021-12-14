@@ -9,8 +9,9 @@
         <p class="addingWorkerPopup">Выберите платеж</p>
         <ul class="popupinput">
             <li>
-                <span>Выберите тип платежа</span>
+                <span>Выберите тип платежа*</span>
                 <select required asp-for="AvailablePaymentId" asp-items="ViewBag.AvailablePayments"></select>
+                @Html.ValidationMessageFor(model => model.AvailablePaymentId, null, new { style = "color:red" })
             </li>
             <li>
                 <span>Укажите сумму*</span>

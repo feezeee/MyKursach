@@ -26,6 +26,7 @@ namespace PostalOffice.Models
 
 
         [Column("good_for_sale_id")]
+        [Required(ErrorMessage = "Не указан товар!")]
         public int GoodForSaleId { get; set; }
         public GoodForSale? GoodForSale { get; set; }
 

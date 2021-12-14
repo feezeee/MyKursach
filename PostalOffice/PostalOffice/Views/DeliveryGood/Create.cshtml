@@ -41,7 +41,8 @@
             </li>
             <li>
                 <span>Выберите страну доставки*</span>
-                <select required asp-for="DeliveryCountryId" asp-items="ViewBag.DeliveryCountries"></select>
+                <select required asp-for="DeliveryCountryId" asp-items="ViewBag.DeliveryCountries"></select>                
+                @Html.ValidationMessageFor(model => model.DeliveryCountryId, null, new { style = "color:red" })
             </li>
             <li>
                 <span>Цена доставки*</span>                

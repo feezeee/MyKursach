@@ -18,6 +18,7 @@ namespace PostalOffice.Models
 
 
         [Column("available_payment_id")]
+        [Required(ErrorMessage = "Не указан тип платежа!")]
         public int AvailablePaymentId { get; set; }
         public AvailablePayment? AvailablePayment { get; set; }
 

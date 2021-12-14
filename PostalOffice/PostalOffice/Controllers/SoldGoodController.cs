@@ -52,7 +52,11 @@ namespace PostalOffice.Controllers
 
         public async Task<IActionResult> CheckCount(int GoodForSaleId, int NumberSold)
         {
-            int maxCount = (await _context.GoodsForSale.FindAsync(GoodForSaleId)).GoodAmount;
+            int? maxCount = (await _context.GoodsForSale.FindAsync(GoodForSaleId))?.GoodAmount;
+            if (maxCount == null)
+            {
+                return Json(false);
+            }
             if(NumberSold > maxCount)
             {
                 return Json(false);

@@ -10,8 +10,9 @@
         <p class="addingWorkerPopup">Выберите товар</p>
         <ul class="popupinput">
             <li>
-                <span>Выберите товар</span>
+                <span>Выберите товар*</span>
                 <select required asp-for="GoodForSaleId" asp-items="ViewBag.GoodsForSale"></select>
+                @Html.ValidationMessageFor(model => model.GoodForSaleId, null, new { style = "color:red" })
             </li>
             <li>
                 <span>Укажите число товаров*</span>

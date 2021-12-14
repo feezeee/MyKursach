@@ -52,6 +52,7 @@ namespace PostalOffice.Models
 
 
         [Column("country_delivery_id")]
+        [Required(ErrorMessage = "Не указана страна!")]
         public int DeliveryCountryId { get; set; }
         public DeliveryCountry? DeliveryCountry { get; set; }
 
