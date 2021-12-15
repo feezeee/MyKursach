@@ -1,6 +1,7 @@
 ﻿@model Worker
 @{
-    Layout = "_Layout";
+    Layout = "_Layout";    
+    ViewData["Title"] = "Добавление работника";
 }
 
 <form class="popup" asp-controller="Worker" asp-action="Create">
@@ -9,17 +10,17 @@
         <ul class="popupinput">
             <li>
                 <span>Фамилия*</span>
-                <input asp-for="LastName" required type="text" placeholder="Введите фамилию" />
+                <input required asp-for="LastName" required type="text" placeholder="Введите фамилию" />
                 @Html.ValidationMessageFor(model => model.LastName, null, new { style = "color:red" })
             </li>
             <li>
                 <span>Имя*</span>
-                <input asp-for="FirstName" type="text" placeholder="Введите имя" />
+                <input required asp-for="FirstName" type="text" placeholder="Введите имя" />
                 @Html.ValidationMessageFor(model => model.FirstName, null, new { style = "color:red" })
             </li>
             <li>
                 <span>Отчество*</span>
-                <input asp-for="MiddleName" type="text" placeholder="Введите отчество" />
+                <input required asp-for="MiddleName" type="text" placeholder="Введите отчество" />
                 @Html.ValidationMessageFor(model => model.MiddleName, null, new { style = "color:red" })
             </li>
             <li>
@@ -34,22 +35,22 @@
             </li>
             <li>
                 <span>Выберите группу пользователей*</span>
-                <select asp-for="GroupUserId" asp-items="ViewBag.GroupUsers"></select>
+                <select required asp-for="GroupUserId" asp-items="ViewBag.GroupUsers"></select>
                 @Html.ValidationMessageFor(model => model.GroupUserId, null, new { style = "color:red" })
             </li>
             <li>
                 <span>Выберите должность*</span>
-                <select asp-for="PositionId" asp-items="ViewBag.Positions"></select>
+                <select required asp-for="PositionId" asp-items="ViewBag.Positions"></select>
                 @Html.ValidationMessageFor(model => model.PositionId, null, new { style = "color:red" })
             </li>
             <li>
                 <span>Номер телефона*</span>
-                <input id="_phonenumber" asp-for="PhoneNumber" type="text" placeholder="Номер телефона" />
+                <input required id="_phonenumber" asp-for="PhoneNumber" type="text" placeholder="Номер телефона" />
                 @Html.ValidationMessageFor(model => model.PhoneNumber, null, new { style = "color:red" })
             </li>
             <li>
                 <span>Введите пароль*</span>
-                <input asp-for="Password" type="text" placeholder="Введите пароль" value="root" />
+                <input required asp-for="Password" type="text" placeholder="Введите пароль" value="root" />
                 @Html.ValidationMessageFor(model => model.Password, null, new { style = "color:red" })
             </li>
 

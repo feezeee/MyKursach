@@ -170,12 +170,11 @@ namespace PostalOffice.Controllers
             {
                 return RedirectToAction("Edit", new { id = id });
             }
-            else if (worker?.Id == AuthorizedUser.GetInstance().GetWorker().Id)
+            else if (worker?.Id != AuthorizedUser.GetInstance().GetWorker().Id && worker?.Operations?.Count == 0)
             {
                 _context.Workers.Remove(worker);
                 _context.SaveChanges();                
-                return RedirectToAction("Logout", "Account");
-
+                return RedirectToAction("List");
             }
             return RedirectToAction("Edit", new { id = id });
         }

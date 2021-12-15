@@ -1,6 +1,8 @@
 ﻿@model GoodForSale
 @{
-    Layout = "_Layout";
+    Layout = "_Layout";    
+    ViewData["Title"] = "Удаление товара";
+
 }
 
 <form class="popup" method="post" asp-controller="GoodForSale" asp-action="Delete" asp-route-id="@Model.Id">

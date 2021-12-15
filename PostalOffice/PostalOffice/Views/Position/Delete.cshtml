@@ -1,6 +1,8 @@
 ﻿@model Position
 @{
     Layout = "_Layout";
+    ViewData["Title"] = "Удаление должности";
+
 }
 
 <form class="popup" method="post" asp-controller="Position" asp-action="Delete" asp-route-id="@Model.Id">

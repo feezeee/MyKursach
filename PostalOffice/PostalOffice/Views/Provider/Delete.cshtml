@@ -1,6 +1,8 @@
 ﻿@model Provider
 @{
     Layout = "_Layout";
+        ViewData["Title"] = "Удаление поставщика";
+
 }
 
 <form class="popup" method="post" asp-controller="Provider" asp-action="Delete" asp-route-id="@Model.Id">

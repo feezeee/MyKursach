@@ -1,6 +1,8 @@
 ﻿@model DeliveryCountry
 @{
     Layout = "_Layout";
+    
+    ViewData["Title"] = "Удаление страны";
 }
 
 <form class="popup" method="post" asp-controller="DeliveryCountry" asp-action="Delete" asp-route-id="@Model.Id">

@@ -112,7 +112,7 @@ namespace PostalOffice.Controllers
                 .Include(t => t.Operations_PaymentMethods)
                 .ThenInclude(t => t.PaymentMethod)
                 .Where(t => t.Id == operation.Id).Select(t => t).FirstOrDefault();
-            if (operation?.SoldGoods?.Count == 0 && operation?.CompletedPayments?.Count == 0 && operation?.DeliveryGoods?.Count == 0)
+            if (operation?.SoldGoods?.Count == 0 && operation?.CompletedPayments?.Count == 0 && operation?.DeliveryGoods?.Count == 0 && operation?.PaymentMethods?.Count == 0)
             {
                 if ((await _context.Operations.Where(t => t.Id == operation.Id).OrderBy(t => t.Id).LastOrDefaultAsync()) != null)
                 {
